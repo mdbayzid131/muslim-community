@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class AppColors {
   // Primary Roles
   static const Color jummaColor = Color(0xFF436E50);
