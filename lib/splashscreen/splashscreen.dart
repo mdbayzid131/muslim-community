@@ -81,7 +81,11 @@ class SplashScreen extends StatelessWidget {
                                   boxShadow: [
                                     BoxShadow(
                                       color: const Color(0xFFA6864D).withValues(
-                                        alpha: 0.12 * (1.0 - controller.logoGlow.value + 0.3),
+                                        alpha:
+                                            0.12 *
+                                            (1.0 -
+                                                controller.logoGlow.value +
+                                                0.3),
                                       ),
                                       blurRadius: 30.r,
                                       spreadRadius: 10.r,
@@ -99,23 +103,28 @@ class SplashScreen extends StatelessWidget {
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xFFA6864D).withValues(alpha: 0.15),
+                                  color: const Color(
+                                    0xFFA6864D,
+                                  ).withValues(alpha: 0.15),
                                   blurRadius: 15.r,
                                   spreadRadius: 2.r,
                                 ),
                               ],
                             ),
                             child: ClipOval(
-                              child: Image.asset(
-                                'assets/image/splashscreenlogo.png',
-                                fit: BoxFit.contain,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Icon(
-                                    Icons.mosque_outlined,
-                                    color: const Color(0xFFA6864D),
-                                    size: 50.sp,
-                                  );
-                                },
+                              child: Transform.scale(
+                                scale: 0.75, // Zoom out the logo slightly
+                                child: Image.asset(
+                                  'assets/image/logo.png',
+                                  fit: BoxFit.contain,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Icon(
+                                      Icons.mosque_outlined,
+                                      color: const Color(0xFFA6864D),
+                                      size: 50.sp,
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),
@@ -231,7 +240,9 @@ class SplashScreen extends StatelessWidget {
                         builder: (context, child) {
                           return PremiumProgressBar(
                             progress: controller.progressController.value,
-                            backgroundColor: const Color(0xFFA6864D).withValues(alpha: 0.15),
+                            backgroundColor: const Color(
+                              0xFFA6864D,
+                            ).withValues(alpha: 0.15),
                             progressColor: const Color(0xFFA6864D),
                             width: 140.w,
                             height: 3.h,
@@ -303,7 +314,14 @@ class IslamicPatternPainter extends CustomPainter {
     _drawRadiatingLines(canvas, center, maxRadius * 0.92, 24, paint);
   }
 
-  void _drawStar(Canvas canvas, Offset center, double radius, int points, Paint paint, {double innerRatio = 0.5}) {
+  void _drawStar(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    int points,
+    Paint paint, {
+    double innerRatio = 0.5,
+  }) {
     final path = Path();
     final totalPoints = points * 2;
     final angleStep = (2 * math.pi) / totalPoints;
@@ -323,23 +341,45 @@ class IslamicPatternPainter extends CustomPainter {
     canvas.drawPath(path, paint);
   }
 
-  void _drawInterlockingSquares(Canvas canvas, Offset center, double radius, Paint paint) {
+  void _drawInterlockingSquares(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    Paint paint,
+  ) {
     _drawRegularPolygon(canvas, center, radius, 4, paint, 0);
     _drawRegularPolygon(canvas, center, radius, 4, paint, math.pi / 4);
   }
 
-  void _drawTwelvePointedStar(Canvas canvas, Offset center, double radius, Paint paint) {
+  void _drawTwelvePointedStar(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    Paint paint,
+  ) {
     _drawRegularPolygon(canvas, center, radius, 4, paint, 0);
     _drawRegularPolygon(canvas, center, radius, 4, paint, math.pi / 6);
     _drawRegularPolygon(canvas, center, radius, 4, paint, math.pi / 3);
   }
 
-  void _drawHexagonalStar(Canvas canvas, Offset center, double radius, Paint paint) {
+  void _drawHexagonalStar(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    Paint paint,
+  ) {
     _drawRegularPolygon(canvas, center, radius, 3, paint, 0);
     _drawRegularPolygon(canvas, center, radius, 3, paint, math.pi);
   }
 
-  void _drawRegularPolygon(Canvas canvas, Offset center, double radius, int sides, Paint paint, double startAngle) {
+  void _drawRegularPolygon(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    int sides,
+    Paint paint,
+    double startAngle,
+  ) {
     final path = Path();
     final angleStep = (2 * math.pi) / sides;
     for (int i = 0; i < sides; i++) {
@@ -356,7 +396,13 @@ class IslamicPatternPainter extends CustomPainter {
     canvas.drawPath(path, paint);
   }
 
-  void _drawRadiatingLines(Canvas canvas, Offset center, double radius, int count, Paint paint) {
+  void _drawRadiatingLines(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    int count,
+    Paint paint,
+  ) {
     final angleStep = (2 * math.pi) / count;
     for (int i = 0; i < count; i++) {
       final angle = i * angleStep;
@@ -406,10 +452,7 @@ class PremiumProgressBar extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    progressColor.withValues(alpha: 0.7),
-                    progressColor,
-                  ],
+                  colors: [progressColor.withValues(alpha: 0.7), progressColor],
                 ),
                 borderRadius: BorderRadius.circular(height / 2),
                 boxShadow: [
