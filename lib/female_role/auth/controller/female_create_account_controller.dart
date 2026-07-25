@@ -167,10 +167,15 @@ class FemaleCreateAccountController extends GetxController {
     if (passwordController.text.isEmpty) missingFields += "Password, ";
     if (dateOfBirth.value.isEmpty) missingFields += "Date of Birth, ";
     
-    // Require at least one verification method (Photo OR Video)
-    if (verifyController.verificationImage.value == null &&
+    // Require verification based on the selected method
+    if (verifyController.selectedMethod.value == null) {
+      missingFields += "Verification method selection, ";
+    } else if (verifyController.selectedMethod.value == 'photo' &&
+        verifyController.verificationImage.value == null) {
+      missingFields += "Photo verification, ";
+    } else if (verifyController.selectedMethod.value == 'video' &&
         verifyController.verificationVideo.value == null) {
-      missingFields += "Photo or Video verification, ";
+      missingFields += "Video verification, ";
     }
 
     if (missingFields.isNotEmpty) {
@@ -195,8 +200,12 @@ class FemaleCreateAccountController extends GetxController {
         role: role.value,
         dateOfBirth: dateOfBirth.value,
         revertDate: revertDate.value.isNotEmpty ? revertDate.value : null,
-        verificationImage: verifyController.verificationImage.value,
-        verificationVideo: verifyController.verificationVideo.value,
+        verificationImage: verifyController.selectedMethod.value == 'photo'
+            ? verifyController.verificationImage.value
+            : null,
+        verificationVideo: verifyController.selectedMethod.value == 'video'
+            ? verifyController.verificationVideo.value
+            : null,
       );
 
       print("Female API Response Code: ${response.statusCode}");
