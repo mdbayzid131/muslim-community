@@ -45,7 +45,7 @@ class JummaForgetPasswordOTPUI extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 10,
                         spreadRadius: 2,
                       ),
@@ -56,15 +56,19 @@ class JummaForgetPasswordOTPUI extends StatelessWidget {
                       width: 80.w,
                       height: 80.w,
                       decoration: BoxDecoration(
-                        color: themeColor.withOpacity(0.1),
+                        color: themeColor.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.mark_email_read_outlined, color: themeColor, size: 40.sp),
+                      child: Icon(
+                        Icons.mark_email_read_outlined,
+                        color: themeColor,
+                        size: 40.sp,
+                      ),
                     ),
                   ),
                 ),
               ),
-              
+
               SizedBox(height: 40.h),
               Text(
                 'Verify Your Email',
@@ -74,7 +78,7 @@ class JummaForgetPasswordOTPUI extends StatelessWidget {
                   color: const Color(0xFF2D3436),
                 ),
               ),
-              
+
               SizedBox(height: 20.h),
               Text(
                 'We have sent a 6-digit code to your email.\nPlease enter it below to continue.',
@@ -85,9 +89,9 @@ class JummaForgetPasswordOTPUI extends StatelessWidget {
                   height: 1.5,
                 ),
               ),
-              
+
               SizedBox(height: 30.h),
-              
+
               // Email Badge
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
@@ -101,18 +105,23 @@ class JummaForgetPasswordOTPUI extends StatelessWidget {
                   children: [
                     Icon(Icons.email_outlined, size: 16.sp, color: Colors.grey),
                     SizedBox(width: 8.w),
-                    Obx(() => Text(
-                      controller.email.value,
-                      style: GoogleFonts.inter(
-                        fontSize: 13.sp,
-                        color: Colors.grey.shade700,
+                    Obx(
+                      () => Text(
+                        controller.email.value,
+                        style: GoogleFonts.inter(
+                          fontSize: 13.sp,
+                          color: Colors.grey.shade700,
+                        ),
                       ),
-                    )),
+                    ),
                     SizedBox(width: 4.w),
                     Container(
                       width: 6.w,
                       height: 6.w,
-                      decoration: const BoxDecoration(color: Colors.orange, shape: BoxShape.circle),
+                      decoration: const BoxDecoration(
+                        color: Colors.orange,
+                        shape: BoxShape.circle,
+                      ),
                     ),
                   ],
                 ),
@@ -123,9 +132,12 @@ class JummaForgetPasswordOTPUI extends StatelessWidget {
               // OTP Input
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(6, (index) => _buildOTPField(index, themeColor, controller)),
+                children: List.generate(
+                  6,
+                  (index) => _buildOTPField(index, themeColor, controller),
+                ),
               ),
-              
+
               SizedBox(height: 15.h),
               Text(
                 'ENTER 6-DIGIT CODE',
@@ -138,7 +150,7 @@ class JummaForgetPasswordOTPUI extends StatelessWidget {
               ),
 
               SizedBox(height: 30.h),
-              
+
               // Timer (Placeholder for now)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -147,16 +159,21 @@ class JummaForgetPasswordOTPUI extends StatelessWidget {
                   SizedBox(width: 8.w),
                   Text(
                     'Code expires in ',
-                    style: GoogleFonts.inter(fontSize: 13.sp, color: Colors.grey),
-                  ),
-                  Obx(() => Text(
-                    controller.timerText.value,
                     style: GoogleFonts.inter(
                       fontSize: 13.sp,
-                      fontWeight: FontWeight.w600,
-                      color: themeColor,
+                      color: Colors.grey,
                     ),
-                  )),
+                  ),
+                  Obx(
+                    () => Text(
+                      controller.timerText.value,
+                      style: GoogleFonts.inter(
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w600,
+                        color: themeColor,
+                      ),
+                    ),
+                  ),
                 ],
               ),
 
@@ -166,28 +183,32 @@ class JummaForgetPasswordOTPUI extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 height: 56.h,
-                child: Obx(() => ElevatedButton(
-                  onPressed: controller.isLoading.value 
-                    ? null 
-                    : () => controller.verifyOtp(AppRoutes.jummaResetPassword),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: themeColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.r),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: controller.isLoading.value
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : Text(
-                        'Verify & Continue',
-                        style: GoogleFonts.inter(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
+                child: Obx(
+                  () => ElevatedButton(
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () => controller.verifyOtp(
+                            AppRoutes.jummaResetPassword,
+                          ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: themeColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
-                )),
+                      elevation: 0,
+                    ),
+                    child: controller.isLoading.value
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Text(
+                            'Verify & Continue',
+                            style: GoogleFonts.inter(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                  ),
+                ),
               ),
 
               SizedBox(height: 30.h),
@@ -203,21 +224,25 @@ class JummaForgetPasswordOTPUI extends StatelessWidget {
                       color: const Color(0xFF636E72),
                     ),
                   ),
-                  Obx(() => GestureDetector(
-                    onTap: controller.secondsRemaining.value == 0
-                        ? () => controller.sendOtp(AppRoutes.jummaForgetPasswordOTP)
-                        : null,
-                    child: Text(
-                      'Resend',
-                      style: GoogleFonts.inter(
-                        fontSize: 14.sp,
-                        color: controller.secondsRemaining.value == 0
-                            ? themeColor
-                            : Colors.grey,
-                        fontWeight: FontWeight.bold,
+                  Obx(
+                    () => GestureDetector(
+                      onTap: controller.secondsRemaining.value == 0
+                          ? () => controller.sendOtp(
+                              AppRoutes.jummaForgetPasswordOTP,
+                            )
+                          : null,
+                      child: Text(
+                        'Resend',
+                        style: GoogleFonts.inter(
+                          fontSize: 14.sp,
+                          color: controller.secondsRemaining.value == 0
+                              ? themeColor
+                              : Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  )),
+                  ),
                 ],
               ),
               SizedBox(height: 30.h),
@@ -228,7 +253,11 @@ class JummaForgetPasswordOTPUI extends StatelessWidget {
     );
   }
 
-  Widget _buildOTPField(int index, Color themeColor, ForgetPasswordController controller) {
+  Widget _buildOTPField(
+    int index,
+    Color themeColor,
+    ForgetPasswordController controller,
+  ) {
     return Container(
       width: 45.w,
       height: 55.w,
@@ -236,7 +265,7 @@ class JummaForgetPasswordOTPUI extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
-          color: themeColor.withOpacity(0.3),
+          color: themeColor.withValues(alpha: 0.3),
           width: 1.5,
         ),
       ),

@@ -50,7 +50,7 @@ class MaleDiscoverUI extends StatelessWidget {
               SizedBox(height: 20.h),
               _buildMainCategories(controller),
               SizedBox(height: 20.h),
-              
+
               Expanded(
                 child: Obx(() {
                   if (controller.selectedCategory.value == 'Brothers') {
@@ -69,7 +69,8 @@ class MaleDiscoverUI extends StatelessWidget {
                     return const MosquesUI();
                   } else if (controller.selectedCategory.value == 'Jumma') {
                     return const JummaUI();
-                  } else if (controller.selectedCategory.value == 'Ask Brother') {
+                  } else if (controller.selectedCategory.value ==
+                      'Ask Brother') {
                     return const AskBrotherUI();
                   } else {
                     return const SizedBox();
@@ -93,13 +94,13 @@ class MaleDiscoverUI extends StatelessWidget {
       ),
       child: Obx(() {
         final currentSelection = controller.selectedCategory.value;
-        
+
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: controller.mainCategories.map((category) {
               final isSelected = currentSelection == category;
-              
+
               return GestureDetector(
                 onTap: () {
                   if (category == 'Jumma') {
@@ -114,14 +115,20 @@ class MaleDiscoverUI extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isSelected ? Colors.white : Colors.transparent,
                     borderRadius: BorderRadius.circular(16.r),
-                    border: isSelected ? Border.all(color: AppColors.maleColor, width: 1) : null,
+                    border: isSelected
+                        ? Border.all(color: AppColors.maleColor, width: 1)
+                        : null,
                   ),
                   child: Text(
                     category,
                     style: GoogleFonts.inter(
                       fontSize: 12.sp,
-                      color: isSelected ? AppColors.titleColor : const Color(0xFF5B7C99),
-                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                      color: isSelected
+                          ? AppColors.titleColor
+                          : const Color(0xFF5B7C99),
+                      fontWeight: isSelected
+                          ? FontWeight.w600
+                          : FontWeight.w400,
                     ),
                   ),
                 ),
@@ -145,12 +152,12 @@ class MaleDiscoverUI extends StatelessWidget {
         decoration: InputDecoration(
           hintText: 'Search Brothers...',
           hintStyle: GoogleFonts.inter(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withValues(alpha: 0.5),
             fontSize: 13.sp,
           ),
           prefixIcon: Icon(
             Icons.search,
-            color: _roleColor.withOpacity(0.5),
+            color: _roleColor.withValues(alpha: 0.5),
             size: 20.sp,
           ),
           border: InputBorder.none,
@@ -193,8 +200,8 @@ class MaleDiscoverUI extends StatelessWidget {
           borderRadius: BorderRadius.circular(30.r),
           border: Border.all(
             color: isSelected
-                ? _roleColor.withOpacity(0.4)
-                : const Color(0xFFA6864D).withOpacity(0.3),
+                ? _roleColor.withValues(alpha: 0.4)
+                : const Color(0xFFA6864D).withValues(alpha: 0.3),
           ),
         ),
         child: Text(
@@ -219,93 +226,104 @@ class MaleDiscoverUI extends StatelessWidget {
           }
           return false;
         },
-        child: Obx(
-          () {
-            if (controller.isLoading.value && controller.filteredBrothers.isEmpty) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: _roleColor,
-                ),
-              );
-            }
+        child: Obx(() {
+          if (controller.isLoading.value &&
+              controller.filteredBrothers.isEmpty) {
+            return const Center(
+              child: CircularProgressIndicator(color: _roleColor),
+            );
+          }
 
-            if (controller.filteredBrothers.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.person_off_outlined,
-                      size: 60.sp,
-                      color: Colors.grey.shade400,
+          if (controller.filteredBrothers.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.person_off_outlined,
+                    size: 60.sp,
+                    color: Colors.grey.shade400,
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    'No Brothers Found',
+                    style: GoogleFonts.inter(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.titleColor,
                     ),
-                    SizedBox(height: 16.h),
-                    Text(
-                      'No Brothers Found',
-                      style: GoogleFonts.inter(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.titleColor,
-                      ),
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    'Try adjusting your search or filters.',
+                    style: GoogleFonts.inter(
+                      fontSize: 12.sp,
+                      color: AppColors.bodyColor,
                     ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      'Try adjusting your search or filters.',
-                      style: GoogleFonts.inter(
-                        fontSize: 12.sp,
-                        color: AppColors.bodyColor,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            return RefreshIndicator(
-              onRefresh: () => controller.fetchBrothers(),
-              color: _roleColor,
-              child: GridView.builder(
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.only(bottom: 20.h),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.65,
-                  crossAxisSpacing: 12.w,
-                  mainAxisSpacing: 12.h,
-                ),
-                itemCount: controller.filteredBrothers.length,
-                itemBuilder: (context, index) {
-                  final brother = controller.filteredBrothers[index];
-                  return BrotherCard(
-                    brother: brother,
-                    index: index,
-                    onConnectPressed: () => Get.find<MaleRequestSendController>().sendRequest(brother.id),
-                    onCancelPressed: () {
-                      print("=== CANCEL BUTTON TAPPED ===");
-                      print("  brother.id         : ${brother.id}");
-                      print("  brother.connectionId: ${brother.connectionId}");
-                      if (brother.connectionId != null) {
-                        Get.find<MaleRequestCancelController>().cancelRequest(brother.id, brother.connectionId!);
-                      } else {
-                        print("  ⚠️ connectionId is NULL! Request cannot be cancelled.");
-                        Get.snackbar("Error", "Connection ID is missing. Cannot cancel.");
-                      }
-                    },
-                    onConfirmPressed: () {
-                      if (brother.connectionId != null) {
-                        Get.find<MaleRequestAcceptController>().acceptRequest(brother.id, brother.connectionId!);
-                      } else {
-                        Get.snackbar("Error", "Connection ID is missing. Cannot confirm.");
-                      }
-                    },
-                  );
-                },
+                  ),
+                ],
               ),
             );
-          },
-        ),
+          }
+
+          return RefreshIndicator(
+            onRefresh: () => controller.fetchBrothers(),
+            color: _roleColor,
+            child: GridView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.only(bottom: 20.h),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.65,
+                crossAxisSpacing: 12.w,
+                mainAxisSpacing: 12.h,
+              ),
+              itemCount: controller.filteredBrothers.length,
+              itemBuilder: (context, index) {
+                final brother = controller.filteredBrothers[index];
+                return BrotherCard(
+                  brother: brother,
+                  index: index,
+                  onConnectPressed: () => Get.find<MaleRequestSendController>()
+                      .sendRequest(brother.id),
+                  onCancelPressed: () {
+                    print("=== CANCEL BUTTON TAPPED ===");
+                    print("  brother.id         : ${brother.id}");
+                    print("  brother.connectionId: ${brother.connectionId}");
+                    if (brother.connectionId != null) {
+                      Get.find<MaleRequestCancelController>().cancelRequest(
+                        brother.id,
+                        brother.connectionId!,
+                      );
+                    } else {
+                      print(
+                        "  ⚠️ connectionId is NULL! Request cannot be cancelled.",
+                      );
+                      Get.snackbar(
+                        "Error",
+                        "Connection ID is missing. Cannot cancel.",
+                      );
+                    }
+                  },
+                  onConfirmPressed: () {
+                    if (brother.connectionId != null) {
+                      Get.find<MaleRequestAcceptController>().acceptRequest(
+                        brother.id,
+                        brother.connectionId!,
+                      );
+                    } else {
+                      Get.snackbar(
+                        "Error",
+                        "Connection ID is missing. Cannot confirm.",
+                      );
+                    }
+                  },
+                );
+              },
+            ),
+          );
+        }),
       ),
     );
   }
 }
-

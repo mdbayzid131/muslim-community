@@ -19,16 +19,13 @@ class GroupCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (group.isJoined) {
-          Get.toNamed(
-            AppRoutes.femaleGroupDetails,
-            arguments: group,
-          );
+          Get.toNamed(AppRoutes.femaleGroupDetails, arguments: group);
         } else {
           Get.snackbar(
             "Access Denied",
             "Please join the group first to see its posts and members.",
             snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.redAccent.withOpacity(0.8),
+            backgroundColor: Colors.redAccent.withValues(alpha: 0.8),
             colorText: Colors.white,
           );
         }
@@ -41,7 +38,7 @@ class GroupCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
@@ -98,7 +95,7 @@ class GroupCard extends StatelessWidget {
               group.description,
               style: GoogleFonts.inter(
                 fontSize: 13.sp,
-                color: AppColors.titleColor.withOpacity(0.8),
+                color: AppColors.titleColor.withValues(alpha: 0.8),
                 height: 1.4,
               ),
               maxLines: 2,

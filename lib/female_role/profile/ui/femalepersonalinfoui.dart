@@ -32,13 +32,17 @@ class FemalePersonalInfoUI extends StatelessWidget {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 5,
                     offset: const Offset(0, 2),
                   ),
                 ],
               ),
-              child: Icon(Icons.arrow_back_ios_new, color: AppColors.titleColor, size: 16.sp),
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: AppColors.titleColor,
+                size: 16.sp,
+              ),
             ),
           ),
         ),
@@ -54,7 +58,9 @@ class FemalePersonalInfoUI extends StatelessWidget {
       ),
       body: Obx(() {
         if (controller.isFetchingProfile.value) {
-          return const Center(child: CircularProgressIndicator(color: AppColors.femaleColor));
+          return const Center(
+            child: CircularProgressIndicator(color: AppColors.femaleColor),
+          );
         }
         return SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -64,144 +70,185 @@ class FemalePersonalInfoUI extends StatelessWidget {
               Center(
                 child: Column(
                   children: [
-                    Obx(() => Stack(
-                      children: [
-                        Container(
-                          width: 100.w,
-                          height: 100.w,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 4),
-                            image: controller.selectedProfileImage.value != null 
-                              ? DecorationImage(
-                                  image: FileImage(controller.selectedProfileImage.value!),
-                                  fit: BoxFit.cover,
-                                )
-                              : userCtrl.userProfileImage.value.isNotEmpty
-                                ? DecorationImage(
-                                    image: NetworkImage(userCtrl.userProfileImage.value),
-                                    fit: BoxFit.cover,
-                                  )
-                                : const DecorationImage(
-                                    image: AssetImage('assets/image/female.png'),
-                                    fit: BoxFit.cover,
-                                  ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 10,
-                                offset: const Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 5,
-                          right: 5,
-                          child: Container(
-                            padding: EdgeInsets.all(2.w),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
+                    Obx(
+                      () => Stack(
+                        children: [
+                          Container(
+                            width: 100.w,
+                            height: 100.w,
+                            decoration: BoxDecoration(
                               shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white, width: 4),
+                              image:
+                                  controller.selectedProfileImage.value != null
+                                  ? DecorationImage(
+                                      image: FileImage(
+                                        controller.selectedProfileImage.value!,
+                                      ),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : userCtrl.userProfileImage.value.isNotEmpty
+                                  ? DecorationImage(
+                                      image: NetworkImage(
+                                        userCtrl.userProfileImage.value,
+                                      ),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : const DecorationImage(
+                                      image: AssetImage(
+                                        'assets/image/female.png',
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 5),
+                                ),
+                              ],
                             ),
+                          ),
+                          Positioned(
+                            bottom: 5,
+                            right: 5,
                             child: Container(
-                              padding: EdgeInsets.all(4.w),
+                              padding: EdgeInsets.all(2.w),
                               decoration: const BoxDecoration(
-                                color: AppColors.femaleColor,
+                                color: Colors.white,
                                 shape: BoxShape.circle,
                               ),
-                              child: Icon(Icons.check, color: Colors.white, size: 10.sp),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )),
-                    SizedBox(height: 15.h),
-                    Obx(() => controller.isEditingPersonalDetails.value 
-                      ? SizedBox(
-                          width: 200.w,
-                          child: TextField(
-                            controller: controller.nameCtrl,
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.titleColor,
-                            ),
-                            decoration: const InputDecoration(
-                              isDense: true,
-                              contentPadding: EdgeInsets.zero,
-                            ),
-                          ),
-                        )
-                      : Text(
-                          "Sister ${controller.nameCtrl.text.split(' ').first}",
-                          style: GoogleFonts.playfairDisplay(
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.titleColor,
-                          ),
-                      )),
-                  SizedBox(height: 5.h),
-                  Obx(() => Text(
-                    controller.joinedAgo.value,
-                    style: GoogleFonts.inter(
-                      fontSize: 13.sp,
-                      color: AppColors.bodyColor,
-                    ),
-                  )),
-                  SizedBox(height: 15.h),
-                    GestureDetector(
-                      onTap: () => controller.pickImage(),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20.r),
-                        border: Border.all(color: Colors.grey.withOpacity(0.2)),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.camera_alt_outlined, color: AppColors.femaleColor, size: 14.sp),
-                          SizedBox(width: 8.w),
-                          Text(
-                            controller.selectedProfileImage.value != null ? "Change Photo" : "Edit Photo",
-                            style: GoogleFonts.inter(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.titleColor,
+                              child: Container(
+                                padding: EdgeInsets.all(4.w),
+                                decoration: const BoxDecoration(
+                                  color: AppColors.femaleColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                  size: 10.sp,
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                  Obx(() => controller.selectedProfileImage.value != null 
-                    ? Padding(
-                        padding: EdgeInsets.only(top: 10.h),
-                        child: GestureDetector(
-                          onTap: () => controller.saveAll(),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
-                            decoration: BoxDecoration(
-                              color: AppColors.femaleColor,
-                              borderRadius: BorderRadius.circular(20.r),
-                            ),
-                            child: controller.isLoading.value 
-                              ? SizedBox(width: 14.sp, height: 14.sp, child: const CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-                              : Text(
-                                  "Save Photo",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                    SizedBox(height: 15.h),
+                    Obx(
+                      () => controller.isEditingPersonalDetails.value
+                          ? SizedBox(
+                              width: 200.w,
+                              child: TextField(
+                                controller: controller.nameCtrl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.playfairDisplay(
+                                  fontSize: 24.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.titleColor,
                                 ),
+                                decoration: const InputDecoration(
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.zero,
+                                ),
+                              ),
+                            )
+                          : Text(
+                              "Sister ${controller.nameCtrl.text.split(' ').first}",
+                              style: GoogleFonts.playfairDisplay(
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.titleColor,
+                              ),
+                            ),
+                    ),
+                    SizedBox(height: 5.h),
+                    Obx(
+                      () => Text(
+                        controller.joinedAgo.value,
+                        style: GoogleFonts.inter(
+                          fontSize: 13.sp,
+                          color: AppColors.bodyColor,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 15.h),
+                    GestureDetector(
+                      onTap: () => controller.pickImage(),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 6.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20.r),
+                          border: Border.all(
+                            color: Colors.grey.withValues(alpha: 0.2),
                           ),
                         ),
-                      )
-                    : const SizedBox.shrink()),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.camera_alt_outlined,
+                              color: AppColors.femaleColor,
+                              size: 14.sp,
+                            ),
+                            SizedBox(width: 8.w),
+                            Text(
+                              controller.selectedProfileImage.value != null
+                                  ? "Change Photo"
+                                  : "Edit Photo",
+                              style: GoogleFonts.inter(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.titleColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Obx(
+                      () => controller.selectedProfileImage.value != null
+                          ? Padding(
+                              padding: EdgeInsets.only(top: 10.h),
+                              child: GestureDetector(
+                                onTap: () => controller.saveAll(),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w,
+                                    vertical: 6.h,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.femaleColor,
+                                    borderRadius: BorderRadius.circular(20.r),
+                                  ),
+                                  child: controller.isLoading.value
+                                      ? SizedBox(
+                                          width: 14.sp,
+                                          height: 14.sp,
+                                          child:
+                                              const CircularProgressIndicator(
+                                                color: Colors.white,
+                                                strokeWidth: 2,
+                                              ),
+                                        )
+                                      : Text(
+                                          "Save Photo",
+                                          style: GoogleFonts.inter(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                    ),
                   ],
                 ),
               ),
@@ -213,17 +260,23 @@ class FemalePersonalInfoUI extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15.r),
-                  border: Border.all(color: AppColors.femaleColor.withOpacity(0.3)),
+                  border: Border.all(
+                    color: AppColors.femaleColor.withValues(alpha: 0.3),
+                  ),
                 ),
                 child: Row(
                   children: [
                     Container(
                       padding: EdgeInsets.all(8.w),
                       decoration: BoxDecoration(
-                        color: AppColors.goldColor.withOpacity(0.1),
+                        color: AppColors.goldColor.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.shield_outlined, color: AppColors.goldColor, size: 20.sp),
+                      child: Icon(
+                        Icons.shield_outlined,
+                        color: AppColors.goldColor,
+                        size: 20.sp,
+                      ),
                     ),
                     SizedBox(width: 15.w),
                     Column(
@@ -240,14 +293,18 @@ class FemalePersonalInfoUI extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: 5.w),
-                            Icon(Icons.check_circle, color: Colors.green, size: 14.sp),
+                            Icon(
+                              Icons.check_circle,
+                              color: Colors.green,
+                              size: 14.sp,
+                            ),
                           ],
                         ),
                         Text(
                           "Verified on Oct 12, 2023",
                           style: GoogleFonts.inter(
                             fontSize: 12.sp,
-                            color: AppColors.bodyColor.withOpacity(0.7),
+                            color: AppColors.bodyColor.withValues(alpha: 0.7),
                           ),
                         ),
                       ],
@@ -258,53 +315,93 @@ class FemalePersonalInfoUI extends StatelessWidget {
               SizedBox(height: 20.h),
 
               // Personal Details Card
-              Obx(() => _buildSectionCard(
-                title: "Personal Details",
-                isEditingSection: controller.isEditingPersonalDetails.value,
-                onEditTap: () => controller.isEditingPersonalDetails.value = true,
-                onSaveTap: () => controller.saveAll(),
-                themeColor: AppColors.femaleColor,
-                children: [
-                  _buildDetailRow("Full Name", controller.nameCtrl, controller.isEditingPersonalDetails.value, AppColors.femaleColor),
-                  _buildStaticRow("Age", controller.ageCtrl.text, icon: Icons.lock_outline),
-                  _buildStaticRow("Gender", "Sister", icon: Icons.lock_outline),
-                  _buildStaticRow("Location", controller.locationCtrl.text, icon: Icons.lock_outline),
-                  _buildStaticRow("How long Muslim?", controller.durationCtrl.text, icon: Icons.lock_outline),
-                  _buildStaticRow("Email", controller.emailCtrl.text, icon: Icons.lock_outline),
-                ],
-              )),
+              Obx(
+                () => _buildSectionCard(
+                  title: "Personal Details",
+                  isEditingSection: controller.isEditingPersonalDetails.value,
+                  onEditTap: () =>
+                      controller.isEditingPersonalDetails.value = true,
+                  onSaveTap: () => controller.saveAll(),
+                  themeColor: AppColors.femaleColor,
+                  children: [
+                    _buildDetailRow(
+                      "Full Name",
+                      controller.nameCtrl,
+                      controller.isEditingPersonalDetails.value,
+                      AppColors.femaleColor,
+                    ),
+                    _buildStaticRow(
+                      "Age",
+                      controller.ageCtrl.text,
+                      icon: Icons.lock_outline,
+                    ),
+                    _buildStaticRow(
+                      "Gender",
+                      "Sister",
+                      icon: Icons.lock_outline,
+                    ),
+                    _buildStaticRow(
+                      "Location",
+                      controller.locationCtrl.text,
+                      icon: Icons.lock_outline,
+                    ),
+                    _buildStaticRow(
+                      "How long Muslim?",
+                      controller.durationCtrl.text,
+                      icon: Icons.lock_outline,
+                    ),
+                    _buildStaticRow(
+                      "Email",
+                      controller.emailCtrl.text,
+                      icon: Icons.lock_outline,
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: 20.h),
 
               // About Me Card
-              Obx(() => _buildSectionCard(
-                title: "About Me",
-                isEditingSection: controller.isEditingAboutMe.value,
-                onEditTap: () => controller.isEditingAboutMe.value = true,
-                onSaveTap: () => controller.saveAll(),
-                themeColor: AppColors.femaleColor,
-                children: [
-                  _buildEditableTextArea(controller.aboutCtrl, controller.isEditingAboutMe.value, AppColors.femaleColor),
-                ],
-              )),
+              Obx(
+                () => _buildSectionCard(
+                  title: "About Me",
+                  isEditingSection: controller.isEditingAboutMe.value,
+                  onEditTap: () => controller.isEditingAboutMe.value = true,
+                  onSaveTap: () => controller.saveAll(),
+                  themeColor: AppColors.femaleColor,
+                  children: [
+                    _buildEditableTextArea(
+                      controller.aboutCtrl,
+                      controller.isEditingAboutMe.value,
+                      AppColors.femaleColor,
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: 20.h),
 
               // My Revert Story Card
-              Obx(() => _buildSectionCard(
-                title: "My Revert Story",
-                isEditingSection: controller.isEditingStory.value,
-                onEditTap: () => controller.isEditingStory.value = true,
-                onSaveTap: () => controller.saveAll(),
-                themeColor: AppColors.femaleColor,
-                children: [
-                  _buildEditableTextArea(controller.storyCtrl, controller.isEditingStory.value, AppColors.femaleColor),
-                ],
-              )),
+              Obx(
+                () => _buildSectionCard(
+                  title: "My Revert Story",
+                  isEditingSection: controller.isEditingStory.value,
+                  onEditTap: () => controller.isEditingStory.value = true,
+                  onSaveTap: () => controller.saveAll(),
+                  themeColor: AppColors.femaleColor,
+                  children: [
+                    _buildEditableTextArea(
+                      controller.storyCtrl,
+                      controller.isEditingStory.value,
+                      AppColors.femaleColor,
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: 20.h),
 
               // Interests Card
               Obx(() => _buildInterestsSection(controller)),
               SizedBox(height: 30.h),
-              
+
               // Global Save Button removed as requested
               const SizedBox.shrink(),
               SizedBox(height: 30.h),
@@ -347,7 +444,10 @@ class FemalePersonalInfoUI extends StatelessWidget {
                 GestureDetector(
                   onTap: onSaveTap,
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 4.h,
+                    ),
                     decoration: BoxDecoration(
                       color: themeColor,
                       borderRadius: BorderRadius.circular(10.r),
@@ -365,7 +465,11 @@ class FemalePersonalInfoUI extends StatelessWidget {
               else
                 GestureDetector(
                   onTap: onEditTap,
-                  child: Icon(Icons.edit_square, color: themeColor.withOpacity(0.5), size: 18.sp),
+                  child: Icon(
+                    Icons.edit_square,
+                    color: themeColor.withValues(alpha: 0.5),
+                    size: 18.sp,
+                  ),
                 ),
             ],
           ),
@@ -376,7 +480,12 @@ class FemalePersonalInfoUI extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailRow(String label, TextEditingController controller, bool isEditingSection, Color themeColor) {
+  Widget _buildDetailRow(
+    String label,
+    TextEditingController controller,
+    bool isEditingSection,
+    Color themeColor,
+  ) {
     return Padding(
       padding: EdgeInsets.only(bottom: 15.h),
       child: Row(
@@ -386,38 +495,47 @@ class FemalePersonalInfoUI extends StatelessWidget {
             label,
             style: GoogleFonts.inter(
               fontSize: 13.sp,
-              color: AppColors.bodyColor.withOpacity(0.8),
+              color: AppColors.bodyColor.withValues(alpha: 0.8),
             ),
           ),
-          isEditingSection 
-            ? Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 20.w),
-                  child: TextField(
-                    controller: controller,
-                    textAlign: TextAlign.right,
-                    style: GoogleFonts.inter(
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.titleColor,
-                    ),
-                    decoration: InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-                      enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: themeColor.withOpacity(0.3))),
-                      focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: themeColor)),
+          isEditingSection
+              ? Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20.w),
+                    child: TextField(
+                      controller: controller,
+                      textAlign: TextAlign.right,
+                      style: GoogleFonts.inter(
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.titleColor,
+                      ),
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 5.w,
+                          vertical: 2.h,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: themeColor.withValues(alpha: 0.3),
+                          ),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: themeColor),
+                        ),
+                      ),
                     ),
                   ),
+                )
+              : Text(
+                  controller.text,
+                  style: GoogleFonts.inter(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.titleColor,
+                  ),
                 ),
-              )
-            : Text(
-                controller.text,
-                style: GoogleFonts.inter(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.titleColor,
-                ),
-              ),
         ],
       ),
     );
@@ -433,7 +551,7 @@ class FemalePersonalInfoUI extends StatelessWidget {
             label,
             style: GoogleFonts.inter(
               fontSize: 13.sp,
-              color: AppColors.bodyColor.withOpacity(0.8),
+              color: AppColors.bodyColor.withValues(alpha: 0.8),
             ),
           ),
           Row(
@@ -457,34 +575,40 @@ class FemalePersonalInfoUI extends StatelessWidget {
     );
   }
 
-  Widget _buildEditableTextArea(TextEditingController controller, bool isEditingSection, Color themeColor) {
+  Widget _buildEditableTextArea(
+    TextEditingController controller,
+    bool isEditingSection,
+    Color themeColor,
+  ) {
     return isEditingSection
-      ? TextField(
-          controller: controller,
-          maxLines: null,
-          style: GoogleFonts.inter(
-            fontSize: 13.sp,
-            color: AppColors.bodyColor,
-            height: 1.5,
-          ),
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.r),
-              borderSide: BorderSide(color: themeColor.withOpacity(0.5)),
+        ? TextField(
+            controller: controller,
+            maxLines: null,
+            style: GoogleFonts.inter(
+              fontSize: 13.sp,
+              color: AppColors.bodyColor,
+              height: 1.5,
             ),
-            contentPadding: EdgeInsets.all(10.w),
-          ),
-        )
-      : Text(
-          controller.text,
-          style: GoogleFonts.inter(
-            fontSize: 13.sp,
-            color: AppColors.bodyColor,
-            height: 1.5,
-          ),
-        );
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.r),
+                borderSide: BorderSide(
+                  color: themeColor.withValues(alpha: 0.5),
+                ),
+              ),
+              contentPadding: EdgeInsets.all(10.w),
+            ),
+          )
+        : Text(
+            controller.text,
+            style: GoogleFonts.inter(
+              fontSize: 13.sp,
+              color: AppColors.bodyColor,
+              height: 1.5,
+            ),
+          );
   }
 
   Widget _buildInterestsSection(FemalePersonalInfoController controller) {
@@ -516,7 +640,10 @@ class FemalePersonalInfoUI extends StatelessWidget {
                     GestureDetector(
                       onTap: () => controller.isEditingInterests.value = false,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                          vertical: 4.h,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.femaleColor,
                           borderRadius: BorderRadius.circular(10.r),
@@ -535,9 +662,13 @@ class FemalePersonalInfoUI extends StatelessWidget {
                     SizedBox(width: 10.w),
                     GestureDetector(
                       onTap: () => controller.isEditingInterests.value = true,
-                      child: Icon(Icons.edit_square, color: AppColors.femaleColor.withOpacity(0.5), size: 18.sp),
+                      child: Icon(
+                        Icons.edit_square,
+                        color: AppColors.femaleColor.withValues(alpha: 0.5),
+                        size: 18.sp,
+                      ),
                     ),
-                  ]
+                  ],
                 ],
               ),
               if (isEditing)
@@ -555,23 +686,32 @@ class FemalePersonalInfoUI extends StatelessWidget {
             spacing: 10.w,
             runSpacing: 10.h,
             children: [
-              ...controller.interestsList.map((t) => _buildInterestTag(t, isEditing, controller)),
+              ...controller.interestsList.map(
+                (t) => _buildInterestTag(t, isEditing, controller),
+              ),
               if (isEditing && controller.interestsList.length < 10)
                 GestureDetector(
                   onTap: () => _showAddInterestDialog(controller),
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 8.h,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.transparent,
                       borderRadius: BorderRadius.circular(20.r),
                       border: Border.all(
-                        color: AppColors.bodyColor.withOpacity(0.3),
+                        color: AppColors.bodyColor.withValues(alpha: 0.3),
                       ),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.add, color: AppColors.bodyColor, size: 14.sp),
+                        Icon(
+                          Icons.add,
+                          color: AppColors.bodyColor,
+                          size: 14.sp,
+                        ),
                         SizedBox(width: 5.w),
                         Text(
                           "Add Interest",
@@ -584,7 +724,7 @@ class FemalePersonalInfoUI extends StatelessWidget {
                       ],
                     ),
                   ),
-                )
+                ),
             ],
           ),
         ],
@@ -592,13 +732,17 @@ class FemalePersonalInfoUI extends StatelessWidget {
     );
   }
 
-  Widget _buildInterestTag(String text, bool isEditing, FemalePersonalInfoController controller) {
+  Widget _buildInterestTag(
+    String text,
+    bool isEditing,
+    FemalePersonalInfoController controller,
+  ) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: AppColors.femaleColor.withOpacity(0.1),
+        color: AppColors.femaleColor.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: AppColors.femaleColor.withOpacity(0.3)),
+        border: Border.all(color: AppColors.femaleColor.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -618,13 +762,17 @@ class FemalePersonalInfoUI extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(2.w),
                 decoration: BoxDecoration(
-                  color: AppColors.femaleColor.withOpacity(0.2),
+                  color: AppColors.femaleColor.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.close, color: AppColors.femaleColor, size: 10.sp),
+                child: Icon(
+                  Icons.close,
+                  color: AppColors.femaleColor,
+                  size: 10.sp,
+                ),
               ),
             ),
-          ]
+          ],
         ],
       ),
     );
@@ -635,13 +783,20 @@ class FemalePersonalInfoUI extends StatelessWidget {
     Get.dialog(
       AlertDialog(
         backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
-        title: Text("Add Interest", style: GoogleFonts.inter(fontWeight: FontWeight.bold)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.r),
+        ),
+        title: Text(
+          "Add Interest",
+          style: GoogleFonts.inter(fontWeight: FontWeight.bold),
+        ),
         content: TextField(
           controller: newInterestCtrl,
           decoration: InputDecoration(
             hintText: "e.g. Dhikr",
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.r)),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.r),
+            ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: const BorderSide(color: AppColors.femaleColor),
@@ -656,7 +811,9 @@ class FemalePersonalInfoUI extends StatelessWidget {
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.femaleColor,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r),
+              ),
             ),
             onPressed: () {
               if (newInterestCtrl.text.trim().isNotEmpty) {
@@ -664,7 +821,13 @@ class FemalePersonalInfoUI extends StatelessWidget {
               }
               Get.back();
             },
-            child: Text("Add", style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold)),
+            child: Text(
+              "Add",
+              style: GoogleFonts.inter(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),

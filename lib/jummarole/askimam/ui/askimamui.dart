@@ -35,116 +35,128 @@ class _AskImamUIState extends State<AskImamUI> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-            // High-Fidelity Header
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.only(top: 80.h, bottom: 60.h),
-              decoration: BoxDecoration(
-                color: AppColors.jummaColor,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(50.r),
-                  bottomRight: Radius.circular(50.r),
+              // High-Fidelity Header
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(top: 80.h, bottom: 60.h),
+                decoration: BoxDecoration(
+                  color: AppColors.jummaColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(50.r),
+                    bottomRight: Radius.circular(50.r),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.jummaColor.withValues(alpha: 0.2),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.jummaColor.withOpacity(0.2),
-                    blurRadius: 20,
-                    offset: const Offset(0, 10),
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Text(
-                  'Ask Imam',
-                  style: GoogleFonts.playfairDisplay(
-                    fontSize: 48.sp,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white,
-                    letterSpacing: -0.5,
+                child: Center(
+                  child: Text(
+                    'Ask Imam',
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 48.sp,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      letterSpacing: -0.5,
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            SizedBox(height: 30.h),
+              SizedBox(height: 30.h),
 
-            // Refined Tab Switcher
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 24.w),
-              padding: EdgeInsets.all(8.w),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.04),
-                    blurRadius: 20,
-                    offset: const Offset(0, 10),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => setState(() => isAskTab = true),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        padding: EdgeInsets.symmetric(vertical: 14.h),
-                        decoration: BoxDecoration(
-                          color: isAskTab ? AppColors.jummaColor : Colors.transparent,
-                          borderRadius: BorderRadius.circular(15.r),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Ask Imam',
-                            style: GoogleFonts.inter(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.bold,
-                              color: isAskTab ? Colors.white : AppColors.jummaColor.withOpacity(0.5),
+              // Refined Tab Switcher
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 24.w),
+                padding: EdgeInsets.all(8.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.04),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => setState(() => isAskTab = true),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          padding: EdgeInsets.symmetric(vertical: 14.h),
+                          decoration: BoxDecoration(
+                            color: isAskTab
+                                ? AppColors.jummaColor
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(15.r),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Ask Imam',
+                              style: GoogleFonts.inter(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.bold,
+                                color: isAskTab
+                                    ? Colors.white
+                                    : AppColors.jummaColor.withValues(
+                                        alpha: 0.5,
+                                      ),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () => setState(() => isAskTab = false),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        padding: EdgeInsets.symmetric(vertical: 14.h),
-                        decoration: BoxDecoration(
-                          color: !isAskTab ? AppColors.jummaColor : Colors.transparent,
-                          borderRadius: BorderRadius.circular(15.r),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Answered',
-                            style: GoogleFonts.inter(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.bold,
-                              color: !isAskTab ? Colors.white : AppColors.jummaColor.withOpacity(0.5),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => setState(() => isAskTab = false),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          padding: EdgeInsets.symmetric(vertical: 14.h),
+                          decoration: BoxDecoration(
+                            color: !isAskTab
+                                ? AppColors.jummaColor
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(15.r),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Answered',
+                              style: GoogleFonts.inter(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.bold,
+                                color: !isAskTab
+                                    ? Colors.white
+                                    : AppColors.jummaColor.withValues(
+                                        alpha: 0.5,
+                                      ),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
 
-            SizedBox(height: 40.h),
+              SizedBox(height: 40.h),
 
-            // Content Section
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              child: isAskTab ? _buildAskForm() : _buildAnsweredList(),
-            ),
-          ],
+              // Content Section
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: isAskTab ? _buildAskForm() : _buildAnsweredList(),
+              ),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -167,23 +179,31 @@ class _AskImamUIState extends State<AskImamUI> {
           TextField(
             controller: _controller.questionController,
             maxLines: 8,
-            style:
-                GoogleFonts.inter(fontSize: 16.sp, color: AppColors.titleColor),
+            style: GoogleFonts.inter(
+              fontSize: 16.sp,
+              color: AppColors.titleColor,
+            ),
             decoration: InputDecoration(
               hintText: 'Type your question here...',
-              hintStyle:
-                  GoogleFonts.inter(color: AppColors.greyColor, fontSize: 16.sp),
+              hintStyle: GoogleFonts.inter(
+                color: AppColors.greyColor,
+                fontSize: 16.sp,
+              ),
               filled: true,
               fillColor: Colors.white,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25.r),
-                borderSide:
-                    const BorderSide(color: AppColors.goldColor, width: 1.2),
+                borderSide: const BorderSide(
+                  color: AppColors.goldColor,
+                  width: 1.2,
+                ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25.r),
-                borderSide:
-                    const BorderSide(color: AppColors.jummaColor, width: 2),
+                borderSide: const BorderSide(
+                  color: AppColors.jummaColor,
+                  width: 2,
+                ),
               ),
               contentPadding: EdgeInsets.all(24.w),
             ),
@@ -192,43 +212,51 @@ class _AskImamUIState extends State<AskImamUI> {
           SizedBox(
             width: double.infinity,
             height: 70.h,
-            child: Obx(() => ElevatedButton(
-                  onPressed: _controller.isSubmitting.value
-                      ? null
-                      : () async {
-                          final success = await _controller
-                              .submitQuestion(_controller.questionController.text);
-                          if (success) {
-                            _controller.questionController.clear();
-                            Get.to(() => const SubmissionSuccessUI(),
-                                transition: Transition.fadeIn);
-                          }
-                        },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.jummaColor,
-                    shape: const StadiumBorder(),
-                    elevation: 10,
-                    shadowColor: AppColors.jummaColor.withOpacity(0.3),
-                  ),
-                  child: _controller.isSubmitting.value
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.send_rounded,
-                                color: Colors.white, size: 22.sp),
-                            SizedBox(width: 14.w),
-                            Text(
-                              'Submit Question',
-                              style: GoogleFonts.inter(
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w800,
-                                color: Colors.white,
-                              ),
+            child: Obx(
+              () => ElevatedButton(
+                onPressed: _controller.isSubmitting.value
+                    ? null
+                    : () async {
+                        final success = await _controller.submitQuestion(
+                          _controller.questionController.text,
+                        );
+                        if (success) {
+                          _controller.questionController.clear();
+                          Get.to(
+                            () => const SubmissionSuccessUI(),
+                            transition: Transition.fadeIn,
+                          );
+                        }
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.jummaColor,
+                  shape: const StadiumBorder(),
+                  elevation: 10,
+                  shadowColor: AppColors.jummaColor.withValues(alpha: 0.3),
+                ),
+                child: _controller.isSubmitting.value
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.send_rounded,
+                            color: Colors.white,
+                            size: 22.sp,
+                          ),
+                          SizedBox(width: 14.w),
+                          Text(
+                            'Submit Question',
+                            style: GoogleFonts.inter(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
                             ),
-                          ],
-                        ),
-                )),
+                          ),
+                        ],
+                      ),
+              ),
+            ),
           ),
           SizedBox(height: 50.h),
           Center(
@@ -262,8 +290,11 @@ class _AskImamUIState extends State<AskImamUI> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.question_answer_outlined,
-                  size: 64.sp, color: Colors.grey.shade300),
+              Icon(
+                Icons.question_answer_outlined,
+                size: 64.sp,
+                color: Colors.grey.shade300,
+              ),
               SizedBox(height: 20.h),
               Text(
                 'No questions yet',
@@ -297,7 +328,7 @@ class _AskImamUIState extends State<AskImamUI> {
                     borderRadius: BorderRadius.circular(25.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.02),
+                        color: Colors.black.withValues(alpha: 0.02),
                         blurRadius: 10,
                         offset: const Offset(0, 5),
                       ),
@@ -311,25 +342,31 @@ class _AskImamUIState extends State<AskImamUI> {
                         children: [
                           Row(
                             children: [
-                              const Icon(Icons.access_time_rounded,
-                                  size: 14, color: Colors.grey),
+                              const Icon(
+                                Icons.access_time_rounded,
+                                size: 14,
+                                color: Colors.grey,
+                              ),
                               SizedBox(width: 8.w),
                               Text(
                                 'Submitted ${DateFormat('MMM dd, yyyy').format(question.createdAt)}',
                                 style: GoogleFonts.inter(
-                                    fontSize: 12.sp,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w500),
+                                  fontSize: 12.sp,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ],
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 10.w, vertical: 4.h),
+                              horizontal: 10.w,
+                              vertical: 4.h,
+                            ),
                             decoration: BoxDecoration(
                               color: question.status == 'answered'
-                                  ? Colors.green.withOpacity(0.1)
-                                  : Colors.orange.withOpacity(0.1),
+                                  ? Colors.green.withValues(alpha: 0.1)
+                                  : Colors.orange.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(10.r),
                             ),
                             child: Text(
@@ -368,8 +405,8 @@ class _AskImamUIState extends State<AskImamUI> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          AppColors.jummaColor.withOpacity(0.4),
-                          AppColors.jummaColor.withOpacity(0.1)
+                          AppColors.jummaColor.withValues(alpha: 0.4),
+                          AppColors.jummaColor.withValues(alpha: 0.1),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -393,8 +430,11 @@ class _AskImamUIState extends State<AskImamUI> {
                                   color: AppColors.jummaColor,
                                   borderRadius: BorderRadius.circular(12.r),
                                 ),
-                                child: const Icon(Icons.auto_awesome_rounded,
-                                    color: Colors.white, size: 18),
+                                child: const Icon(
+                                  Icons.auto_awesome_rounded,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
                               ),
                               SizedBox(width: 16.w),
                               Column(
@@ -411,9 +451,10 @@ class _AskImamUIState extends State<AskImamUI> {
                                   Text(
                                     'Answered ${DateFormat('MMM dd').format(question.answers.first.createdAt)}',
                                     style: GoogleFonts.inter(
-                                        fontSize: 12.sp,
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.w500),
+                                      fontSize: 12.sp,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ],
                               ),

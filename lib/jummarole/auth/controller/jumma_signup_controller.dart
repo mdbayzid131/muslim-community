@@ -42,7 +42,7 @@ class JummaSignupController extends GetxController {
       Get.snackbar(
         'Required Fields',
         'Please fill all fields',
-        backgroundColor: Colors.orange.withOpacity(0.8),
+        backgroundColor: Colors.orange.withValues(alpha: 0.8),
         colorText: Colors.white,
       );
       return;
@@ -52,7 +52,7 @@ class JummaSignupController extends GetxController {
       Get.snackbar(
         'Consent Required',
         'You must agree to the Terms of Service & Privacy Policy and consent to religious data processing to create an account.',
-        backgroundColor: Colors.orange.withOpacity(0.8),
+        backgroundColor: Colors.orange.withValues(alpha: 0.8),
         colorText: Colors.white,
       );
       return;

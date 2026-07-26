@@ -39,19 +39,19 @@ class JummaProfileUI extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 40.h),
-              
+
               // ACCOUNT Section
               Text(
                 "ACCOUNT",
                 style: GoogleFonts.inter(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.bodyColor.withOpacity(0.7),
+                  color: AppColors.bodyColor.withValues(alpha: 0.7),
                   letterSpacing: 1.2,
                 ),
               ),
               SizedBox(height: 15.h),
-              
+
               // Account Card
               Container(
                 decoration: BoxDecoration(
@@ -59,7 +59,7 @@ class JummaProfileUI extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.02),
+                      color: Colors.black.withValues(alpha: 0.02),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -73,21 +73,39 @@ class JummaProfileUI extends StatelessWidget {
                       onTap: () => Get.to(() => const JummaPersonalInfoUI()),
                       themeColor: AppColors.jummaColor,
                     ),
-                    Divider(height: 1, thickness: 1, color: Colors.grey.withOpacity(0.1), indent: 20.w, endIndent: 20.w),
+                    Divider(
+                      height: 1,
+                      thickness: 1,
+                      color: Colors.grey.withValues(alpha: 0.1),
+                      indent: 20.w,
+                      endIndent: 20.w,
+                    ),
                     _buildAccountOption(
                       icon: Icons.lock_outline,
                       title: "Change Password",
                       onTap: () => Get.to(() => const JummaChangePasswordUI()),
                       themeColor: AppColors.jummaColor,
                     ),
-                    Divider(height: 1, thickness: 1, color: Colors.grey.withOpacity(0.1), indent: 20.w, endIndent: 20.w),
+                    Divider(
+                      height: 1,
+                      thickness: 1,
+                      color: Colors.grey.withValues(alpha: 0.1),
+                      indent: 20.w,
+                      endIndent: 20.w,
+                    ),
                     _buildAccountOption(
                       icon: Icons.shield_outlined,
                       title: "Privacy Policy",
                       onTap: () => Get.to(() => const JummaPrivacyPolicyUI()),
                       themeColor: AppColors.jummaColor,
                     ),
-                    Divider(height: 1, thickness: 1, color: Colors.grey.withOpacity(0.1), indent: 20.w, endIndent: 20.w),
+                    Divider(
+                      height: 1,
+                      thickness: 1,
+                      color: Colors.grey.withValues(alpha: 0.1),
+                      indent: 20.w,
+                      endIndent: 20.w,
+                    ),
                     _buildAccountOption(
                       icon: Icons.description_outlined,
                       title: "Terms and Conditions",
@@ -97,9 +115,9 @@ class JummaProfileUI extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               SizedBox(height: 40.h),
-              
+
               // Log Out Button
               GestureDetector(
                 onTap: () => _showLogoutDialog(context),
@@ -109,12 +127,18 @@ class JummaProfileUI extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15.r),
-                    border: Border.all(color: Colors.grey.withOpacity(0.2)),
+                    border: Border.all(
+                      color: Colors.grey.withValues(alpha: 0.2),
+                    ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.logout_rounded, color: AppColors.titleColor, size: 20.sp),
+                      Icon(
+                        Icons.logout_rounded,
+                        color: AppColors.titleColor,
+                        size: 20.sp,
+                      ),
                       SizedBox(width: 10.w),
                       Text(
                         "Log Out",
@@ -128,9 +152,9 @@ class JummaProfileUI extends StatelessWidget {
                   ),
                 ),
               ),
-              
+
               SizedBox(height: 15.h),
-              
+
               // Delete Account Button
               GestureDetector(
                 onTap: () => _showDeleteAccountDialog(context),
@@ -140,12 +164,18 @@ class JummaProfileUI extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(15.r),
-                    border: Border.all(color: const Color(0xFFD18E8E).withOpacity(0.4)),
+                    border: Border.all(
+                      color: const Color(0xFFD18E8E).withValues(alpha: 0.4),
+                    ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.delete_outline_rounded, color: const Color(0xFFD18E8E), size: 20.sp),
+                      Icon(
+                        Icons.delete_outline_rounded,
+                        color: const Color(0xFFD18E8E),
+                        size: 20.sp,
+                      ),
                       SizedBox(width: 10.w),
                       Text(
                         "Delete Account",
@@ -183,7 +213,7 @@ class JummaProfileUI extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(10.w),
               decoration: BoxDecoration(
-                color: themeColor.withOpacity(0.1),
+                color: themeColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, color: themeColor, size: 20.sp),
@@ -199,7 +229,11 @@ class JummaProfileUI extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(Icons.arrow_forward_ios, color: Colors.grey.withOpacity(0.5), size: 16.sp),
+            Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.grey.withValues(alpha: 0.5),
+              size: 16.sp,
+            ),
           ],
         ),
       ),
@@ -211,7 +245,9 @@ class JummaProfileUI extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.r)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24.r),
+          ),
           backgroundColor: Colors.white,
           child: Padding(
             padding: EdgeInsets.all(24.w),
@@ -224,7 +260,11 @@ class JummaProfileUI extends StatelessWidget {
                     color: Color(0xFFF7EFE5),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(Icons.logout_rounded, color: const Color(0xFF8B6B60), size: 28.sp),
+                  child: Icon(
+                    Icons.logout_rounded,
+                    color: const Color(0xFF8B6B60),
+                    size: 28.sp,
+                  ),
                 ),
                 SizedBox(height: 20.h),
                 Text(
@@ -257,7 +297,9 @@ class JummaProfileUI extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFD49B92),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.r)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.r),
+                      ),
                       elevation: 0,
                     ),
                     child: Text(
@@ -278,7 +320,9 @@ class JummaProfileUI extends StatelessWidget {
                     onPressed: () => Get.back(),
                     style: TextButton.styleFrom(
                       backgroundColor: const Color(0xFFF7EFE5),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.r)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.r),
+                      ),
                     ),
                     child: Text(
                       "Cancel",
@@ -303,7 +347,9 @@ class JummaProfileUI extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.r)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24.r),
+          ),
           backgroundColor: Colors.white,
           child: Padding(
             padding: EdgeInsets.all(24.w),
@@ -320,7 +366,11 @@ class JummaProfileUI extends StatelessWidget {
                         color: Color(0xFFF7EFE5),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.close, color: const Color(0xFF8B6B60), size: 16.sp),
+                      child: Icon(
+                        Icons.close,
+                        color: const Color(0xFF8B6B60),
+                        size: 16.sp,
+                      ),
                     ),
                   ),
                 ),
@@ -330,7 +380,11 @@ class JummaProfileUI extends StatelessWidget {
                     color: Color(0xFFF7EFE5),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(Icons.warning_amber_rounded, color: const Color(0xFFD49B92), size: 28.sp),
+                  child: Icon(
+                    Icons.warning_amber_rounded,
+                    color: const Color(0xFFD49B92),
+                    size: 28.sp,
+                  ),
                 ),
                 SizedBox(height: 20.h),
                 Text(
@@ -363,7 +417,9 @@ class JummaProfileUI extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFD49B92),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.r)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.r),
+                      ),
                       elevation: 0,
                     ),
                     child: Text(
@@ -384,7 +440,9 @@ class JummaProfileUI extends StatelessWidget {
                     onPressed: () => Get.back(),
                     style: TextButton.styleFrom(
                       backgroundColor: const Color(0xFFF7EFE5),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.r)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.r),
+                      ),
                     ),
                     child: Text(
                       "Keep Account",

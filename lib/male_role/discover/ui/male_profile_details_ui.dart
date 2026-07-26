@@ -13,8 +13,10 @@ class MaleProfileDetailsUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MaleProfileDetailsController controller = Get.put(MaleProfileDetailsController());
-    
+    final MaleProfileDetailsController controller = Get.put(
+      MaleProfileDetailsController(),
+    );
+
     // Fetch live profile details when UI opens
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.fetchProfile(brother.id);
@@ -24,7 +26,9 @@ class MaleProfileDetailsUI extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator(color: AppColors.maleColor));
+          return const Center(
+            child: CircularProgressIndicator(color: AppColors.maleColor),
+          );
         }
 
         final liveBrother = controller.brother.value ?? brother;
@@ -76,10 +80,14 @@ class MaleProfileDetailsUI extends StatelessWidget {
           onTap: () => Get.back(),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withValues(alpha: 0.8),
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.arrow_back_ios_new, color: AppColors.titleColor, size: 18.sp),
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: AppColors.titleColor,
+              size: 18.sp,
+            ),
           ),
         ),
       ),
@@ -87,19 +95,15 @@ class MaleProfileDetailsUI extends StatelessWidget {
         background: Stack(
           fit: StackFit.expand,
           children: [
-            displayBrother.imageUrl.isNotEmpty && displayBrother.imageUrl.startsWith('http')
+            displayBrother.imageUrl.isNotEmpty &&
+                    displayBrother.imageUrl.startsWith('http')
                 ? Image.network(
                     displayBrother.imageUrl,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Image.asset(
-                      'assets/image/male.png',
-                      fit: BoxFit.cover,
-                    ),
+                    errorBuilder: (context, error, stackTrace) =>
+                        Image.asset('assets/image/male.png', fit: BoxFit.cover),
                   )
-                : Image.asset(
-                    'assets/image/male.png',
-                    fit: BoxFit.cover,
-                  ),
+                : Image.asset('assets/image/male.png', fit: BoxFit.cover),
             // Gradient to make text readable
             Container(
               decoration: BoxDecoration(
@@ -108,7 +112,7 @@ class MaleProfileDetailsUI extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Colors.black.withOpacity(0.5),
+                    Colors.black.withValues(alpha: 0.5),
                   ],
                 ),
               ),
@@ -118,9 +122,12 @@ class MaleProfileDetailsUI extends StatelessWidget {
                 bottom: 20.h,
                 right: 20.w,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 4.h,
+                  ),
                   decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.9),
+                    color: Colors.green.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: Row(
@@ -180,13 +187,19 @@ class MaleProfileDetailsUI extends StatelessWidget {
                       ),
                       if (displayBrother.isVerified) ...[
                         SizedBox(width: 8.w),
-                        Icon(Icons.verified, color: AppColors.maleColor, size: 22.sp),
+                        Icon(
+                          Icons.verified,
+                          color: AppColors.maleColor,
+                          size: 22.sp,
+                        ),
                       ],
                     ],
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    displayBrother.joinedAgo.isNotEmpty ? "Joined ${displayBrother.joinedAgo}" : "Member",
+                    displayBrother.joinedAgo.isNotEmpty
+                        ? "Joined ${displayBrother.joinedAgo}"
+                        : "Member",
                     style: GoogleFonts.inter(
                       fontSize: 14.sp,
                       color: AppColors.bodyColor,
@@ -198,12 +211,16 @@ class MaleProfileDetailsUI extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
               decoration: BoxDecoration(
-                color: AppColors.maleColor.withOpacity(0.1),
+                color: AppColors.maleColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20.r),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.location_on_outlined, color: AppColors.maleColor, size: 16.sp),
+                  Icon(
+                    Icons.location_on_outlined,
+                    color: AppColors.maleColor,
+                    size: 16.sp,
+                  ),
                   SizedBox(width: 4.w),
                   Text(
                     "${displayBrother.distance} mi",
@@ -223,9 +240,11 @@ class MaleProfileDetailsUI extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
             decoration: BoxDecoration(
-              color: AppColors.goldColor.withOpacity(0.2),
+              color: AppColors.goldColor.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(8.r),
-              border: Border.all(color: AppColors.goldColor.withOpacity(0.5)),
+              border: Border.all(
+                color: AppColors.goldColor.withValues(alpha: 0.5),
+              ),
             ),
             child: Text(
               "✨ New Revert",
@@ -261,7 +280,7 @@ class MaleProfileDetailsUI extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -290,9 +309,11 @@ class MaleProfileDetailsUI extends StatelessWidget {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           decoration: BoxDecoration(
-            color: AppColors.maleColor.withOpacity(0.1),
+            color: AppColors.maleColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20.r),
-            border: Border.all(color: AppColors.maleColor.withOpacity(0.3)),
+            border: Border.all(
+              color: AppColors.maleColor.withValues(alpha: 0.3),
+            ),
           ),
           child: Text(
             interest,
@@ -318,7 +339,9 @@ class MaleProfileDetailsUI extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {},
         style: ElevatedButton.styleFrom(
-          backgroundColor: isConnected || isRequested ? Colors.white : AppColors.maleColor,
+          backgroundColor: isConnected || isRequested
+              ? Colors.white
+              : AppColors.maleColor,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.r),
@@ -339,7 +362,9 @@ class MaleProfileDetailsUI extends StatelessWidget {
               style: GoogleFonts.inter(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
-                color: isConnected || isRequested ? AppColors.maleColor : Colors.white,
+                color: isConnected || isRequested
+                    ? AppColors.maleColor
+                    : Colors.white,
               ),
             ),
           ],

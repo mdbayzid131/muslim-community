@@ -44,7 +44,7 @@ class FemaleForgetPasswordEmailUI extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
               ),
-              
+
               SizedBox(height: 40.h),
               Text(
                 'Forget Password',
@@ -74,7 +74,7 @@ class FemaleForgetPasswordEmailUI extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontSize: 11.sp,
                     fontWeight: FontWeight.w600,
-                    color: themeColor.withOpacity(0.8),
+                    color: themeColor.withValues(alpha: 0.8),
                     letterSpacing: 1.2,
                   ),
                 ),
@@ -85,21 +85,35 @@ class FemaleForgetPasswordEmailUI extends StatelessWidget {
                 style: GoogleFonts.inter(fontSize: 14.sp),
                 decoration: InputDecoration(
                   hintText: 'Enter your email',
-                  hintStyle: GoogleFonts.inter(color: Colors.grey.shade400, fontSize: 14.sp),
-                  prefixIcon: Icon(Icons.email_outlined, color: Colors.grey.shade400, size: 20.sp),
+                  hintStyle: GoogleFonts.inter(
+                    color: Colors.grey.shade400,
+                    fontSize: 14.sp,
+                  ),
+                  prefixIcon: Icon(
+                    Icons.email_outlined,
+                    color: Colors.grey.shade400,
+                    size: 20.sp,
+                  ),
                   filled: true,
-                  fillColor: const Color(0xFFEDF4F1).withOpacity(0.6),
+                  fillColor: const Color(0xFFEDF4F1).withValues(alpha: 0.6),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.r),
                     borderSide: BorderSide.none,
                   ),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 16.h,
+                  ),
                 ),
               ),
               SizedBox(height: 15.h),
               Row(
                 children: [
-                  Icon(Icons.info_outline, color: const Color(0xFFA6864D), size: 16.sp),
+                  Icon(
+                    Icons.info_outline,
+                    color: const Color(0xFFA6864D),
+                    size: 16.sp,
+                  ),
                   SizedBox(width: 8.w),
                   Expanded(
                     child: Text(
@@ -119,51 +133,63 @@ class FemaleForgetPasswordEmailUI extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 height: 56.h,
-                child: Obx(() => ElevatedButton(
-                  onPressed: controller.isLoading.value 
-                    ? null 
-                    : () => controller.sendOtp(AppRoutes.femaleForgetPasswordOTP),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: themeColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.r),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: controller.isLoading.value
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.send, color: Colors.white, size: 18.sp),
-                          SizedBox(width: 10.w),
-                          Text(
-                            'Send OTP',
-                            style: GoogleFonts.inter(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
+                child: Obx(
+                  () => ElevatedButton(
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () => controller.sendOtp(
+                            AppRoutes.femaleForgetPasswordOTP,
                           ),
-                        ],
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: themeColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
-                )),
+                      elevation: 0,
+                    ),
+                    child: controller.isLoading.value
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.send,
+                                color: Colors.white,
+                                size: 18.sp,
+                              ),
+                              SizedBox(width: 10.w),
+                              Text(
+                                'Send OTP',
+                                style: GoogleFonts.inter(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
+                ),
               ),
 
               SizedBox(height: 40.h),
-              
+
               // Divider
               Row(
                 children: [
                   Expanded(child: Divider(color: Colors.grey.shade300)),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: Icon(Icons.nights_stay_outlined, color: Colors.grey.shade300, size: 16.sp),
+                    child: Icon(
+                      Icons.nights_stay_outlined,
+                      color: Colors.grey.shade300,
+                      size: 16.sp,
+                    ),
                   ),
                   Expanded(child: Divider(color: Colors.grey.shade300)),
                 ],
               ),
-              
+
               SizedBox(height: 30.h),
 
               // Footer

@@ -29,14 +29,17 @@ class JummaPersonalInfoUI extends StatelessWidget {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 5,
                     offset: const Offset(0, 2),
                   ),
                 ],
               ),
-              child: Icon(Icons.arrow_back_ios_new,
-                  color: AppColors.titleColor, size: 16.sp),
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: AppColors.titleColor,
+                size: 16.sp,
+              ),
             ),
           ),
         ),
@@ -78,24 +81,27 @@ class JummaPersonalInfoUI extends StatelessWidget {
                               border: Border.all(color: Colors.white, width: 4),
                               image: hasLocalImage
                                   ? DecorationImage(
-                                      image: FileImage(controller
-                                          .selectedProfileImage.value!),
+                                      image: FileImage(
+                                        controller.selectedProfileImage.value!,
+                                      ),
                                       fit: BoxFit.cover,
                                     )
                                   : hasNetworkImage
-                                      ? DecorationImage(
-                                          image: NetworkImage(controller
-                                              .profileImageUrl.value),
-                                          fit: BoxFit.cover,
-                                        )
-                                      : const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/image/male.png'),
-                                          fit: BoxFit.cover,
-                                        ),
+                                  ? DecorationImage(
+                                      image: NetworkImage(
+                                        controller.profileImageUrl.value,
+                                      ),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : const DecorationImage(
+                                      image: AssetImage(
+                                        'assets/image/male.png',
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
+                                  color: Colors.black.withValues(alpha: 0.1),
                                   blurRadius: 10,
                                   offset: const Offset(0, 5),
                                 ),
@@ -118,56 +124,67 @@ class JummaPersonalInfoUI extends StatelessWidget {
                                 color: AppColors.jummaColor,
                                 shape: BoxShape.circle,
                               ),
-                              child: Icon(Icons.check,
-                                  color: Colors.white, size: 10.sp),
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.white,
+                                size: 10.sp,
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
                     SizedBox(height: 15.h),
-                    Obx(() => controller.isEditingPersonalDetails.value
-                        ? SizedBox(
-                            width: 200.w,
-                            child: TextField(
-                              controller: controller.nameCtrl,
-                              textAlign: TextAlign.center,
+                    Obx(
+                      () => controller.isEditingPersonalDetails.value
+                          ? SizedBox(
+                              width: 200.w,
+                              child: TextField(
+                                controller: controller.nameCtrl,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.playfairDisplay(
+                                  fontSize: 24.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.titleColor,
+                                ),
+                                decoration: const InputDecoration(
+                                  isDense: true,
+                                  contentPadding: EdgeInsets.zero,
+                                ),
+                              ),
+                            )
+                          : Text(
+                              controller.nameCtrl.text,
                               style: GoogleFonts.playfairDisplay(
                                 fontSize: 24.sp,
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.titleColor,
                               ),
-                              decoration: const InputDecoration(
-                                isDense: true,
-                                contentPadding: EdgeInsets.zero,
-                              ),
                             ),
-                          )
-                        : Text(
-                            controller.nameCtrl.text,
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.titleColor,
-                            ),
-                          )),
+                    ),
                     SizedBox(height: 15.h),
                     GestureDetector(
                       onTap: () => controller.pickImage(),
                       child: Container(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 16.w, vertical: 6.h),
+                          horizontal: 16.w,
+                          vertical: 6.h,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20.r),
-                          border:
-                              Border.all(color: Colors.grey.withOpacity(0.2)),
+                          border: Border.all(
+                            color: Colors.grey.withValues(alpha: 0.2),
+                          ),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.camera_alt_outlined,
-                                color: AppColors.jummaColor, size: 14.sp),
+                            Icon(
+                              Icons.camera_alt_outlined,
+                              color: AppColors.jummaColor,
+                              size: 14.sp,
+                            ),
                             SizedBox(width: 8.w),
                             Text(
                               "Edit Photo",
@@ -192,19 +209,23 @@ class JummaPersonalInfoUI extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15.r),
-                  border:
-                      Border.all(color: AppColors.jummaColor.withOpacity(0.3)),
+                  border: Border.all(
+                    color: AppColors.jummaColor.withValues(alpha: 0.3),
+                  ),
                 ),
                 child: Row(
                   children: [
                     Container(
                       padding: EdgeInsets.all(8.w),
                       decoration: BoxDecoration(
-                        color: AppColors.goldColor.withOpacity(0.1),
+                        color: AppColors.goldColor.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.shield_outlined,
-                          color: AppColors.goldColor, size: 20.sp),
+                      child: Icon(
+                        Icons.shield_outlined,
+                        color: AppColors.goldColor,
+                        size: 20.sp,
+                      ),
                     ),
                     SizedBox(width: 15.w),
                     Column(
@@ -221,15 +242,18 @@ class JummaPersonalInfoUI extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: 5.w),
-                            Icon(Icons.check_circle,
-                                color: Colors.green, size: 14.sp),
+                            Icon(
+                              Icons.check_circle,
+                              color: Colors.green,
+                              size: 14.sp,
+                            ),
                           ],
                         ),
                         Text(
                           "Official Muslim Community Imam",
                           style: GoogleFonts.inter(
                             fontSize: 12.sp,
-                            color: AppColors.bodyColor.withOpacity(0.7),
+                            color: AppColors.bodyColor.withValues(alpha: 0.7),
                           ),
                         ),
                       ],
@@ -240,33 +264,38 @@ class JummaPersonalInfoUI extends StatelessWidget {
               SizedBox(height: 20.h),
 
               // Personal Details Card
-              Obx(() => _buildSectionCard(
-                    title: "Personal Details",
-                    isEditingSection: controller.isEditingPersonalDetails.value,
-                    isLoading: controller.isLoading.value,
-                    onEditTap: () =>
-                        controller.isEditingPersonalDetails.value = true,
-                    onSaveTap: () => controller.saveAll(),
-                    themeColor: AppColors.jummaColor,
-                    children: [
-                      _buildDetailRow(
-                          "Full Name",
-                          controller.nameCtrl,
-                          controller.isEditingPersonalDetails.value,
-                          AppColors.jummaColor),
-                      _buildDetailRow(
-                          "Age",
-                          controller.ageCtrl,
-                          false, // Age not editable
-                          AppColors.jummaColor),
-                      _buildDetailRow(
-                          "Email",
-                          controller.emailCtrl,
-                          false, // Email not editable
-                          AppColors.jummaColor,
-                          isLocked: true),
-                    ],
-                  )),
+              Obx(
+                () => _buildSectionCard(
+                  title: "Personal Details",
+                  isEditingSection: controller.isEditingPersonalDetails.value,
+                  isLoading: controller.isLoading.value,
+                  onEditTap: () =>
+                      controller.isEditingPersonalDetails.value = true,
+                  onSaveTap: () => controller.saveAll(),
+                  themeColor: AppColors.jummaColor,
+                  children: [
+                    _buildDetailRow(
+                      "Full Name",
+                      controller.nameCtrl,
+                      controller.isEditingPersonalDetails.value,
+                      AppColors.jummaColor,
+                    ),
+                    _buildDetailRow(
+                      "Age",
+                      controller.ageCtrl,
+                      false, // Age not editable
+                      AppColors.jummaColor,
+                    ),
+                    _buildDetailRow(
+                      "Email",
+                      controller.emailCtrl,
+                      false, // Email not editable
+                      AppColors.jummaColor,
+                      isLocked: true,
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(height: 20.h),
             ],
           ),
@@ -308,8 +337,10 @@ class JummaPersonalInfoUI extends StatelessWidget {
                 GestureDetector(
                   onTap: isLoading ? null : onSaveTap,
                   child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 4.h,
+                    ),
                     decoration: BoxDecoration(
                       color: themeColor,
                       borderRadius: BorderRadius.circular(10.r),
@@ -319,7 +350,9 @@ class JummaPersonalInfoUI extends StatelessWidget {
                             width: 12.w,
                             height: 12.w,
                             child: const CircularProgressIndicator(
-                                color: Colors.white, strokeWidth: 2),
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
                           )
                         : Text(
                             "Save",
@@ -334,8 +367,11 @@ class JummaPersonalInfoUI extends StatelessWidget {
               else
                 GestureDetector(
                   onTap: onEditTap,
-                  child: Icon(Icons.edit_square,
-                      color: themeColor.withOpacity(0.5), size: 18.sp),
+                  child: Icon(
+                    Icons.edit_square,
+                    color: themeColor.withValues(alpha: 0.5),
+                    size: 18.sp,
+                  ),
                 ),
             ],
           ),
@@ -346,9 +382,13 @@ class JummaPersonalInfoUI extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailRow(String label, TextEditingController controller,
-      bool isEditingSection, Color themeColor,
-      {bool isLocked = false}) {
+  Widget _buildDetailRow(
+    String label,
+    TextEditingController controller,
+    bool isEditingSection,
+    Color themeColor, {
+    bool isLocked = false,
+  }) {
     return Padding(
       padding: EdgeInsets.only(bottom: 15.h),
       child: Row(
@@ -358,7 +398,7 @@ class JummaPersonalInfoUI extends StatelessWidget {
             label,
             style: GoogleFonts.inter(
               fontSize: 13.sp,
-              color: AppColors.bodyColor.withOpacity(0.8),
+              color: AppColors.bodyColor.withValues(alpha: 0.8),
             ),
           ),
           isEditingSection
@@ -376,12 +416,17 @@ class JummaPersonalInfoUI extends StatelessWidget {
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding: EdgeInsets.symmetric(
-                            horizontal: 5.w, vertical: 2.h),
+                          horizontal: 5.w,
+                          vertical: 2.h,
+                        ),
                         enabledBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: themeColor.withOpacity(0.3))),
+                          borderSide: BorderSide(
+                            color: themeColor.withValues(alpha: 0.3),
+                          ),
+                        ),
                         focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: themeColor)),
+                          borderSide: BorderSide(color: themeColor),
+                        ),
                       ),
                     ),
                   ),
@@ -398,8 +443,11 @@ class JummaPersonalInfoUI extends StatelessWidget {
                     ),
                     if (isLocked) ...[
                       SizedBox(width: 8.w),
-                      Icon(Icons.lock_outline,
-                          size: 14.sp, color: Colors.grey.shade400),
+                      Icon(
+                        Icons.lock_outline,
+                        size: 14.sp,
+                        color: Colors.grey.shade400,
+                      ),
                     ],
                   ],
                 ),

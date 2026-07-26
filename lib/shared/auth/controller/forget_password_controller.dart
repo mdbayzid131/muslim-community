@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:muslim_community/approut.dart';
 import 'package:muslim_community/services/forget_password_service.dart';
 
 class ForgetPasswordController extends GetxController {
@@ -11,8 +10,10 @@ class ForgetPasswordController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  final List<TextEditingController> otpControllers =
-      List.generate(6, (_) => TextEditingController());
+  final List<TextEditingController> otpControllers = List.generate(
+    6,
+    (_) => TextEditingController(),
+  );
   final List<FocusNode> focusNodes = List.generate(6, (_) => FocusNode());
 
   var isLoading = false.obs;
@@ -42,8 +43,10 @@ class ForgetPasswordController extends GetxController {
     });
   }
 
-  void togglePasswordVisibility() => isPasswordVisible.value = !isPasswordVisible.value;
-  void toggleConfirmPasswordVisibility() => isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
+  void togglePasswordVisibility() =>
+      isPasswordVisible.value = !isPasswordVisible.value;
+  void toggleConfirmPasswordVisibility() =>
+      isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
 
   String get otp => otpControllers.map((c) => c.text).join();
 
@@ -56,8 +59,9 @@ class ForgetPasswordController extends GetxController {
 
     isLoading.value = true;
     try {
-      final response =
-          await _service.forgotPassword(emailController.text.trim());
+      final response = await _service.forgotPassword(
+        emailController.text.trim(),
+      );
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -92,19 +96,23 @@ class ForgetPasswordController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         // Extract resetToken from response based on the raw data you provided
-        final receivedToken = data['data']?['resetToken'] ?? 
-                             data['resetToken'] ??
-                             data['data']?['accessToken'] ?? 
-                             data['data']?['token'] ??
-                             data['accessToken'] ?? 
-                             data['token'];
-        
+        final receivedToken =
+            data['data']?['resetToken'] ??
+            data['resetToken'] ??
+            data['data']?['accessToken'] ??
+            data['data']?['token'] ??
+            data['accessToken'] ??
+            data['token'];
+
         if (receivedToken != null) {
           token.value = receivedToken;
           Get.snackbar('Success', 'OTP Verified');
           Get.toNamed(nextRoute);
         } else {
-          Get.snackbar('Error', 'Failed to get authorization token from server');
+          Get.snackbar(
+            'Error',
+            'Failed to get authorization token from server',
+          );
         }
       } else {
         Get.snackbar('Error', data['message'] ?? 'Invalid OTP');

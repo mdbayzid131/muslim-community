@@ -15,7 +15,8 @@ class FemaleGroupDetailsUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FemaleGroupController controller = Get.find<FemaleGroupController>();
-    final FemaleUserDataController userDataController = Get.isRegistered<FemaleUserDataController>()
+    final FemaleUserDataController userDataController =
+        Get.isRegistered<FemaleUserDataController>()
         ? Get.find<FemaleUserDataController>()
         : Get.put(FemaleUserDataController());
 
@@ -33,7 +34,11 @@ class FemaleGroupDetailsUI extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: Colors.white,
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new, color: AppColors.femaleColor, size: 18.sp),
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: AppColors.femaleColor,
+                size: 18.sp,
+              ),
               onPressed: () => Get.back(),
             ),
           ),
@@ -77,7 +82,7 @@ class FemaleGroupDetailsUI extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.03),
+                      color: Colors.black.withValues(alpha: 0.03),
                       blurRadius: 10,
                       offset: const Offset(0, 5),
                     ),
@@ -95,7 +100,11 @@ class FemaleGroupDetailsUI extends StatelessWidget {
                             color: const Color(0xFFFBF0F0),
                             borderRadius: BorderRadius.circular(15.r),
                           ),
-                          child: Icon(group.icon, color: AppColors.femaleColor, size: 24.sp),
+                          child: Icon(
+                            group.icon,
+                            color: AppColors.femaleColor,
+                            size: 24.sp,
+                          ),
                         ),
                         SizedBox(width: 15.w),
                         Expanded(
@@ -135,123 +144,155 @@ class FemaleGroupDetailsUI extends StatelessWidget {
               // --- CREATE POST SECTION (MEMBERS ONLY) ---
               Obx(() {
                 final group = controller.currentGroup.value;
-                if (group == null || !group.isJoined) return const SizedBox.shrink();
-                
+                if (group == null || !group.isJoined)
+                  return const SizedBox.shrink();
+
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Obx(() {
-                    final img = userDataController.userProfileImage.value;
-                    return CircleAvatar(
-                      radius: 22.r,
-                      backgroundImage: img.isNotEmpty
-                          ? NetworkImage(img)
-                          : const AssetImage('assets/image/female.png') as ImageProvider,
-                      onBackgroundImageError: img.isNotEmpty ? (e, s) {} : null,
-                    );
-                  }),
-                  SizedBox(width: 12.w),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20.r),
-                            border: Border.all(color: AppColors.femaleColor.withOpacity(0.15)),
-                          ),
-                          child: TextField(
-                            controller: controller.postContentCtrl,
-                            maxLines: null,
-                            minLines: 3,
-                            decoration: InputDecoration(
-                              hintText: 'Share something with the group...',
-                              hintStyle: GoogleFonts.inter(
-                                fontSize: 14.sp,
-                                color: AppColors.bodyColor.withOpacity(0.6),
-                              ),
-                              border: InputBorder.none,
+                    Obx(() {
+                      final img = userDataController.userProfileImage.value;
+                      return CircleAvatar(
+                        radius: 22.r,
+                        backgroundImage: img.isNotEmpty
+                            ? NetworkImage(img)
+                            : const AssetImage('assets/image/female.png')
+                                  as ImageProvider,
+                        onBackgroundImageError: img.isNotEmpty
+                            ? (e, s) {}
+                            : null,
+                      );
+                    }),
+                    SizedBox(width: 12.w),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 15.w,
+                              vertical: 10.h,
                             ),
-                          ),
-                        ),
-                        Obx(() {
-                          if (controller.selectedImages.isEmpty) return const SizedBox.shrink();
-                          return Padding(
-                            padding: EdgeInsets.only(top: 10.h),
-                            child: SizedBox(
-                              height: 80.h,
-                              child: ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: controller.selectedImages.length,
-                                separatorBuilder: (context, index) => SizedBox(width: 10.w),
-                                itemBuilder: (context, index) {
-                                  return Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(10.r),
-                                        child: Image.file(
-                                          controller.selectedImages[index],
-                                          width: 80.w,
-                                          height: 80.h,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: 5.h,
-                                        right: 5.w,
-                                        child: GestureDetector(
-                                          onTap: () => controller.removeImage(index),
-                                          child: Container(
-                                            padding: EdgeInsets.all(4.w),
-                                            decoration: const BoxDecoration(
-                                              color: Colors.black54,
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Icon(Icons.close, color: Colors.white, size: 12.sp),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ),
-                            ),
-                          );
-                        }),
-                        SizedBox(height: 10.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              onPressed: () => controller.pickImages(),
-                              icon: Icon(Icons.image_outlined, color: AppColors.femaleColor),
-                            ),
-                            SizedBox(width: 10.w),
-                            ElevatedButton(
-                              onPressed: () => controller.createPost(group.id),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFF0E0DF),
-                                foregroundColor: AppColors.femaleColor,
-                                elevation: 0,
-                                padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 8.h),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.r),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20.r),
+                              border: Border.all(
+                                color: AppColors.femaleColor.withValues(
+                                  alpha: 0.15,
                                 ),
                               ),
-                              child: Text(
-                                'Post',
-                                style: GoogleFonts.inter(fontSize: 14.sp, fontWeight: FontWeight.w600),
+                            ),
+                            child: TextField(
+                              controller: controller.postContentCtrl,
+                              maxLines: null,
+                              minLines: 3,
+                              decoration: InputDecoration(
+                                hintText: 'Share something with the group...',
+                                hintStyle: GoogleFonts.inter(
+                                  fontSize: 14.sp,
+                                  color: AppColors.bodyColor.withValues(
+                                    alpha: 0.6,
+                                  ),
+                                ),
+                                border: InputBorder.none,
                               ),
                             ),
-                          ],
-                        ),
-                      ],
+                          ),
+                          Obx(() {
+                            if (controller.selectedImages.isEmpty)
+                              return const SizedBox.shrink();
+                            return Padding(
+                              padding: EdgeInsets.only(top: 10.h),
+                              child: SizedBox(
+                                height: 80.h,
+                                child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: controller.selectedImages.length,
+                                  separatorBuilder: (context, index) =>
+                                      SizedBox(width: 10.w),
+                                  itemBuilder: (context, index) {
+                                    return Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            10.r,
+                                          ),
+                                          child: Image.file(
+                                            controller.selectedImages[index],
+                                            width: 80.w,
+                                            height: 80.h,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Positioned(
+                                          top: 5.h,
+                                          right: 5.w,
+                                          child: GestureDetector(
+                                            onTap: () =>
+                                                controller.removeImage(index),
+                                            child: Container(
+                                              padding: EdgeInsets.all(4.w),
+                                              decoration: const BoxDecoration(
+                                                color: Colors.black54,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Icon(
+                                                Icons.close,
+                                                color: Colors.white,
+                                                size: 12.sp,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                            );
+                          }),
+                          SizedBox(height: 10.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: () => controller.pickImages(),
+                                icon: Icon(
+                                  Icons.image_outlined,
+                                  color: AppColors.femaleColor,
+                                ),
+                              ),
+                              SizedBox(width: 10.w),
+                              ElevatedButton(
+                                onPressed: () =>
+                                    controller.createPost(group.id),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFFF0E0DF),
+                                  foregroundColor: AppColors.femaleColor,
+                                  elevation: 0,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 30.w,
+                                    vertical: 8.h,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.r),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Post',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              );
-            }),
+                  ],
+                );
+              }),
 
               SizedBox(height: 30.h),
               Text(
@@ -284,7 +325,8 @@ class FemaleGroupDetailsUI extends StatelessWidget {
   }
 
   Widget _buildPostCard(BuildContext context, GroupPostModel post) {
-    final FemaleUserDataController userDataController = Get.find<FemaleUserDataController>();
+    final FemaleUserDataController userDataController =
+        Get.find<FemaleUserDataController>();
     return GestureDetector(
       onTap: () => Get.toNamed(AppRoutes.femalePostDetails, arguments: post),
       child: Container(
@@ -295,7 +337,7 @@ class FemaleGroupDetailsUI extends StatelessWidget {
           borderRadius: BorderRadius.circular(25.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.02),
+              color: Colors.black.withValues(alpha: 0.02),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -310,8 +352,11 @@ class FemaleGroupDetailsUI extends StatelessWidget {
                   radius: 18.r,
                   backgroundImage: post.userImage.isNotEmpty
                       ? NetworkImage(post.userImage)
-                      : const AssetImage('assets/image/female.png') as ImageProvider,
-                  onBackgroundImageError: post.userImage.isNotEmpty ? (e, s) {} : null,
+                      : const AssetImage('assets/image/female.png')
+                            as ImageProvider,
+                  onBackgroundImageError: post.userImage.isNotEmpty
+                      ? (e, s) {}
+                      : null,
                 ),
                 SizedBox(width: 12.w),
                 Expanded(
@@ -338,13 +383,19 @@ class FemaleGroupDetailsUI extends StatelessWidget {
                 ),
                 if (post.userId == userDataController.userId.value)
                   PopupMenuButton<String>(
-                    icon: Icon(Icons.more_vert, color: AppColors.bodyColor, size: 20.sp),
+                    icon: Icon(
+                      Icons.more_vert,
+                      color: AppColors.bodyColor,
+                      size: 20.sp,
+                    ),
                     onSelected: (value) {
                       if (value == 'delete') {
                         Get.dialog(
                           AlertDialog(
                             title: const Text("Delete Post"),
-                            content: const Text("Are you sure you want to delete this post?"),
+                            content: const Text(
+                              "Are you sure you want to delete this post?",
+                            ),
                             actions: [
                               TextButton(
                                 onPressed: () => Get.back(),
@@ -353,10 +404,14 @@ class FemaleGroupDetailsUI extends StatelessWidget {
                               TextButton(
                                 onPressed: () {
                                   Get.back();
-                                  final FemaleGroupController controller = Get.find<FemaleGroupController>();
+                                  final FemaleGroupController controller =
+                                      Get.find<FemaleGroupController>();
                                   controller.deletePost(post.groupId, post.id);
                                 },
-                                child: const Text("Delete", style: TextStyle(color: Colors.red)),
+                                child: const Text(
+                                  "Delete",
+                                  style: TextStyle(color: Colors.red),
+                                ),
                               ),
                             ],
                           ),
@@ -368,7 +423,11 @@ class FemaleGroupDetailsUI extends StatelessWidget {
                         value: 'delete',
                         child: Row(
                           children: [
-                            Icon(Icons.delete_outline, color: Colors.red, size: 20),
+                            Icon(
+                              Icons.delete_outline,
+                              color: Colors.red,
+                              size: 20,
+                            ),
                             SizedBox(width: 10),
                             Text("Delete", style: TextStyle(color: Colors.red)),
                           ],
@@ -377,7 +436,11 @@ class FemaleGroupDetailsUI extends StatelessWidget {
                     ],
                   )
                 else
-                  Icon(Icons.more_vert, color: AppColors.bodyColor, size: 20.sp),
+                  Icon(
+                    Icons.more_vert,
+                    color: AppColors.bodyColor,
+                    size: 20.sp,
+                  ),
               ],
             ),
             SizedBox(height: 15.h),
@@ -385,25 +448,39 @@ class FemaleGroupDetailsUI extends StatelessWidget {
               post.content,
               style: GoogleFonts.inter(
                 fontSize: 14.sp,
-                color: AppColors.titleColor.withOpacity(0.8),
+                color: AppColors.titleColor.withValues(alpha: 0.8),
                 height: 1.5,
               ),
             ),
             SizedBox(height: 20.h),
             Row(
               children: [
-                Icon(Icons.favorite, color: const Color(0xFFE57373), size: 18.sp),
+                Icon(
+                  Icons.favorite,
+                  color: const Color(0xFFE57373),
+                  size: 18.sp,
+                ),
                 SizedBox(width: 5.w),
                 Text(
                   '${post.likesCount}',
-                  style: GoogleFonts.inter(fontSize: 12.sp, color: AppColors.bodyColor),
+                  style: GoogleFonts.inter(
+                    fontSize: 12.sp,
+                    color: AppColors.bodyColor,
+                  ),
                 ),
                 SizedBox(width: 20.w),
-                Icon(Icons.chat_bubble_outline, color: AppColors.bodyColor, size: 18.sp),
+                Icon(
+                  Icons.chat_bubble_outline,
+                  color: AppColors.bodyColor,
+                  size: 18.sp,
+                ),
                 SizedBox(width: 5.w),
                 Text(
                   '${post.commentsCount}',
-                  style: GoogleFonts.inter(fontSize: 12.sp, color: AppColors.bodyColor),
+                  style: GoogleFonts.inter(
+                    fontSize: 12.sp,
+                    color: AppColors.bodyColor,
+                  ),
                 ),
               ],
             ),

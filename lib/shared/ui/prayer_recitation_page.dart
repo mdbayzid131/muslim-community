@@ -163,7 +163,7 @@ class _PrayerRecitationPageState extends State<PrayerRecitationPage> {
         borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -216,7 +216,7 @@ class _PrayerRecitationPageState extends State<PrayerRecitationPage> {
                   color: const Color(0xFFF9FBFB),
                   borderRadius: BorderRadius.circular(15.r),
                   border: Border.all(
-                    color: const Color(0xFF26A69A).withOpacity(0.08),
+                    color: const Color(0xFF26A69A).withValues(alpha: 0.08),
                   ),
                 ),
                 child: ClipRRect(
@@ -301,7 +301,7 @@ class _PrayerRecitationPageState extends State<PrayerRecitationPage> {
               color: const Color(0xFFF0FDFB),
               borderRadius: BorderRadius.circular(15.r),
               border: Border.all(
-                color: const Color(0xFF26A69A).withOpacity(0.2),
+                color: const Color(0xFF26A69A).withValues(alpha: 0.2),
               ),
             ),
             child: Column(

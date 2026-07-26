@@ -63,7 +63,7 @@ class MosquesUI extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.search,
-                      color: AppColors.bodyColor.withOpacity(0.5),
+                      color: AppColors.bodyColor.withValues(alpha: 0.5),
                       size: 20.sp,
                     ),
                     SizedBox(width: 10.w),
@@ -73,7 +73,7 @@ class MosquesUI extends StatelessWidget {
                           hintText: 'Search nearby mosques...',
                           hintStyle: GoogleFonts.inter(
                             fontSize: 13.sp,
-                            color: AppColors.bodyColor.withOpacity(0.5),
+                            color: AppColors.bodyColor.withValues(alpha: 0.5),
                           ),
                           border: InputBorder.none,
                         ),
@@ -172,7 +172,7 @@ class MosquesUI extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.02),
+              color: Colors.black.withValues(alpha: 0.02),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),

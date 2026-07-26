@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muslim_community/male_role/auth/service/male_create_account_service.dart';
 import 'package:muslim_community/male_role/auth/controller/male_verify_controller.dart';
-import 'package:intl/intl.dart';
 import 'dart:convert';
 
 import '../../../approut.dart';
@@ -139,7 +138,7 @@ class MaleCreateAccountController extends GetxController {
       Get.snackbar(
         'Consent Required',
         'You must agree to the Terms of Service & Privacy Policy and consent to religious data processing to create an account.',
-        backgroundColor: Colors.orange.withOpacity(0.8),
+        backgroundColor: Colors.orange.withValues(alpha: 0.8),
         colorText: Colors.white,
       );
       return;

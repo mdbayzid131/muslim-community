@@ -12,8 +12,10 @@ class FemalePendingRequestUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FemalePendingRequestController controller = Get.put(FemalePendingRequestController());
-    
+    final FemalePendingRequestController controller = Get.put(
+      FemalePendingRequestController(),
+    );
+
     // Refresh data when the UI is built to ensure it's up to date
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (controller.pendingRequests.isEmpty && !controller.isLoading.value) {
@@ -23,7 +25,9 @@ class FemalePendingRequestUI extends StatelessWidget {
 
     return Obx(() {
       if (controller.isLoading.value && controller.pendingRequests.isEmpty) {
-        return const Center(child: CircularProgressIndicator(color: AppColors.femaleColor));
+        return const Center(
+          child: CircularProgressIndicator(color: AppColors.femaleColor),
+        );
       }
 
       return RefreshIndicator(
@@ -36,21 +40,30 @@ class FemalePendingRequestUI extends StatelessWidget {
                   Center(
                     child: Text(
                       'No pending requests',
-                      style: GoogleFonts.inter(fontSize: 16.sp, color: Colors.grey),
+                      style: GoogleFonts.inter(
+                        fontSize: 16.sp,
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ],
               )
             : NotificationListener<ScrollNotification>(
                 onNotification: (ScrollNotification scrollInfo) {
-                  if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+                  if (scrollInfo.metrics.pixels ==
+                      scrollInfo.metrics.maxScrollExtent) {
                     controller.fetchPendingRequests();
                   }
                   return false;
                 },
                 child: ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-                  itemCount: controller.pendingRequests.length + (controller.isFetchingMore.value ? 1 : 0),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20.w,
+                    vertical: 20.h,
+                  ),
+                  itemCount:
+                      controller.pendingRequests.length +
+                      (controller.isFetchingMore.value ? 1 : 0),
                   itemBuilder: (context, index) {
                     if (index < controller.pendingRequests.length) {
                       final sister = controller.pendingRequests[index];
@@ -59,7 +72,9 @@ class FemalePendingRequestUI extends StatelessWidget {
                       return const Center(
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: CircularProgressIndicator(color: AppColors.femaleColor),
+                          child: CircularProgressIndicator(
+                            color: AppColors.femaleColor,
+                          ),
                         ),
                       );
                     }
@@ -70,7 +85,10 @@ class FemalePendingRequestUI extends StatelessWidget {
     });
   }
 
-  Widget _buildRequestCard(SisterModel sister, FemalePendingRequestController controller) {
+  Widget _buildRequestCard(
+    SisterModel sister,
+    FemalePendingRequestController controller,
+  ) {
     return GestureDetector(
       onTap: () => Get.to(() => FemaleProfileDetailsUI(sister: sister)),
       child: Container(
@@ -81,7 +99,7 @@ class FemalePendingRequestUI extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
@@ -125,7 +143,10 @@ class FemalePendingRequestUI extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             if (sister.connectionId != null) {
-                              controller.acceptRequest(sister.connectionId!, sister.id);
+                              controller.acceptRequest(
+                                sister.connectionId!,
+                                sister.id,
+                              );
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -137,7 +158,13 @@ class FemalePendingRequestUI extends StatelessWidget {
                             ),
                             padding: EdgeInsets.symmetric(vertical: 8.h),
                           ),
-                          child: Text("Accept", style: GoogleFonts.inter(fontSize: 12.sp, fontWeight: FontWeight.bold)),
+                          child: Text(
+                            "Accept",
+                            style: GoogleFonts.inter(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(width: 10.w),
@@ -145,7 +172,10 @@ class FemalePendingRequestUI extends StatelessWidget {
                         child: OutlinedButton(
                           onPressed: () {
                             if (sister.connectionId != null) {
-                              controller.rejectRequest(sister.connectionId!, sister.id);
+                              controller.rejectRequest(
+                                sister.connectionId!,
+                                sister.id,
+                              );
                             }
                           },
                           style: OutlinedButton.styleFrom(
@@ -156,7 +186,13 @@ class FemalePendingRequestUI extends StatelessWidget {
                             ),
                             padding: EdgeInsets.symmetric(vertical: 8.h),
                           ),
-                          child: Text("Reject", style: GoogleFonts.inter(fontSize: 12.sp, fontWeight: FontWeight.bold)),
+                          child: Text(
+                            "Reject",
+                            style: GoogleFonts.inter(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                     ],

@@ -22,7 +22,7 @@ class MaleMessagesUI extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 10.h),
-              
+
               // --- TITLE ---
               Text(
                 'Messages',
@@ -32,53 +32,54 @@ class MaleMessagesUI extends StatelessWidget {
                   color: AppColors.titleColor,
                 ),
               ),
-              
+
               SizedBox(height: 20.h),
-              
+
               // --- SEARCH BAR ---
               _buildSearchBar(controller),
-              
+
               SizedBox(height: 20.h),
-              
+
               // --- DIVIDER ---
               Divider(
-                color: AppColors.goldColor.withOpacity(0.15),
+                color: AppColors.goldColor.withValues(alpha: 0.15),
                 thickness: 1,
                 height: 1,
               ),
-              
+
               SizedBox(height: 20.h),
-              
+
               // --- MESSAGES LIST ---
               Expanded(
-                child: Obx(
-                  () {
-                    if (controller.isLoading.value && controller.messages.isEmpty) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    
-                    if (controller.filteredMessages.isEmpty) {
-                      return Center(
-                        child: Text(
-                          controller.searchQuery.value.isEmpty 
-                              ? 'No chats found' 
-                              : 'No matches found',
-                          style: GoogleFonts.inter(color: AppColors.bodyColor),
-                        ),
-                      );
-                    }
+                child: Obx(() {
+                  if (controller.isLoading.value &&
+                      controller.messages.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                    return RefreshIndicator(
-                      onRefresh: () => controller.fetchChatList(),
-                      child: ListView.builder(
-                        itemCount: controller.filteredMessages.length,
-                        itemBuilder: (context, index) {
-                          return MessageTile(message: controller.filteredMessages[index]);
-                        },
+                  if (controller.filteredMessages.isEmpty) {
+                    return Center(
+                      child: Text(
+                        controller.searchQuery.value.isEmpty
+                            ? 'No chats found'
+                            : 'No matches found',
+                        style: GoogleFonts.inter(color: AppColors.bodyColor),
                       ),
                     );
-                  },
-                ),
+                  }
+
+                  return RefreshIndicator(
+                    onRefresh: () => controller.fetchChatList(),
+                    child: ListView.builder(
+                      itemCount: controller.filteredMessages.length,
+                      itemBuilder: (context, index) {
+                        return MessageTile(
+                          message: controller.filteredMessages[index],
+                        );
+                      },
+                    ),
+                  );
+                }),
               ),
             ],
           ),
@@ -95,7 +96,7 @@ class MaleMessagesUI extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.r), // Pill shape for search bar
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -106,12 +107,12 @@ class MaleMessagesUI extends StatelessWidget {
         decoration: InputDecoration(
           hintText: 'Search messages...',
           hintStyle: GoogleFonts.inter(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withValues(alpha: 0.5),
             fontSize: 13.sp,
           ),
           prefixIcon: Icon(
             Icons.search,
-            color: AppColors.maleColor.withOpacity(0.5),
+            color: AppColors.maleColor.withValues(alpha: 0.5),
             size: 20.sp,
           ),
           border: InputBorder.none,

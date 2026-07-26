@@ -104,7 +104,8 @@ class FemaleCreateAccountController extends GetxController {
           !hasLowercase ||
           !hasDigits ||
           !hasSpecialCharacters) {
-        passwordError.value = "Must be 8+ chars with A-Z, a-z, 0-9 & special char";
+        passwordError.value =
+            "Must be 8+ chars with A-Z, a-z, 0-9 & special char";
         isValid = false;
       }
     }
@@ -121,7 +122,8 @@ class FemaleCreateAccountController extends GetxController {
       DateTime dob = DateTime.parse(dateOfBirth.value);
       DateTime now = DateTime.now();
       int age = now.year - dob.year;
-      if (now.month < dob.month || (now.month == dob.month && now.day < dob.day)) {
+      if (now.month < dob.month ||
+          (now.month == dob.month && now.day < dob.day)) {
         age--;
       }
       if (age < 16) {
@@ -138,7 +140,7 @@ class FemaleCreateAccountController extends GetxController {
       Get.snackbar(
         'Consent Required',
         'You must agree to the Terms of Service & Privacy Policy and consent to religious data processing to create an account.',
-        backgroundColor: Colors.orange.withOpacity(0.8),
+        backgroundColor: Colors.orange.withValues(alpha: 0.8),
         colorText: Colors.white,
       );
       return;
@@ -166,7 +168,7 @@ class FemaleCreateAccountController extends GetxController {
     if (emailController.text.isEmpty) missingFields += "Email, ";
     if (passwordController.text.isEmpty) missingFields += "Password, ";
     if (dateOfBirth.value.isEmpty) missingFields += "Date of Birth, ";
-    
+
     // Require verification based on the selected method
     if (verifyController.selectedMethod.value == null) {
       missingFields += "Verification method selection, ";

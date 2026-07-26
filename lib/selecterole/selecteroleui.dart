@@ -58,7 +58,7 @@ class SelecteRoleUI extends StatelessWidget {
                       color: const Color(0xFFF4F8F9),
                       borderRadius: BorderRadius.circular(30.r),
                       border: Border.all(
-                        color: const Color(0xFF5B7C99).withOpacity(0.3),
+                        color: const Color(0xFF5B7C99).withValues(alpha: 0.3),
                         width: 1.2,
                       ),
                     ),
@@ -88,7 +88,7 @@ class SelecteRoleUI extends StatelessWidget {
                                     fontSize: 10.sp,
                                     color: const Color(
                                       0xFF5B7C99,
-                                    ).withOpacity(0.5),
+                                    ).withValues(alpha: 0.5),
                                     letterSpacing: 1.5,
                                   ),
                                 ),
@@ -145,7 +145,7 @@ class SelecteRoleUI extends StatelessWidget {
                       color: const Color(0xFFFEF9F6),
                       borderRadius: BorderRadius.circular(30.r),
                       border: Border.all(
-                        color: const Color(0xFFD18E8E).withOpacity(0.3),
+                        color: const Color(0xFFD18E8E).withValues(alpha: 0.3),
                         width: 1.2,
                       ),
                     ),
@@ -174,7 +174,7 @@ class SelecteRoleUI extends StatelessWidget {
                                     fontSize: 10.sp,
                                     color: const Color(
                                       0xFFD18E8E,
-                                    ).withOpacity(0.5),
+                                    ).withValues(alpha: 0.5),
                                     letterSpacing: 1.5,
                                   ),
                                 ),
@@ -229,7 +229,7 @@ class SelecteRoleUI extends StatelessWidget {
                       color: const Color(0xFFF2F7F4),
                       borderRadius: BorderRadius.circular(30.r),
                       border: Border.all(
-                        color: const Color(0xFF436E50).withOpacity(0.3),
+                        color: const Color(0xFF436E50).withValues(alpha: 0.3),
                         width: 1.2,
                       ),
                     ),

@@ -13,7 +13,9 @@ class MaleNotificationsUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MaleNotificationController controller = Get.put(MaleNotificationController());
+    final MaleNotificationController controller = Get.put(
+      MaleNotificationController(),
+    );
 
     return DefaultTabController(
       length: 3,
@@ -23,7 +25,11 @@ class MaleNotificationsUI extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.black,
+              size: 20,
+            ),
             onPressed: () => Get.back(),
           ),
           title: Text(
@@ -52,7 +58,10 @@ class MaleNotificationsUI extends StatelessWidget {
             indicatorColor: AppColors.maleColor,
             labelColor: AppColors.maleColor,
             unselectedLabelColor: Colors.grey,
-            labelStyle: GoogleFonts.inter(fontSize: 13.sp, fontWeight: FontWeight.bold),
+            labelStyle: GoogleFonts.inter(
+              fontSize: 13.sp,
+              fontWeight: FontWeight.bold,
+            ),
             tabs: const [
               Tab(text: "Notifications"),
               Tab(text: "Pending"),
@@ -77,30 +86,35 @@ class MaleNotificationsUI extends StatelessWidget {
         onRefresh: () => controller.fetchNotifications(),
         color: AppColors.maleColor,
         child: controller.isLoading.value && controller.notifications.isEmpty
-            ? const Center(child: CircularProgressIndicator(color: AppColors.maleColor))
+            ? const Center(
+                child: CircularProgressIndicator(color: AppColors.maleColor),
+              )
             : controller.notifications.isEmpty
-                ? ListView(
-                    children: [
-                      SizedBox(height: 200.h),
-                      Center(
-                        child: Text(
-                          'No notifications',
-                          style: GoogleFonts.inter(fontSize: 16.sp, color: Colors.grey),
-                        ),
+            ? ListView(
+                children: [
+                  SizedBox(height: 200.h),
+                  Center(
+                    child: Text(
+                      'No notifications',
+                      style: GoogleFonts.inter(
+                        fontSize: 16.sp,
+                        color: Colors.grey,
                       ),
-                    ],
-                  )
-                : ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-                    itemCount: controller.notifications.length,
-                    itemBuilder: (context, index) {
-                      final notification = controller.notifications[index];
-                      return GestureDetector(
-                        onTap: () => controller.markAsRead(notification.id),
-                        child: _buildNotificationCard(notification),
-                      );
-                    },
+                    ),
                   ),
+                ],
+              )
+            : ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                itemCount: controller.notifications.length,
+                itemBuilder: (context, index) {
+                  final notification = controller.notifications[index];
+                  return GestureDetector(
+                    onTap: () => controller.markAsRead(notification.id),
+                    child: _buildNotificationCard(notification),
+                  );
+                },
+              ),
       ),
     );
   }
@@ -113,7 +127,7 @@ class MaleNotificationsUI extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -138,7 +152,7 @@ class MaleNotificationsUI extends StatelessWidget {
                 ),
               ),
             ),
-          
+
           Padding(
             padding: EdgeInsets.all(16.r),
             child: Row(
@@ -152,7 +166,11 @@ class MaleNotificationsUI extends StatelessWidget {
                     color: notification.iconBackgroundColor,
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(notification.icon, color: notification.iconColor, size: 22.sp),
+                  child: Icon(
+                    notification.icon,
+                    color: notification.iconColor,
+                    size: 22.sp,
+                  ),
                 ),
                 SizedBox(width: 15.w),
                 // Content

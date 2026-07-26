@@ -72,12 +72,15 @@ class LearningUI extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 12,
               offset: const Offset(0, 5),
             ),
           ],
-          border: Border.all(color: themeColor.withOpacity(0.1), width: 1),
+          border: Border.all(
+            color: themeColor.withValues(alpha: 0.1),
+            width: 1,
+          ),
         ),
         child: Row(
           children: [
@@ -85,7 +88,7 @@ class LearningUI extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
-                color: themeColor.withOpacity(0.08),
+                color: themeColor.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, color: themeColor, size: 24.sp),
@@ -109,7 +112,7 @@ class LearningUI extends StatelessWidget {
                     subtitle,
                     style: GoogleFonts.inter(
                       fontSize: 12.sp,
-                      color: AppColors.bodyColor.withOpacity(0.8),
+                      color: AppColors.bodyColor.withValues(alpha: 0.8),
                     ),
                   ),
                 ],
@@ -118,7 +121,7 @@ class LearningUI extends StatelessWidget {
             // Arrow
             Icon(
               Icons.arrow_forward_ios_rounded,
-              color: themeColor.withOpacity(0.4),
+              color: themeColor.withValues(alpha: 0.4),
               size: 14.sp,
             ),
           ],

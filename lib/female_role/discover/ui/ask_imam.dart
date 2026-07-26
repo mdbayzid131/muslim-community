@@ -12,7 +12,11 @@ class AskImamUI extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.question_answer, size: 60.sp, color: AppColors.femaleColor.withOpacity(0.5)),
+          Icon(
+            Icons.question_answer,
+            size: 60.sp,
+            color: AppColors.femaleColor.withValues(alpha: 0.5),
+          ),
           SizedBox(height: 20.h),
           Text(
             'Ask Imam Module',
@@ -25,7 +29,10 @@ class AskImamUI extends StatelessWidget {
           SizedBox(height: 10.h),
           Text(
             'Ask Imam interface will be designed here.',
-            style: GoogleFonts.inter(fontSize: 14.sp, color: AppColors.bodyColor),
+            style: GoogleFonts.inter(
+              fontSize: 14.sp,
+              color: AppColors.bodyColor,
+            ),
           ),
         ],
       ),

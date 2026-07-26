@@ -35,7 +35,7 @@ class FemaleNavbarUI extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, -5),
             ),
@@ -46,7 +46,7 @@ class FemaleNavbarUI extends StatelessWidget {
             currentIndex: controller.selectedIndex.value,
             onTap: controller.changeIndex,
             selectedItemColor: AppColors.femaleColor,
-            unselectedItemColor: const Color(0xFFA6864D).withOpacity(0.7),
+            unselectedItemColor: const Color(0xFFA6864D).withValues(alpha: 0.7),
             showSelectedLabels: true,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
@@ -108,7 +108,7 @@ class FemaleNavbarUI extends StatelessWidget {
           assetPath,
           width: 24.w,
           height: 24.w,
-          color: const Color(0xFFA6864D).withOpacity(0.7),
+          color: const Color(0xFFA6864D).withValues(alpha: 0.7),
         ),
       ),
       activeIcon: Column(

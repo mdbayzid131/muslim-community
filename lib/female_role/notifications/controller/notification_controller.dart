@@ -34,7 +34,7 @@ class FemaleNotificationController extends GetxController {
             timeAgo: _formatTimeAgo(item['createdAt']),
             icon: _getIconForType(item['type']),
             iconColor: AppColors.femaleColor,
-            iconBackgroundColor: AppColors.femaleColor.withOpacity(0.1),
+            iconBackgroundColor: AppColors.femaleColor.withValues(alpha: 0.1),
             isUnread: item['isRead'] == false,
           );
         }).toList();
@@ -88,11 +88,16 @@ class FemaleNotificationController extends GetxController {
 
   IconData _getIconForType(String? type) {
     switch (type) {
-      case 'prayer': return Icons.access_time_filled;
-      case 'connection': return Icons.person_add_alt_1_rounded;
-      case 'event': return Icons.calendar_today_rounded;
-      case 'message': return Icons.chat_bubble_outline_rounded;
-      default: return Icons.notifications_active_rounded;
+      case 'prayer':
+        return Icons.access_time_filled;
+      case 'connection':
+        return Icons.person_add_alt_1_rounded;
+      case 'event':
+        return Icons.calendar_today_rounded;
+      case 'message':
+        return Icons.chat_bubble_outline_rounded;
+      default:
+        return Icons.notifications_active_rounded;
     }
   }
 

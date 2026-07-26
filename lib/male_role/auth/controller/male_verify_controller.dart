@@ -14,9 +14,9 @@ class MaleVerifyController extends GetxController {
     if (photo != null) {
       verificationImage.value = File(photo.path);
       Get.snackbar(
-        'Success', 
+        'Success',
         'your image upload for verification',
-        backgroundColor: Colors.green.withOpacity(0.8),
+        backgroundColor: Colors.green.withValues(alpha: 0.8),
         colorText: Colors.white,
       );
     }
@@ -27,9 +27,9 @@ class MaleVerifyController extends GetxController {
     if (video != null) {
       verificationVideo.value = File(video.path);
       Get.snackbar(
-        'Success', 
+        'Success',
         'your video is upload for verification',
-        backgroundColor: Colors.green.withOpacity(0.8),
+        backgroundColor: Colors.green.withValues(alpha: 0.8),
         colorText: Colors.white,
       );
     }

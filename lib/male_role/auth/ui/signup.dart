@@ -38,7 +38,7 @@ class MaleSignUpUI extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFA6864D).withOpacity(0.1),
+                        color: const Color(0xFFA6864D).withValues(alpha: 0.1),
                         blurRadius: 20.r,
                         spreadRadius: 5.r,
                       ),
@@ -68,7 +68,7 @@ class MaleSignUpUI extends StatelessWidget {
                 'Start your spiritual journey with us.',
                 style: GoogleFonts.inter(
                   fontSize: 14.sp,
-                  color: const Color(0xFF636E72).withOpacity(0.8),
+                  color: const Color(0xFF636E72).withValues(alpha: 0.8),
                 ),
               ),
               SizedBox(height: 30.h),
@@ -77,7 +77,7 @@ class MaleSignUpUI extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(20.w),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.6),
+                  color: Colors.white.withValues(alpha: 0.6),
                   borderRadius: BorderRadius.circular(24.r),
                   border: Border.all(color: Colors.white, width: 2),
                 ),
@@ -320,7 +320,7 @@ class MaleSignUpUI extends StatelessWidget {
                     'assets/icons/selecteduration.png',
                     width: 16.w,
                     height: 16.w,
-                    color: themeColor.withOpacity(0.5),
+                    color: themeColor.withValues(alpha: 0.5),
                   ),
                   const Expanded(child: Divider(indent: 10, endIndent: 40)),
                 ],
@@ -388,7 +388,7 @@ class MaleSignUpUI extends StatelessWidget {
                 style: GoogleFonts.inter(
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w600,
-                  color: themeColor.withOpacity(0.8),
+                  color: themeColor.withValues(alpha: 0.8),
                   letterSpacing: 1.0,
                 ),
               ),
@@ -428,7 +428,7 @@ class MaleSignUpUI extends StatelessWidget {
                   )
                 : null,
             filled: true,
-            fillColor: const Color(0xFFEDF4F1).withOpacity(0.5),
+            fillColor: const Color(0xFFEDF4F1).withValues(alpha: 0.5),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide.none,
@@ -471,7 +471,7 @@ class MaleSignUpUI extends StatelessWidget {
                 style: GoogleFonts.inter(
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w600,
-                  color: themeColor.withOpacity(0.8),
+                  color: themeColor.withValues(alpha: 0.8),
                   letterSpacing: 1.0,
                 ),
               ),
@@ -482,7 +482,7 @@ class MaleSignUpUI extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
           decoration: BoxDecoration(
-            color: const Color(0xFFEDF4F1).withOpacity(0.5),
+            color: const Color(0xFFEDF4F1).withValues(alpha: 0.5),
             borderRadius: BorderRadius.circular(12.r),
           ),
           child: Row(

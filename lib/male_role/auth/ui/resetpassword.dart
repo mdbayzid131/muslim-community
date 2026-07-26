@@ -45,7 +45,7 @@ class MaleResetPasswordUI extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 10,
                         spreadRadius: 2,
                       ),
@@ -56,15 +56,19 @@ class MaleResetPasswordUI extends StatelessWidget {
                       width: 80.w,
                       height: 80.w,
                       decoration: BoxDecoration(
-                        color: themeColor.withOpacity(0.1),
+                        color: themeColor.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.lock_reset_outlined, color: themeColor, size: 40.sp),
+                      child: Icon(
+                        Icons.lock_reset_outlined,
+                        color: themeColor,
+                        size: 40.sp,
+                      ),
                     ),
                   ),
                 ),
               ),
-              
+
               SizedBox(height: 40.h),
               Text(
                 'Reset Password',
@@ -74,7 +78,7 @@ class MaleResetPasswordUI extends StatelessWidget {
                   color: const Color(0xFF2D3436),
                 ),
               ),
-              
+
               SizedBox(height: 12.h),
               Text(
                 'Create a strong password to secure your account.',
@@ -84,7 +88,7 @@ class MaleResetPasswordUI extends StatelessWidget {
                   color: const Color(0xFF636E72),
                 ),
               ),
-              
+
               SizedBox(height: 40.h),
 
               // Password Fields
@@ -96,9 +100,9 @@ class MaleResetPasswordUI extends StatelessWidget {
                 toggleVisibility: controller.togglePasswordVisibility,
                 themeColor: themeColor,
               ),
-              
+
               SizedBox(height: 20.h),
-              
+
               _buildPasswordField(
                 label: 'CONFIRM PASSWORD',
                 hint: 'Confirm new password',
@@ -114,28 +118,30 @@ class MaleResetPasswordUI extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 height: 56.h,
-                child: Obx(() => ElevatedButton(
-                  onPressed: controller.isLoading.value 
-                    ? null 
-                    : () => controller.resetPassword(AppRoutes.maleLogin),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: themeColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.r),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: controller.isLoading.value
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : Text(
-                        'Reset Password',
-                        style: GoogleFonts.inter(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
+                child: Obx(
+                  () => ElevatedButton(
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () => controller.resetPassword(AppRoutes.maleLogin),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: themeColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
-                )),
+                      elevation: 0,
+                    ),
+                    child: controller.isLoading.value
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Text(
+                            'Reset Password',
+                            style: GoogleFonts.inter(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                  ),
+                ),
               ),
               SizedBox(height: 40.h),
             ],
@@ -161,36 +167,50 @@ class MaleResetPasswordUI extends StatelessWidget {
           style: GoogleFonts.inter(
             fontSize: 11.sp,
             fontWeight: FontWeight.w600,
-            color: themeColor.withOpacity(0.8),
+            color: themeColor.withValues(alpha: 0.8),
             letterSpacing: 1.2,
           ),
         ),
         SizedBox(height: 10.h),
-        Obx(() => TextField(
-          controller: controller,
-          obscureText: !isVisible.value,
-          style: GoogleFonts.inter(fontSize: 14.sp),
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: GoogleFonts.inter(color: Colors.grey.shade400, fontSize: 14.sp),
-            prefixIcon: Icon(Icons.lock_outline, color: Colors.grey.shade400, size: 20.sp),
-            suffixIcon: IconButton(
-              icon: Icon(
-                isVisible.value ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+        Obx(
+          () => TextField(
+            controller: controller,
+            obscureText: !isVisible.value,
+            style: GoogleFonts.inter(fontSize: 14.sp),
+            decoration: InputDecoration(
+              hintText: hint,
+              hintStyle: GoogleFonts.inter(
+                color: Colors.grey.shade400,
+                fontSize: 14.sp,
+              ),
+              prefixIcon: Icon(
+                Icons.lock_outline,
                 color: Colors.grey.shade400,
                 size: 20.sp,
               ),
-              onPressed: toggleVisibility,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  isVisible.value
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  color: Colors.grey.shade400,
+                  size: 20.sp,
+                ),
+                onPressed: toggleVisibility,
+              ),
+              filled: true,
+              fillColor: const Color(0xFFEDF4F1).withValues(alpha: 0.6),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15.r),
+                borderSide: BorderSide.none,
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 16.h,
+              ),
             ),
-            filled: true,
-            fillColor: const Color(0xFFEDF4F1).withOpacity(0.6),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15.r),
-              borderSide: BorderSide.none,
-            ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
           ),
-        )),
+        ),
       ],
     );
   }

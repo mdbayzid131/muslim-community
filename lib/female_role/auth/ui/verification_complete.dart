@@ -47,7 +47,7 @@ class FemaleVerificationCompleteUI extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: themeColor.withOpacity(0.1),
+                        color: themeColor.withValues(alpha: 0.1),
                         blurRadius: 30,
                         spreadRadius: 10,
                       ),
@@ -59,7 +59,7 @@ class FemaleVerificationCompleteUI extends StatelessWidget {
                       height: 70,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: themeColor.withOpacity(0.1),
+                        color: themeColor.withValues(alpha: 0.1),
                       ),
                       child: Icon(Icons.check, size: 40, color: themeColor),
                     ),
@@ -85,7 +85,7 @@ class FemaleVerificationCompleteUI extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     fontSize: 16,
-                    color: const Color(0xFFA6864D).withOpacity(0.8),
+                    color: const Color(0xFFA6864D).withValues(alpha: 0.8),
                     height: 1.5,
                   ),
                 ),
@@ -100,7 +100,9 @@ class FemaleVerificationCompleteUI extends StatelessWidget {
                   onPressed: () => Get.offAllNamed(AppRoutes.femaleLogin),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: themeColor,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                     elevation: 0,
                   ),
                   child: Text(
@@ -128,7 +130,7 @@ class FemaleVerificationCompleteUI extends StatelessWidget {
       height: 8,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isActive ? color : color.withOpacity(0.2),
+        color: isActive ? color : color.withValues(alpha: 0.2),
       ),
     );
   }

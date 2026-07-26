@@ -16,10 +16,11 @@ class MaleGroupDetailsUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MaleGroupController controller = Get.find<MaleGroupController>();
-    final MaleUserDataController userDataController = Get.isRegistered<MaleUserDataController>()
+    final MaleUserDataController userDataController =
+        Get.isRegistered<MaleUserDataController>()
         ? Get.find<MaleUserDataController>()
         : Get.put(MaleUserDataController());
-    
+
     // Get initial group data from arguments
     final GroupModel initialGroup = Get.arguments;
     controller.updateInitialGroup(initialGroup);
@@ -34,7 +35,11 @@ class MaleGroupDetailsUI extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: Colors.white,
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new, color: AppColors.maleColor, size: 18.sp),
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: AppColors.maleColor,
+                size: 18.sp,
+              ),
               onPressed: () => Get.back(),
             ),
           ),
@@ -78,7 +83,7 @@ class MaleGroupDetailsUI extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.03),
+                      color: Colors.black.withValues(alpha: 0.03),
                       blurRadius: 10,
                       offset: const Offset(0, 5),
                     ),
@@ -96,7 +101,11 @@ class MaleGroupDetailsUI extends StatelessWidget {
                             color: const Color(0xFFEBF1F7),
                             borderRadius: BorderRadius.circular(15.r),
                           ),
-                          child: Icon(group.icon ?? Icons.group, color: AppColors.maleColor, size: 24.sp),
+                          child: Icon(
+                            group.icon ?? Icons.group,
+                            color: AppColors.maleColor,
+                            size: 24.sp,
+                          ),
                         ),
                         SizedBox(width: 15.w),
                         Expanded(
@@ -136,7 +145,8 @@ class MaleGroupDetailsUI extends StatelessWidget {
               // --- CREATE POST SECTION (MEMBERS ONLY) ---
               Obx(() {
                 final group = controller.currentGroup.value;
-                if (group == null || !group.isJoined) return const SizedBox.shrink();
+                if (group == null || !group.isJoined)
+                  return const SizedBox.shrink();
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,8 +160,11 @@ class MaleGroupDetailsUI extends StatelessWidget {
                             radius: 20.r,
                             backgroundImage: img.isNotEmpty
                                 ? NetworkImage(img)
-                                : const AssetImage('assets/icons/abubakr.png') as ImageProvider,
-                            onBackgroundImageError: img.isNotEmpty ? (e, s) {} : null,
+                                : const AssetImage('assets/icons/abubakr.png')
+                                      as ImageProvider,
+                            onBackgroundImageError: img.isNotEmpty
+                                ? (e, s) {}
+                                : null,
                           );
                         }),
                         SizedBox(width: 15.w),
@@ -159,21 +172,31 @@ class MaleGroupDetailsUI extends StatelessWidget {
                           child: Column(
                             children: [
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 15.w,
+                                  vertical: 10.h,
+                                ),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20.r),
-                                  border: Border.all(color: AppColors.maleColor.withOpacity(0.15)),
+                                  border: Border.all(
+                                    color: AppColors.maleColor.withValues(
+                                      alpha: 0.15,
+                                    ),
+                                  ),
                                 ),
                                 child: TextField(
                                   controller: controller.postContentCtrl,
                                   maxLines: null,
                                   minLines: 3,
                                   decoration: InputDecoration(
-                                    hintText: 'Share something with the group...',
+                                    hintText:
+                                        'Share something with the group...',
                                     hintStyle: GoogleFonts.inter(
                                       fontSize: 13.sp,
-                                      color: AppColors.bodyColor.withOpacity(0.6),
+                                      color: AppColors.bodyColor.withValues(
+                                        alpha: 0.6,
+                                      ),
                                     ),
                                     border: InputBorder.none,
                                     isDense: true,
@@ -181,22 +204,27 @@ class MaleGroupDetailsUI extends StatelessWidget {
                                 ),
                               ),
                               Obx(() {
-                                if (controller.selectedImages.isEmpty) return const SizedBox.shrink();
+                                if (controller.selectedImages.isEmpty)
+                                  return const SizedBox.shrink();
                                 return Padding(
                                   padding: EdgeInsets.only(top: 10.h),
                                   child: SizedBox(
                                     height: 80.h,
                                     child: ListView.separated(
                                       scrollDirection: Axis.horizontal,
-                                      itemCount: controller.selectedImages.length,
-                                      separatorBuilder: (context, index) => SizedBox(width: 10.w),
+                                      itemCount:
+                                          controller.selectedImages.length,
+                                      separatorBuilder: (context, index) =>
+                                          SizedBox(width: 10.w),
                                       itemBuilder: (context, index) {
                                         return Stack(
                                           children: [
                                             ClipRRect(
-                                              borderRadius: BorderRadius.circular(10.r),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r),
                                               child: Image.file(
-                                                controller.selectedImages[index],
+                                                controller
+                                                    .selectedImages[index],
                                                 width: 80.w,
                                                 height: 80.h,
                                                 fit: BoxFit.cover,
@@ -206,14 +234,20 @@ class MaleGroupDetailsUI extends StatelessWidget {
                                               top: 5.h,
                                               right: 5.w,
                                               child: GestureDetector(
-                                                onTap: () => controller.removeImage(index),
+                                                onTap: () => controller
+                                                    .removeImage(index),
                                                 child: Container(
                                                   padding: EdgeInsets.all(4.w),
-                                                  decoration: const BoxDecoration(
-                                                    color: Colors.black54,
-                                                    shape: BoxShape.circle,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                        color: Colors.black54,
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                  child: Icon(
+                                                    Icons.close,
+                                                    color: Colors.white,
+                                                    size: 12.sp,
                                                   ),
-                                                  child: Icon(Icons.close, color: Colors.white, size: 12.sp),
                                                 ),
                                               ),
                                             ),
@@ -230,26 +264,46 @@ class MaleGroupDetailsUI extends StatelessWidget {
                                 children: [
                                   IconButton(
                                     onPressed: () => controller.pickImages(),
-                                    icon: Icon(Icons.image_outlined, color: AppColors.maleColor),
+                                    icon: Icon(
+                                      Icons.image_outlined,
+                                      color: AppColors.maleColor,
+                                    ),
                                   ),
                                   SizedBox(width: 10.w),
                                   ElevatedButton(
-                                    onPressed: () => controller.createPost(group.id),
+                                    onPressed: () =>
+                                        controller.createPost(group.id),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFFD9E2ED),
                                       foregroundColor: AppColors.maleColor,
                                       elevation: 0,
-                                      padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 8.h),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 25.w,
+                                        vertical: 8.h,
+                                      ),
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20.r),
+                                        borderRadius: BorderRadius.circular(
+                                          20.r,
+                                        ),
                                       ),
                                     ),
-                                    child: Obx(() => controller.isLoading.value 
-                                      ? SizedBox(width: 15.w, height: 15.h, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.maleColor))
-                                      : Text(
-                                          'Post',
-                                          style: GoogleFonts.inter(fontSize: 12.sp, fontWeight: FontWeight.w600),
-                                        ),
+                                    child: Obx(
+                                      () => controller.isLoading.value
+                                          ? SizedBox(
+                                              width: 15.w,
+                                              height: 15.h,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2,
+                                                color: AppColors.maleColor,
+                                              ),
+                                            )
+                                          : Text(
+                                              'Post',
+                                              style: GoogleFonts.inter(
+                                                fontSize: 12.sp,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
                                     ),
                                   ),
                                 ],
@@ -309,7 +363,8 @@ class MaleGroupDetailsUI extends StatelessWidget {
 
   Widget _buildPostCard(BuildContext context, GroupPostModel post) {
     final controller = Get.find<MaleGroupController>();
-    final MaleUserDataController userDataController = Get.find<MaleUserDataController>();
+    final MaleUserDataController userDataController =
+        Get.find<MaleUserDataController>();
     return GestureDetector(
       onTap: () => Get.toNamed(AppRoutes.malePostDetails, arguments: post),
       child: Container(
@@ -319,7 +374,7 @@ class MaleGroupDetailsUI extends StatelessWidget {
           borderRadius: BorderRadius.circular(25.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.02),
+              color: Colors.black.withValues(alpha: 0.02),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -334,8 +389,11 @@ class MaleGroupDetailsUI extends StatelessWidget {
                   radius: 18.r,
                   backgroundImage: post.userImage.isNotEmpty
                       ? NetworkImage(post.userImage)
-                      : const AssetImage('assets/icons/abubakr.png') as ImageProvider,
-                  onBackgroundImageError: post.userImage.isNotEmpty ? (e, s) {} : null,
+                      : const AssetImage('assets/icons/abubakr.png')
+                            as ImageProvider,
+                  onBackgroundImageError: post.userImage.isNotEmpty
+                      ? (e, s) {}
+                      : null,
                 ),
                 SizedBox(width: 12.w),
                 Expanded(
@@ -362,13 +420,19 @@ class MaleGroupDetailsUI extends StatelessWidget {
                 ),
                 if (post.userId == userDataController.userId.value)
                   PopupMenuButton<String>(
-                    icon: Icon(Icons.more_vert, color: AppColors.bodyColor, size: 20.sp),
+                    icon: Icon(
+                      Icons.more_vert,
+                      color: AppColors.bodyColor,
+                      size: 20.sp,
+                    ),
                     onSelected: (value) {
                       if (value == 'delete') {
                         Get.dialog(
                           AlertDialog(
                             title: const Text("Delete Post"),
-                            content: const Text("Are you sure you want to delete this post?"),
+                            content: const Text(
+                              "Are you sure you want to delete this post?",
+                            ),
                             actions: [
                               TextButton(
                                 onPressed: () => Get.back(),
@@ -379,7 +443,10 @@ class MaleGroupDetailsUI extends StatelessWidget {
                                   Get.back();
                                   controller.deletePost(post.groupId, post.id);
                                 },
-                                child: const Text("Delete", style: TextStyle(color: Colors.red)),
+                                child: const Text(
+                                  "Delete",
+                                  style: TextStyle(color: Colors.red),
+                                ),
                               ),
                             ],
                           ),
@@ -391,7 +458,11 @@ class MaleGroupDetailsUI extends StatelessWidget {
                         value: 'delete',
                         child: Row(
                           children: [
-                            Icon(Icons.delete_outline, color: Colors.red, size: 20),
+                            Icon(
+                              Icons.delete_outline,
+                              color: Colors.red,
+                              size: 20,
+                            ),
                             SizedBox(width: 10),
                             Text("Delete", style: TextStyle(color: Colors.red)),
                           ],
@@ -400,7 +471,11 @@ class MaleGroupDetailsUI extends StatelessWidget {
                     ],
                   )
                 else
-                  Icon(Icons.more_vert, color: AppColors.bodyColor, size: 20.sp),
+                  Icon(
+                    Icons.more_vert,
+                    color: AppColors.bodyColor,
+                    size: 20.sp,
+                  ),
               ],
             ),
             SizedBox(height: 15.h),
@@ -408,7 +483,7 @@ class MaleGroupDetailsUI extends StatelessWidget {
               post.content,
               style: GoogleFonts.inter(
                 fontSize: 14.sp,
-                color: AppColors.titleColor.withOpacity(0.8),
+                color: AppColors.titleColor.withValues(alpha: 0.8),
                 height: 1.5,
               ),
             ),
@@ -430,7 +505,10 @@ class MaleGroupDetailsUI extends StatelessWidget {
                         errorBuilder: (context, error, stackTrace) => Container(
                           width: 250.w,
                           color: Colors.grey[200],
-                          child: Icon(Icons.image_not_supported, color: Colors.grey),
+                          child: Icon(
+                            Icons.image_not_supported,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
                     );
@@ -447,7 +525,9 @@ class MaleGroupDetailsUI extends StatelessWidget {
                     children: [
                       Icon(
                         post.isLiked ? Icons.favorite : Icons.favorite_border,
-                        color: post.isLiked ? const Color(0xFFE57373) : AppColors.bodyColor,
+                        color: post.isLiked
+                            ? const Color(0xFFE57373)
+                            : AppColors.bodyColor,
                         size: 18.sp,
                       ),
                       SizedBox(width: 6.w),
@@ -462,7 +542,11 @@ class MaleGroupDetailsUI extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 20.w),
-                Icon(Icons.chat_bubble_outline, color: AppColors.bodyColor, size: 18.sp),
+                Icon(
+                  Icons.chat_bubble_outline,
+                  color: AppColors.bodyColor,
+                  size: 18.sp,
+                ),
                 SizedBox(width: 6.w),
                 Text(
                   post.commentsCount.toString(),

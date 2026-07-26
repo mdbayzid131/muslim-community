@@ -11,7 +11,7 @@ class FemaleTermsConditionsUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(PrivacyAndTermsController());
-    
+
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
@@ -29,13 +29,17 @@ class FemaleTermsConditionsUI extends StatelessWidget {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 5,
                     offset: const Offset(0, 2),
                   ),
                 ],
               ),
-              child: Icon(Icons.arrow_back_ios_new, color: AppColors.titleColor, size: 16.sp),
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: AppColors.titleColor,
+                size: 16.sp,
+              ),
             ),
           ),
         ),
@@ -51,9 +55,11 @@ class FemaleTermsConditionsUI extends StatelessWidget {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator(color: AppColors.femaleColor));
+          return const Center(
+            child: CircularProgressIndicator(color: AppColors.femaleColor),
+          );
         }
-        
+
         return RefreshIndicator(
           onRefresh: () => controller.fetchAllLegalPages(),
           color: AppColors.femaleColor,

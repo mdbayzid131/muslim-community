@@ -30,8 +30,10 @@ class JummaHomeUI extends StatelessWidget {
                 // Header Section
                 Container(
                   width: double.infinity,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 24.w,
+                    vertical: 30.h,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.jummaColor,
                     borderRadius: BorderRadius.only(
@@ -42,34 +44,34 @@ class JummaHomeUI extends StatelessWidget {
                   child: Column(
                     children: [
                       FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Jumu'ah Mubarak",
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 32.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Jumu'ah Mubarak",
+                              style: GoogleFonts.playfairDisplay(
+                                fontSize: 32.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 8.w),
-                          Image.asset(
-                            'assets/icons/mosque.png',
-                            width: 30.w,
-                            height: 30.w,
-                          ),
-                        ],
+                            SizedBox(width: 8.w),
+                            Image.asset(
+                              'assets/icons/mosque.png',
+                              width: 30.w,
+                              height: 30.w,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
                       SizedBox(height: 8.h),
                       Text(
                         'BLESSED FRIDAY',
                         style: GoogleFonts.inter(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.white.withValues(alpha: 0.8),
                           letterSpacing: 2,
                         ),
                       ),
@@ -91,7 +93,9 @@ class JummaHomeUI extends StatelessWidget {
                     if (controller.khutbahs.isEmpty) {
                       return SizedBox(
                         height: 400.h,
-                        child: const Center(child: Text("No Khutbahs available")),
+                        child: const Center(
+                          child: Text("No Khutbahs available"),
+                        ),
                       );
                     }
 
@@ -116,15 +120,17 @@ class JummaHomeUI extends StatelessWidget {
 
                         // Featured Khutbah Card
                         GestureDetector(
-                          onTap: () => Get.toNamed(AppRoutes.jummaNowPlaying,
-                              arguments: {'khutbahId': featuredKhutbah.id}),
+                          onTap: () => Get.toNamed(
+                            AppRoutes.jummaNowPlaying,
+                            arguments: {'khutbahId': featuredKhutbah.id},
+                          ),
                           child: Container(
                             decoration: BoxDecoration(
                               color: AppColors.cardColor,
                               borderRadius: BorderRadius.circular(20.r),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
+                                  color: Colors.black.withValues(alpha: 0.05),
                                   blurRadius: 20,
                                   offset: const Offset(0, 10),
                                 ),
@@ -140,21 +146,26 @@ class JummaHomeUI extends StatelessWidget {
                                         topLeft: Radius.circular(20.r),
                                         topRight: Radius.circular(20.r),
                                       ),
-                                      child: featuredKhutbah
-                                              .thumbnailUrl.isNotEmpty
+                                      child:
+                                          featuredKhutbah
+                                              .thumbnailUrl
+                                              .isNotEmpty
                                           ? Image.network(
                                               featuredKhutbah.thumbnailUrl,
                                               width: double.infinity,
                                               height: 200.h,
                                               fit: BoxFit.cover,
                                               errorBuilder:
-                                                  (context, error, stackTrace) =>
-                                                      Image.asset(
-                                                'assets/icons/video.png',
-                                                width: double.infinity,
-                                                height: 200.h,
-                                                fit: BoxFit.cover,
-                                              ),
+                                                  (
+                                                    context,
+                                                    error,
+                                                    stackTrace,
+                                                  ) => Image.asset(
+                                                    'assets/icons/video.png',
+                                                    width: double.infinity,
+                                                    height: 200.h,
+                                                    fit: BoxFit.cover,
+                                                  ),
                                             )
                                           : Image.asset(
                                               'assets/icons/video.png',
@@ -170,7 +181,9 @@ class JummaHomeUI extends StatelessWidget {
                                             topLeft: Radius.circular(20.r),
                                             topRight: Radius.circular(20.r),
                                           ),
-                                          color: Colors.black.withOpacity(0.1),
+                                          color: Colors.black.withValues(
+                                            alpha: 0.1,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -179,11 +192,16 @@ class JummaHomeUI extends StatelessWidget {
                                         child: Container(
                                           padding: EdgeInsets.all(12.w),
                                           decoration: BoxDecoration(
-                                            color: Colors.white.withOpacity(0.3),
+                                            color: Colors.white.withValues(
+                                              alpha: 0.3,
+                                            ),
                                             shape: BoxShape.circle,
                                           ),
-                                          child: Icon(Icons.play_arrow,
-                                              color: Colors.white, size: 40.sp),
+                                          child: Icon(
+                                            Icons.play_arrow,
+                                            color: Colors.white,
+                                            size: 40.sp,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -243,9 +261,9 @@ class JummaHomeUI extends StatelessWidget {
                         SizedBox(height: 30.h),
 
                         // List of Other Khutbahs
-                        ...otherKhutbahs.map((khutbah) => _buildKhutbahListItem(
-                              khutbah,
-                            )),
+                        ...otherKhutbahs.map(
+                          (khutbah) => _buildKhutbahListItem(khutbah),
+                        ),
                         SizedBox(height: 20.h),
                       ],
                     );
@@ -261,8 +279,10 @@ class JummaHomeUI extends StatelessWidget {
 
   Widget _buildKhutbahListItem(KhutbahModel khutbah) {
     return GestureDetector(
-      onTap: () => Get.toNamed(AppRoutes.jummaNowPlaying,
-          arguments: {'khutbahId': khutbah.id}),
+      onTap: () => Get.toNamed(
+        AppRoutes.jummaNowPlaying,
+        arguments: {'khutbahId': khutbah.id},
+      ),
       child: Container(
         margin: EdgeInsets.only(bottom: 16.h),
         padding: EdgeInsets.all(12.w),
@@ -271,7 +291,7 @@ class JummaHomeUI extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.02),
+              color: Colors.black.withValues(alpha: 0.02),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -291,11 +311,11 @@ class JummaHomeUI extends StatelessWidget {
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) =>
                               Image.asset(
-                            'assets/icons/video.png',
-                            width: 65.w,
-                            height: 65.w,
-                            fit: BoxFit.cover,
-                          ),
+                                'assets/icons/video.png',
+                                width: 65.w,
+                                height: 65.w,
+                                fit: BoxFit.cover,
+                              ),
                         )
                       : Image.asset(
                           'assets/icons/video.png',
@@ -304,12 +324,17 @@ class JummaHomeUI extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                   Positioned.fill(
-                    child: Container(color: Colors.black.withOpacity(0.1)),
+                    child: Container(
+                      color: Colors.black.withValues(alpha: 0.1),
+                    ),
                   ),
                   Positioned.fill(
                     child: Center(
-                      child: Icon(Icons.play_circle_fill,
-                          color: Colors.white.withOpacity(0.8), size: 24.sp),
+                      child: Icon(
+                        Icons.play_circle_fill,
+                        color: Colors.white.withValues(alpha: 0.8),
+                        size: 24.sp,
+                      ),
                     ),
                   ),
                 ],
@@ -356,25 +381,36 @@ class JummaHomeUI extends StatelessWidget {
                   SizedBox(height: 4.h),
                   Row(
                     children: [
-                      const Icon(Icons.person_outline,
-                          size: 12, color: Colors.grey),
+                      const Icon(
+                        Icons.person_outline,
+                        size: 12,
+                        color: Colors.grey,
+                      ),
                       SizedBox(width: 4.w),
                       Flexible(
                         child: Text(
                           khutbah.imam,
                           style: GoogleFonts.inter(
-                              fontSize: 10.sp, color: Colors.grey),
+                            fontSize: 10.sp,
+                            color: Colors.grey,
+                          ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
                       ),
                       SizedBox(width: 8.w),
-                      Icon(Icons.circle, size: 4.sp, color: Colors.grey.shade300),
+                      Icon(
+                        Icons.circle,
+                        size: 4.sp,
+                        color: Colors.grey.shade300,
+                      ),
                       SizedBox(width: 8.w),
                       Text(
                         DateFormat('MMM dd').format(khutbah.date),
                         style: GoogleFonts.inter(
-                            fontSize: 10.sp, color: Colors.grey),
+                          fontSize: 10.sp,
+                          color: Colors.grey,
+                        ),
                       ),
                     ],
                   ),

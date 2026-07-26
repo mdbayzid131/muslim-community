@@ -22,7 +22,7 @@ class MaleChatUI extends StatelessWidget {
   Widget build(BuildContext context) {
     // Get the controller (creates if not exists, otherwise returns existing)
     final MaleChatController controller = Get.put(MaleChatController());
-    
+
     // Fetch messages when UI opens or when chatId changes
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (controller.currentChatId != chatId) {
@@ -38,53 +38,54 @@ class MaleChatUI extends StatelessWidget {
           children: [
             // --- DIVIDER ---
             Divider(
-              color: AppColors.goldColor.withOpacity(0.15),
+              color: AppColors.goldColor.withValues(alpha: 0.15),
               thickness: 1,
               height: 1,
             ),
 
             Expanded(
-              child: Obx(
-                () {
-                  if (controller.isLoading.value && controller.messages.isEmpty) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  
-                  if (controller.messages.isEmpty) {
-                    return Center(
-                      child: Text(
-                        'No messages yet. Start a conversation!',
-                        style: GoogleFonts.inter(color: AppColors.bodyColor),
-                      ),
-                    );
-                  }
+              child: Obx(() {
+                if (controller.isLoading.value && controller.messages.isEmpty) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-                  return ListView.builder(
-                    controller: controller.scrollController,
-                    reverse: true, // Newest messages at bottom (index 0)
-                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-                    itemCount: controller.messages.length,
-                    itemBuilder: (context, index) {
-                      final msg = controller.messages[index];
-                      
-                      // With reverse: true, the last item in the list is the oldest (top of screen)
-                      if (index == controller.messages.length - 1) {
-                        return Column(
-                          children: [
-                            _buildTodayPill(),
-                            SizedBox(height: 20.h),
-                            _buildChatBubble(msg),
-                          ],
-                        );
-                      }
-                      
-                      return _buildChatBubble(msg);
-                    },
+                if (controller.messages.isEmpty) {
+                  return Center(
+                    child: Text(
+                      'No messages yet. Start a conversation!',
+                      style: GoogleFonts.inter(color: AppColors.bodyColor),
+                    ),
                   );
-                },
-              ),
+                }
+
+                return ListView.builder(
+                  controller: controller.scrollController,
+                  reverse: true, // Newest messages at bottom (index 0)
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20.w,
+                    vertical: 20.h,
+                  ),
+                  itemCount: controller.messages.length,
+                  itemBuilder: (context, index) {
+                    final msg = controller.messages[index];
+
+                    // With reverse: true, the last item in the list is the oldest (top of screen)
+                    if (index == controller.messages.length - 1) {
+                      return Column(
+                        children: [
+                          _buildTodayPill(),
+                          SizedBox(height: 20.h),
+                          _buildChatBubble(msg),
+                        ],
+                      );
+                    }
+
+                    return _buildChatBubble(msg);
+                  },
+                );
+              }),
             ),
-            
+
             // --- MESSAGE INPUT ---
             _buildMessageInput(),
           ],
@@ -98,7 +99,11 @@ class MaleChatUI extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
       elevation: 0,
       leading: IconButton(
-        icon: Icon(Icons.arrow_back_ios_new, color: AppColors.titleColor, size: 20.sp),
+        icon: Icon(
+          Icons.arrow_back_ios_new,
+          color: AppColors.titleColor,
+          size: 20.sp,
+        ),
         onPressed: () => Get.back(),
       ),
       titleSpacing: 0,
@@ -119,40 +124,61 @@ class MaleChatUI extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.r),
                     child: userImage != null
                         ? (userImage!.startsWith('assets/')
-                            ? Image.asset(userImage!, fit: BoxFit.cover, width: 40.h, height: 40.h)
-                            : Image.network(
-                                userImage!,
-                                fit: BoxFit.cover,
-                                width: 40.h,
-                                height: 40.h,
-                                errorBuilder: (context, error, stackTrace) => Center(
-                                  child: Text(
-                                    userName.isNotEmpty ? userName[0] : '',
-                                    style: TextStyle(color: AppColors.maleColor, fontSize: 18.sp),
-                                  ),
-                                ),
-                              ))
+                              ? Image.asset(
+                                  userImage!,
+                                  fit: BoxFit.cover,
+                                  width: 40.h,
+                                  height: 40.h,
+                                )
+                              : Image.network(
+                                  userImage!,
+                                  fit: BoxFit.cover,
+                                  width: 40.h,
+                                  height: 40.h,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Center(
+                                        child: Text(
+                                          userName.isNotEmpty
+                                              ? userName[0]
+                                              : '',
+                                          style: TextStyle(
+                                            color: AppColors.maleColor,
+                                            fontSize: 18.sp,
+                                          ),
+                                        ),
+                                      ),
+                                ))
                         : Center(
                             child: Text(
                               userName.isNotEmpty ? userName[0] : '',
-                              style: TextStyle(color: AppColors.maleColor, fontSize: 18.sp),
+                              style: TextStyle(
+                                color: AppColors.maleColor,
+                                fontSize: 18.sp,
+                              ),
                             ),
                           ),
                   ),
                 ),
-                Obx(() => controller.isOtherUserOnline.value ? Positioned(
-                  top: -2,
-                  right: -2,
-                  child: Container(
-                    width: 10.w,
-                    height: 10.w,
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: AppColors.backgroundColor, width: 2),
-                    ),
-                  ),
-                ) : const SizedBox.shrink()),
+                Obx(
+                  () => controller.isOtherUserOnline.value
+                      ? Positioned(
+                          top: -2,
+                          right: -2,
+                          child: Container(
+                            width: 10.w,
+                            height: 10.w,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppColors.backgroundColor,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ),
               ],
             ),
           ),
@@ -169,13 +195,17 @@ class MaleChatUI extends StatelessWidget {
                   color: AppColors.titleColor,
                 ),
               ),
-              Obx(() => Text(
-                controller.isOtherUserOnline.value ? 'Online' : 'Offline',
-                style: GoogleFonts.inter(
-                  fontSize: 11.sp,
-                  color: controller.isOtherUserOnline.value ? Colors.green : AppColors.maleColor, 
+              Obx(
+                () => Text(
+                  controller.isOtherUserOnline.value ? 'Online' : 'Offline',
+                  style: GoogleFonts.inter(
+                    fontSize: 11.sp,
+                    color: controller.isOtherUserOnline.value
+                        ? Colors.green
+                        : AppColors.maleColor,
+                  ),
                 ),
-              )),
+              ),
             ],
           ),
         ],
@@ -190,7 +220,9 @@ class MaleChatUI extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20.r),
-          border: Border.all(color: AppColors.goldColor.withOpacity(0.15)),
+          border: Border.all(
+            color: AppColors.goldColor.withValues(alpha: 0.15),
+          ),
         ),
         child: Text(
           'TODAY',
@@ -210,28 +242,43 @@ class MaleChatUI extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: 20.h),
       child: Row(
-        mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isMe
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         children: [
           Flexible(
             child: Column(
-              crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              crossAxisAlignment: isMe
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 12.h,
+                  ),
                   constraints: BoxConstraints(maxWidth: Get.width * 0.75),
                   decoration: BoxDecoration(
                     color: isMe ? AppColors.maleColor : Colors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20.r),
                       topRight: Radius.circular(20.r),
-                      bottomLeft: isMe ? Radius.circular(20.r) : Radius.circular(0),
-                      bottomRight: isMe ? Radius.circular(0) : Radius.circular(20.r),
+                      bottomLeft: isMe
+                          ? Radius.circular(20.r)
+                          : Radius.circular(0),
+                      bottomRight: isMe
+                          ? Radius.circular(0)
+                          : Radius.circular(20.r),
                     ),
-                    border: isMe ? null : Border.all(color: AppColors.goldColor.withOpacity(0.15)),
+                    border: isMe
+                        ? null
+                        : Border.all(
+                            color: AppColors.goldColor.withValues(alpha: 0.15),
+                          ),
                     boxShadow: [
                       if (!isMe)
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.02),
+                          color: Colors.black.withValues(alpha: 0.02),
                           blurRadius: 5,
                           offset: const Offset(0, 2),
                         ),
@@ -256,7 +303,7 @@ class MaleChatUI extends StatelessWidget {
                         message.time,
                         style: GoogleFonts.inter(
                           fontSize: 10.sp,
-                          color: AppColors.bodyColor.withOpacity(0.7),
+                          color: AppColors.bodyColor.withValues(alpha: 0.7),
                         ),
                       ),
                       if (isMe) ...[
@@ -281,11 +328,11 @@ class MaleChatUI extends StatelessWidget {
     switch (status) {
       case MessageStatus.sent:
         icon = Icons.done;
-        color = AppColors.bodyColor.withOpacity(0.5);
+        color = AppColors.bodyColor.withValues(alpha: 0.5);
         break;
       case MessageStatus.delivered:
         icon = Icons.done_all;
-        color = AppColors.bodyColor.withOpacity(0.5);
+        color = AppColors.bodyColor.withValues(alpha: 0.5);
         break;
       case MessageStatus.read:
         icon = Icons.done_all;
@@ -303,7 +350,7 @@ class MaleChatUI extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.backgroundColor,
         border: Border(
-          top: BorderSide(color: AppColors.goldColor.withOpacity(0.15)),
+          top: BorderSide(color: AppColors.goldColor.withValues(alpha: 0.15)),
         ),
       ),
       child: Row(
@@ -316,18 +363,23 @@ class MaleChatUI extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(25.r),
-                border: Border.all(color: AppColors.goldColor.withOpacity(0.2)),
+                border: Border.all(
+                  color: AppColors.goldColor.withValues(alpha: 0.2),
+                ),
               ),
               child: TextField(
                 controller: controller.messageController,
                 decoration: InputDecoration(
                   hintText: 'Type a message...',
                   hintStyle: GoogleFonts.inter(
-                    color: Colors.grey.withOpacity(0.5),
+                    color: Colors.grey.withValues(alpha: 0.5),
                     fontSize: 14.sp,
                   ),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 15.w,
+                    vertical: 12.h,
+                  ),
                 ),
                 onSubmitted: (_) => controller.sendMessage(chatId),
               ),

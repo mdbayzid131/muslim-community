@@ -35,7 +35,7 @@ class JummaSignUpOTPUI extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: themeColor.withOpacity(0.15),
+                        color: themeColor.withValues(alpha: 0.15),
                         blurRadius: 30,
                         spreadRadius: 5,
                       ),
@@ -72,7 +72,10 @@ class JummaSignUpOTPUI extends StatelessWidget {
               // Email Badge
               Container(
                 constraints: BoxConstraints(maxWidth: Get.width * 0.8),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -81,17 +84,24 @@ class JummaSignUpOTPUI extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.email_outlined,
-                        size: 16, color: themeColor.withOpacity(0.6)),
+                    Icon(
+                      Icons.email_outlined,
+                      size: 16,
+                      color: themeColor.withValues(alpha: 0.6),
+                    ),
                     const SizedBox(width: 8),
                     Flexible(
-                      child: Obx(() => Text(
-                            controller.email.value,
-                            style: GoogleFonts.inter(
-                                fontSize: 14, color: const Color(0xFF2D3436)),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          )),
+                      child: Obx(
+                        () => Text(
+                          controller.email.value,
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            color: const Color(0xFF2D3436),
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 4),
                     const Icon(Icons.circle, size: 4, color: Color(0xFFF1C40F)),
@@ -103,7 +113,10 @@ class JummaSignUpOTPUI extends StatelessWidget {
               // 6-digit OTP Fields
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(6, (index) => _buildOTPBox(index, themeColor, controller)),
+                children: List.generate(
+                  6,
+                  (index) => _buildOTPBox(index, themeColor, controller),
+                ),
               ),
               const SizedBox(height: 15),
               Text(
@@ -121,20 +134,29 @@ class JummaSignUpOTPUI extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.access_time, size: 18, color: Colors.grey.shade400),
+                  Icon(
+                    Icons.access_time,
+                    size: 18,
+                    color: Colors.grey.shade400,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     'Code expires in ',
-                    style: GoogleFonts.inter(fontSize: 14, color: Colors.grey.shade600),
-                  ),
-                  Obx(() => Text(
-                    controller.timerText.value,
                     style: GoogleFonts.inter(
-                      fontSize: 14, 
-                      color: themeColor,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Colors.grey.shade600,
                     ),
-                  )),
+                  ),
+                  Obx(
+                    () => Text(
+                      controller.timerText.value,
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        color: themeColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 40),
@@ -143,31 +165,41 @@ class JummaSignUpOTPUI extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 height: 56,
-                child: Obx(() => ElevatedButton(
-                  onPressed: controller.isLoading.value ? null : () => controller.verifyOtp(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: themeColor,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                    elevation: 0,
-                  ),
-                  child: controller.isLoading.value 
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.help_outline, size: 18, color: Colors.white),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Verify & Continue',
-                            style: GoogleFonts.inter(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
+                child: Obx(
+                  () => ElevatedButton(
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () => controller.verifyOtp(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: themeColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                )),
+                      elevation: 0,
+                    ),
+                    child: controller.isLoading.value
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.help_outline,
+                                size: 18,
+                                color: Colors.white,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Verify & Continue',
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                  ),
+                ),
               ),
               const SizedBox(height: 30),
 
@@ -177,22 +209,27 @@ class JummaSignUpOTPUI extends StatelessWidget {
                 children: [
                   Text(
                     "Didn't receive the code? ",
-                    style: GoogleFonts.inter(fontSize: 14, color: Colors.grey.shade600),
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      color: Colors.grey.shade600,
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
                       controller.resendOtp();
                     },
-                    child: Obx(() => Text(
-                          'Resend',
-                          style: GoogleFonts.inter(
-                            fontSize: 14,
-                            color: controller.secondsRemaining.value > 0
-                                ? Colors.grey
-                                : themeColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )),
+                    child: Obx(
+                      () => Text(
+                        'Resend',
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          color: controller.secondsRemaining.value > 0
+                              ? Colors.grey
+                              : themeColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -204,7 +241,11 @@ class JummaSignUpOTPUI extends StatelessWidget {
     );
   }
 
-  Widget _buildOTPBox(int index, Color themeColor, JummaOtpController controller) {
+  Widget _buildOTPBox(
+    int index,
+    Color themeColor,
+    JummaOtpController controller,
+  ) {
     return Container(
       width: 45,
       height: 60,
@@ -212,7 +253,7 @@ class JummaSignUpOTPUI extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: themeColor.withOpacity(0.3),
+          color: themeColor.withValues(alpha: 0.3),
           width: 1.5,
         ),
       ),

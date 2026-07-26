@@ -9,10 +9,6 @@ import 'package:muslim_community/male_role/navbar/navbarcontroller.dart';
 import 'package:muslim_community/male_role/home/ui/prayer_settings_ui.dart';
 import 'package:muslim_community/male_role/notifications/ui/malenotificationsui.dart';
 import 'package:muslim_community/male_role/discover/controller/discover_controller.dart';
-import 'package:muslim_community/male_role/discover/model/brother_model.dart';
-import 'package:muslim_community/male_role/discover/ui/male_profile_details_ui.dart';
-import 'package:intl/intl.dart';
-import 'dart:math' as math;
 import 'package:muslim_community/shared/ui/prayer_recitation_page.dart';
 import 'package:muslim_community/shared/widgets/qibla_compass_widget.dart';
 import 'package:muslim_community/shared/widgets/coming_soon_dialog.dart';
@@ -24,7 +20,9 @@ class MaleHomeUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MaleHomeController controller = Get.put(MaleHomeController());
-    final MaleUserDataController userDataController = Get.put(MaleUserDataController());
+    final MaleUserDataController userDataController = Get.put(
+      MaleUserDataController(),
+    );
     final MaleNavbarController navbarController =
         Get.find<MaleNavbarController>();
 
@@ -133,7 +131,9 @@ class MaleHomeUI extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.circle,
-                border: Border.all(color: AppColors.maleColor.withOpacity(0.2)),
+                border: Border.all(
+                  color: AppColors.maleColor.withValues(alpha: 0.2),
+                ),
               ),
               child: Icon(
                 Icons.notifications_none,
@@ -198,13 +198,15 @@ class MaleHomeUI extends StatelessWidget {
                       color: AppColors.titleColor,
                     ),
                   ),
-                  Obx(() => Text(
-                    "Today · ${prayerCtrl.todayDate.value.isNotEmpty ? prayerCtrl.todayDate.value : 'Loading...'} · ${prayerCtrl.hijriDate.value}",
-                    style: GoogleFonts.inter(
-                      fontSize: 12.sp,
-                      color: AppColors.bodyColor,
+                  Obx(
+                    () => Text(
+                      "Today · ${prayerCtrl.todayDate.value.isNotEmpty ? prayerCtrl.todayDate.value : 'Loading...'} · ${prayerCtrl.hijriDate.value}",
+                      style: GoogleFonts.inter(
+                        fontSize: 12.sp,
+                        color: AppColors.bodyColor,
+                      ),
                     ),
-                  )),
+                  ),
                 ],
               ),
             ),
@@ -212,7 +214,7 @@ class MaleHomeUI extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
               decoration: BoxDecoration(
-                color: AppColors.maleColor.withOpacity(0.1),
+                color: AppColors.maleColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20.r),
               ),
               child: Row(
@@ -248,10 +250,12 @@ class MaleHomeUI extends StatelessWidget {
           if (prayerCtrl.isLoading.value) {
             return SizedBox(
               height: 150.h,
-              child: const Center(child: CircularProgressIndicator(color: AppColors.maleColor)),
+              child: const Center(
+                child: CircularProgressIndicator(color: AppColors.maleColor),
+              ),
             );
           }
-          
+
           final timings = prayerCtrl.prayerTimings;
           if (timings.isEmpty) {
             return const Center(child: Text("No timings available"));
@@ -265,12 +269,42 @@ class MaleHomeUI extends StatelessWidget {
             crossAxisSpacing: 15.w,
             childAspectRatio: 0.8,
             children: [
-              _buildPrayerCard("Fajr", timings['Fajr'] ?? "--:--", 'assets/icons/fajr.png', isNext: prayerCtrl.nextPrayerName.value == "Fajr"),
-              _buildPrayerCard("Sunrise", timings['Sunrise'] ?? "--:--", 'assets/icons/sunrise.png', isNext: false),
-              _buildPrayerCard("Dhuhr", timings['Dhuhr'] ?? "--:--", 'assets/icons/dhuhr.png', isNext: prayerCtrl.nextPrayerName.value == "Dhuhr"),
-              _buildPrayerCard("Asr", timings['Asr'] ?? "--:--", 'assets/icons/asr.png', isNext: prayerCtrl.nextPrayerName.value == "Asr"),
-              _buildPrayerCard("Maghrib", timings['Maghrib'] ?? "--:--", 'assets/icons/maghrib.png', isNext: prayerCtrl.nextPrayerName.value == "Maghrib"),
-              _buildPrayerCard("Isha", timings['Isha'] ?? "--:--", 'assets/icons/isha.png', isNext: prayerCtrl.nextPrayerName.value == "Isha"),
+              _buildPrayerCard(
+                "Fajr",
+                timings['Fajr'] ?? "--:--",
+                'assets/icons/fajr.png',
+                isNext: prayerCtrl.nextPrayerName.value == "Fajr",
+              ),
+              _buildPrayerCard(
+                "Sunrise",
+                timings['Sunrise'] ?? "--:--",
+                'assets/icons/sunrise.png',
+                isNext: false,
+              ),
+              _buildPrayerCard(
+                "Dhuhr",
+                timings['Dhuhr'] ?? "--:--",
+                'assets/icons/dhuhr.png',
+                isNext: prayerCtrl.nextPrayerName.value == "Dhuhr",
+              ),
+              _buildPrayerCard(
+                "Asr",
+                timings['Asr'] ?? "--:--",
+                'assets/icons/asr.png',
+                isNext: prayerCtrl.nextPrayerName.value == "Asr",
+              ),
+              _buildPrayerCard(
+                "Maghrib",
+                timings['Maghrib'] ?? "--:--",
+                'assets/icons/maghrib.png',
+                isNext: prayerCtrl.nextPrayerName.value == "Maghrib",
+              ),
+              _buildPrayerCard(
+                "Isha",
+                timings['Isha'] ?? "--:--",
+                'assets/icons/isha.png',
+                isNext: prayerCtrl.nextPrayerName.value == "Isha",
+              ),
             ],
           );
         }),
@@ -280,7 +314,7 @@ class MaleHomeUI extends StatelessWidget {
             "Tap card to view recitation",
             style: GoogleFonts.inter(
               fontSize: 12.sp,
-              color: AppColors.bodyColor.withOpacity(0.6),
+              color: AppColors.bodyColor.withValues(alpha: 0.6),
             ),
           ),
         ),
@@ -297,21 +331,34 @@ class MaleHomeUI extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (name == "Sunrise") {
-          Get.to(() => const SunriseDetailsUI(themeColor: AppColors.maleColor, isMale: true));
+          Get.to(
+            () => const SunriseDetailsUI(
+              themeColor: AppColors.maleColor,
+              isMale: true,
+            ),
+          );
         } else {
-          Get.to(() => PrayerRecitationPage(waqt: name, themeColor: AppColors.maleColor, isMale: true));
+          Get.to(
+            () => PrayerRecitationPage(
+              waqt: name,
+              themeColor: AppColors.maleColor,
+              isMale: true,
+            ),
+          );
         }
       },
       child: Container(
         decoration: BoxDecoration(
-          color: isNext ? AppColors.maleColor.withOpacity(0.1) : Colors.white,
+          color: isNext
+              ? AppColors.maleColor.withValues(alpha: 0.1)
+              : Colors.white,
           borderRadius: BorderRadius.circular(15.r),
           border: isNext
-              ? Border.all(color: AppColors.maleColor.withOpacity(0.3))
+              ? Border.all(color: AppColors.maleColor.withValues(alpha: 0.3))
               : null,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -392,7 +439,7 @@ class MaleHomeUI extends StatelessWidget {
         borderRadius: BorderRadius.circular(35.r),
         boxShadow: [
           BoxShadow(
-            color: AppColors.maleColor.withOpacity(0.08),
+            color: AppColors.maleColor.withValues(alpha: 0.08),
             blurRadius: 30,
             offset: const Offset(0, 10),
           ),
@@ -414,7 +461,7 @@ class MaleHomeUI extends StatelessWidget {
             "Live Compass Direction",
             style: GoogleFonts.inter(
               fontSize: 13.sp,
-              color: AppColors.bodyColor.withOpacity(0.6),
+              color: AppColors.bodyColor.withValues(alpha: 0.6),
             ),
           ),
           SizedBox(height: 35.h),
@@ -426,10 +473,6 @@ class MaleHomeUI extends StatelessWidget {
                 needleRotation: controller.qiblaController.needleRotation,
                 primaryColor: AppColors.maleColor,
               ),
-
-
-
-
             ],
           ),
           SizedBox(height: 35.h),
@@ -437,7 +480,7 @@ class MaleHomeUI extends StatelessWidget {
             "Align your phone to find the Kaaba",
             style: GoogleFonts.inter(
               fontSize: 12.sp,
-              color: AppColors.bodyColor.withOpacity(0.5),
+              color: AppColors.bodyColor.withValues(alpha: 0.5),
               fontStyle: FontStyle.italic,
             ),
           ),
@@ -448,7 +491,7 @@ class MaleHomeUI extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.all(12.w),
                       decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.05),
+                        color: Colors.red.withValues(alpha: 0.05),
                         borderRadius: BorderRadius.circular(15.r),
                       ),
                       child: Row(
@@ -535,7 +578,7 @@ class MaleHomeUI extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.r),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.03),
+                  color: Colors.black.withValues(alpha: 0.03),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -546,7 +589,7 @@ class MaleHomeUI extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(12.w),
                   decoration: BoxDecoration(
-                    color: resource['color'].withOpacity(0.1),
+                    color: resource['color'].withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -573,7 +616,7 @@ class MaleHomeUI extends StatelessWidget {
                         resource['subtitle'],
                         style: GoogleFonts.inter(
                           fontSize: 13.sp,
-                          color: AppColors.bodyColor.withOpacity(0.7),
+                          color: AppColors.bodyColor.withValues(alpha: 0.7),
                         ),
                       ),
                     ],
@@ -581,7 +624,7 @@ class MaleHomeUI extends StatelessWidget {
                 ),
                 Icon(
                   Icons.arrow_forward_ios_rounded,
-                  color: AppColors.bodyColor.withOpacity(0.3),
+                  color: AppColors.bodyColor.withValues(alpha: 0.3),
                   size: 16.sp,
                 ),
               ],

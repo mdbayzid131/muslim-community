@@ -70,7 +70,8 @@ class FemaleDiscoverUI extends StatelessWidget {
                     return const MosquesUI();
                   } else if (controller.selectedCategory.value == 'Jumma') {
                     return const JummaUI();
-                  } else if (controller.selectedCategory.value == 'Ask Sister') {
+                  } else if (controller.selectedCategory.value ==
+                      'Ask Sister') {
                     return const AskSisterUI();
                   } else {
                     return const SizedBox();
@@ -94,13 +95,13 @@ class FemaleDiscoverUI extends StatelessWidget {
       ),
       child: Obx(() {
         final currentSelection = controller.selectedCategory.value;
-        
+
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: controller.mainCategories.map((category) {
               final isSelected = currentSelection == category;
-              
+
               return GestureDetector(
                 onTap: () {
                   if (category == 'Jumma') {
@@ -115,14 +116,20 @@ class FemaleDiscoverUI extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isSelected ? Colors.white : Colors.transparent,
                     borderRadius: BorderRadius.circular(16.r),
-                    border: isSelected ? Border.all(color: AppColors.femaleColor, width: 1) : null,
+                    border: isSelected
+                        ? Border.all(color: AppColors.femaleColor, width: 1)
+                        : null,
                   ),
                   child: Text(
                     category,
                     style: GoogleFonts.inter(
                       fontSize: 12.sp,
-                      color: isSelected ? AppColors.titleColor : const Color(0xFFD18E8E),
-                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                      color: isSelected
+                          ? AppColors.titleColor
+                          : const Color(0xFFD18E8E),
+                      fontWeight: isSelected
+                          ? FontWeight.w600
+                          : FontWeight.w400,
                     ),
                   ),
                 ),
@@ -146,12 +153,12 @@ class FemaleDiscoverUI extends StatelessWidget {
         decoration: InputDecoration(
           hintText: 'Search Sisters...',
           hintStyle: GoogleFonts.inter(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withValues(alpha: 0.5),
             fontSize: 13.sp,
           ),
           prefixIcon: Icon(
             Icons.search,
-            color: _roleColor.withOpacity(0.5),
+            color: _roleColor.withValues(alpha: 0.5),
             size: 20.sp,
           ),
           border: InputBorder.none,
@@ -194,8 +201,8 @@ class FemaleDiscoverUI extends StatelessWidget {
           borderRadius: BorderRadius.circular(30.r),
           border: Border.all(
             color: isSelected
-                ? _roleColor.withOpacity(0.4)
-                : const Color(0xFFA6864D).withOpacity(0.3),
+                ? _roleColor.withValues(alpha: 0.4)
+                : const Color(0xFFA6864D).withValues(alpha: 0.3),
           ),
         ),
         child: Text(
@@ -219,89 +226,100 @@ class FemaleDiscoverUI extends StatelessWidget {
           }
           return false;
         },
-        child: Obx(
-          () {
-            if (controller.isLoading.value && controller.filteredSisters.isEmpty) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: _roleColor,
-                ),
-              );
-            }
+        child: Obx(() {
+          if (controller.isLoading.value &&
+              controller.filteredSisters.isEmpty) {
+            return const Center(
+              child: CircularProgressIndicator(color: _roleColor),
+            );
+          }
 
-            if (controller.filteredSisters.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.person_off_outlined,
-                      size: 60.sp,
-                      color: Colors.grey.shade400,
+          if (controller.filteredSisters.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.person_off_outlined,
+                    size: 60.sp,
+                    color: Colors.grey.shade400,
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    'No Sisters Found',
+                    style: GoogleFonts.inter(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.titleColor,
                     ),
-                    SizedBox(height: 16.h),
-                    Text(
-                      'No Sisters Found',
-                      style: GoogleFonts.inter(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.titleColor,
-                      ),
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    'Try adjusting your search or filters.',
+                    style: GoogleFonts.inter(
+                      fontSize: 12.sp,
+                      color: AppColors.bodyColor,
                     ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      'Try adjusting your search or filters.',
-                      style: GoogleFonts.inter(
-                        fontSize: 12.sp,
-                        color: AppColors.bodyColor,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            return RefreshIndicator(
-              onRefresh: () => controller.fetchSisters(),
-              color: _roleColor,
-              child: GridView.builder(
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.only(bottom: 20.h),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.65,
-                  crossAxisSpacing: 12.w,
-                  mainAxisSpacing: 12.h,
-                ),
-                itemCount: controller.filteredSisters.length,
-                itemBuilder: (context, index) {
-                  final sister = controller.filteredSisters[index];
-                  return SisterCard(
-                    sister: sister,
-                    index: index,
-                    onConnectPressed: () => Get.find<FemaleRequestSendController>().sendRequest(sister.id),
-                    onCancelPressed: () {
-                      if (sister.connectionId != null) {
-                        Get.find<FemaleRequestCancelController>().cancelRequest(sister.id, sister.connectionId!);
-                      } else {
-                        Get.snackbar("Error", "Connection ID is missing. Cannot cancel.");
-                      }
-                    },
-                    onConfirmPressed: () {
-                      if (sister.connectionId != null) {
-                        Get.find<FemaleRequestAcceptController>().acceptRequest(sister.id, sister.connectionId!);
-                      } else {
-                        Get.snackbar("Error", "Connection ID is missing. Cannot confirm.");
-                      }
-                    },
-                  );
-                },
+                  ),
+                ],
               ),
             );
-          },
-        ),
+          }
+
+          return RefreshIndicator(
+            onRefresh: () => controller.fetchSisters(),
+            color: _roleColor,
+            child: GridView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: EdgeInsets.only(bottom: 20.h),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.65,
+                crossAxisSpacing: 12.w,
+                mainAxisSpacing: 12.h,
+              ),
+              itemCount: controller.filteredSisters.length,
+              itemBuilder: (context, index) {
+                final sister = controller.filteredSisters[index];
+                return SisterCard(
+                  sister: sister,
+                  index: index,
+                  onConnectPressed: () =>
+                      Get.find<FemaleRequestSendController>().sendRequest(
+                        sister.id,
+                      ),
+                  onCancelPressed: () {
+                    if (sister.connectionId != null) {
+                      Get.find<FemaleRequestCancelController>().cancelRequest(
+                        sister.id,
+                        sister.connectionId!,
+                      );
+                    } else {
+                      Get.snackbar(
+                        "Error",
+                        "Connection ID is missing. Cannot cancel.",
+                      );
+                    }
+                  },
+                  onConfirmPressed: () {
+                    if (sister.connectionId != null) {
+                      Get.find<FemaleRequestAcceptController>().acceptRequest(
+                        sister.id,
+                        sister.connectionId!,
+                      );
+                    } else {
+                      Get.snackbar(
+                        "Error",
+                        "Connection ID is missing. Cannot confirm.",
+                      );
+                    }
+                  },
+                );
+              },
+            ),
+          );
+        }),
       ),
     );
   }
 }
-

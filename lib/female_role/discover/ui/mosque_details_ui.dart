@@ -72,9 +72,9 @@ class FemaleMosqueDetailsUI extends StatelessWidget {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Colors.black.withOpacity(0.3),
+                          Colors.black.withValues(alpha: 0.3),
                           Colors.transparent,
-                          Colors.black.withOpacity(0.7),
+                          Colors.black.withValues(alpha: 0.7),
                         ],
                       ),
                     ),
@@ -84,7 +84,7 @@ class FemaleMosqueDetailsUI extends StatelessWidget {
                   top: 40.h,
                   left: 20.w,
                   child: CircleAvatar(
-                    backgroundColor: Colors.white.withOpacity(0.8),
+                    backgroundColor: Colors.white.withValues(alpha: 0.8),
                     child: IconButton(
                       icon: Icon(
                         Icons.arrow_back_ios_new,
@@ -124,7 +124,7 @@ class FemaleMosqueDetailsUI extends StatelessWidget {
                               address,
                               style: GoogleFonts.inter(
                                 fontSize: 14.sp,
-                                color: Colors.white.withOpacity(0.9),
+                                color: Colors.white.withValues(alpha: 0.9),
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -152,7 +152,10 @@ class FemaleMosqueDetailsUI extends StatelessWidget {
                         if (mapUrl.isNotEmpty) {
                           final uri = Uri.parse(mapUrl);
                           try {
-                            await launchUrl(uri, mode: LaunchMode.externalApplication);
+                            await launchUrl(
+                              uri,
+                              mode: LaunchMode.externalApplication,
+                            );
                           } catch (e) {
                             Get.snackbar('Error', 'Could not open map: $e');
                           }
@@ -168,7 +171,7 @@ class FemaleMosqueDetailsUI extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(
                           0xFFE5A69E,
-                        ).withOpacity(0.8), // Soft coral from image
+                        ).withValues(alpha: 0.8), // Soft coral from image
                         foregroundColor: Colors.white,
                         elevation: 0,
                         padding: EdgeInsets.symmetric(vertical: 15.h),
@@ -179,16 +182,22 @@ class FemaleMosqueDetailsUI extends StatelessWidget {
                     ),
                   ),
 
-                  if (args['website'] != null && args['website'].toString().isNotEmpty) ...[
+                  if (args['website'] != null &&
+                      args['website'].toString().isNotEmpty) ...[
                     SizedBox(height: 12.h),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
                         onPressed: () async {
                           final String url = args['website'];
-                          final uri = Uri.parse(url.startsWith('http') ? url : 'https://$url');
+                          final uri = Uri.parse(
+                            url.startsWith('http') ? url : 'https://$url',
+                          );
                           try {
-                            await launchUrl(uri, mode: LaunchMode.externalApplication);
+                            await launchUrl(
+                              uri,
+                              mode: LaunchMode.externalApplication,
+                            );
                           } catch (e) {
                             Get.snackbar('Error', 'Could not open website');
                           }
@@ -205,7 +214,11 @@ class FemaleMosqueDetailsUI extends StatelessWidget {
                           padding: EdgeInsets.symmetric(vertical: 15.h),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.r),
-                            side: BorderSide(color: AppColors.femaleColor.withOpacity(0.3)),
+                            side: BorderSide(
+                              color: AppColors.femaleColor.withValues(
+                                alpha: 0.3,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -243,7 +256,7 @@ class FemaleMosqueDetailsUI extends StatelessWidget {
                       borderRadius: BorderRadius.circular(25.r),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.02),
+                          color: Colors.black.withValues(alpha: 0.02),
                           blurRadius: 15,
                           offset: const Offset(0, 8),
                         ),

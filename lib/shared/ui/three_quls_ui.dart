@@ -392,7 +392,7 @@ class _ThreeQulsUIState extends State<ThreeQulsUI>
                 style: GoogleFonts.inter(
                   fontSize: 12.sp,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.bodyColor.withOpacity(0.8),
+                  color: AppColors.bodyColor.withValues(alpha: 0.8),
                   letterSpacing: 1.2,
                 ),
               ),
@@ -400,7 +400,7 @@ class _ThreeQulsUIState extends State<ThreeQulsUI>
                 "${surah.verses.length} Verses",
                 style: GoogleFonts.inter(
                   fontSize: 12.sp,
-                  color: AppColors.bodyColor.withOpacity(0.6),
+                  color: AppColors.bodyColor.withValues(alpha: 0.6),
                 ),
               ),
             ],
@@ -432,12 +432,12 @@ class _ThreeQulsUIState extends State<ThreeQulsUI>
         color: Colors.white,
         borderRadius: BorderRadius.circular(24.r),
         border: Border.all(
-          color: widget.themeColor.withOpacity(0.12),
+          color: widget.themeColor.withValues(alpha: 0.12),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: widget.themeColor.withOpacity(0.04),
+            color: widget.themeColor.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -480,9 +480,11 @@ class _ThreeQulsUIState extends State<ThreeQulsUI>
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: const Color(0xFFF0FDFB).withOpacity(0.5),
+        color: const Color(0xFFF0FDFB).withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: const Color(0xFF26A69A).withOpacity(0.15)),
+        border: Border.all(
+          color: const Color(0xFF26A69A).withValues(alpha: 0.15),
+        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -529,9 +531,9 @@ class _ThreeQulsUIState extends State<ThreeQulsUI>
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       decoration: BoxDecoration(
-        color: widget.themeColor.withOpacity(0.08),
+        color: widget.themeColor.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: widget.themeColor.withOpacity(0.2)),
+        border: Border.all(color: widget.themeColor.withValues(alpha: 0.2)),
       ),
       child: Row(
         children: [
@@ -571,7 +573,7 @@ class _ThreeQulsUIState extends State<ThreeQulsUI>
                   "Reciter: Mishary Rashid Alafasy",
                   style: GoogleFonts.inter(
                     fontSize: 11.sp,
-                    color: AppColors.bodyColor.withOpacity(0.8),
+                    color: AppColors.bodyColor.withValues(alpha: 0.8),
                   ),
                 ),
               ],
@@ -596,17 +598,19 @@ class _ThreeQulsUIState extends State<ThreeQulsUI>
       margin: EdgeInsets.only(bottom: 12.h),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: isActive ? widget.themeColor.withOpacity(0.03) : Colors.white,
+        color: isActive
+            ? widget.themeColor.withValues(alpha: 0.03)
+            : Colors.white,
         borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
           color: isActive
-              ? widget.themeColor.withOpacity(0.5)
-              : Colors.black.withOpacity(0.04),
+              ? widget.themeColor.withValues(alpha: 0.5)
+              : Colors.black.withValues(alpha: 0.04),
           width: isActive ? 1.5 : 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -628,7 +632,7 @@ class _ThreeQulsUIState extends State<ThreeQulsUI>
                   ),
                   decoration: BoxDecoration(
                     color: isActive
-                        ? widget.themeColor.withOpacity(0.1)
+                        ? widget.themeColor.withValues(alpha: 0.1)
                         : const Color(0xFFF3F3F5),
                     borderRadius: BorderRadius.circular(30.r),
                   ),
@@ -651,7 +655,7 @@ class _ThreeQulsUIState extends State<ThreeQulsUI>
                           isActive &&
                               _currentlyPlayingUrl == verse.audioUrl &&
                               _isPlaying
-                          ? widget.themeColor.withOpacity(0.1)
+                          ? widget.themeColor.withValues(alpha: 0.1)
                           : Colors.transparent,
                       shape: BoxShape.circle,
                     ),

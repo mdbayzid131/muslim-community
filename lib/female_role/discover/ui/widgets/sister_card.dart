@@ -5,7 +5,6 @@ import 'package:muslim_community/female_role/discover/model/sister_model.dart';
 import 'package:muslim_community/female_role/discover/ui/female_profile_details_ui.dart';
 import 'package:get/get.dart';
 import 'package:muslim_community/female_role/discover/controller/sistergetcontroller.dart';
-import 'package:muslim_community/female_role/discover/controller/requestsendcontroller.dart';
 
 /// This widget represents a single sister profile card in the Discover grid.
 class SisterCard extends StatelessWidget {
@@ -14,7 +13,7 @@ class SisterCard extends StatelessWidget {
   final VoidCallback onConnectPressed;
   final VoidCallback onCancelPressed;
   final VoidCallback onConfirmPressed;
-  
+
   const SisterCard({
     super.key,
     required this.sister,
@@ -35,79 +34,82 @@ class SisterCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
           ],
         ),
         child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // --- IMAGE SECTION ---
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.r),
-                child: sister.imageUrl.isNotEmpty && sister.imageUrl.startsWith('http')
-                    ? Image.network(
-                        sister.imageUrl,
-                        height: 100.h,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
-                        errorBuilder: (context, error, stackTrace) => Container(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // --- IMAGE SECTION ---
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15.r),
+                  child:
+                      sister.imageUrl.isNotEmpty &&
+                          sister.imageUrl.startsWith('http')
+                      ? Image.network(
+                          sister.imageUrl,
+                          height: 100.h,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                                height: 100.h,
+                                width: double.infinity,
+                                color: Colors.black,
+                              ),
+                        )
+                      : Container(
                           height: 100.h,
                           width: double.infinity,
                           color: Colors.black,
                         ),
-                      )
-                    : Container(
-                        height: 100.h,
-                        width: double.infinity,
-                        color: Colors.black,
-                      ),
+                ),
+                if (sister.isOnline) _buildOnlineIndicator(),
+                if (sister.isVerified) _buildVerifiedBadge(),
+              ],
+            ),
+
+            SizedBox(height: 8.h),
+
+            // --- INFO SECTION (Name, Age, Distance) ---
+            Text(
+              sister.name,
+              style: GoogleFonts.playfairDisplay(
+                fontSize: 15.sp,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xFF2D3436),
               ),
-              if (sister.isOnline) _buildOnlineIndicator(),
-              if (sister.isVerified) _buildVerifiedBadge(),
-            ],
-          ),
-          
-          SizedBox(height: 8.h),
-          
-          // --- INFO SECTION (Name, Age, Distance) ---
-          Text(
-            sister.name,
-            style: GoogleFonts.playfairDisplay(
-              fontSize: 15.sp,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF2D3436),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          
-          SizedBox(height: 2.h),
-          
-          Text(
-            '${sister.age} • ${sister.joinedAgo}',
-            style: GoogleFonts.inter(
-              fontSize: 10.sp,
-              color: const Color(0xFF636E72),
+
+            SizedBox(height: 2.h),
+
+            Text(
+              '${sister.age} • ${sister.joinedAgo}',
+              style: GoogleFonts.inter(
+                fontSize: 10.sp,
+                color: const Color(0xFF636E72),
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          
-          SizedBox(height: 6.h),
-          
-          _buildDistanceBadge(),
 
-          SizedBox(height: 8.h),
+            SizedBox(height: 6.h),
 
-          _buildActionButton(),
-        ],
-      ),
+            _buildDistanceBadge(),
+
+            SizedBox(height: 8.h),
+
+            _buildActionButton(),
+          ],
+        ),
       ),
     );
   }
@@ -122,7 +124,9 @@ class SisterCard extends StatelessWidget {
         decoration: const BoxDecoration(
           color: Colors.green,
           shape: BoxShape.circle,
-          border: Border.fromBorderSide(BorderSide(color: Colors.white, width: 1.5)),
+          border: Border.fromBorderSide(
+            BorderSide(color: Colors.white, width: 1.5),
+          ),
         ),
       ),
     );
@@ -147,17 +151,26 @@ class SisterCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
       decoration: BoxDecoration(
-        color: const Color(0xFFFBF0F0), // Soft pink background matching femaleColor
+        color: const Color(
+          0xFFFBF0F0,
+        ), // Soft pink background matching femaleColor
         borderRadius: BorderRadius.circular(20.r), // Pill shape
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.location_on_outlined, size: 10.sp, color: const Color(0xFFD18E8E)),
+          Icon(
+            Icons.location_on_outlined,
+            size: 10.sp,
+            color: const Color(0xFFD18E8E),
+          ),
           SizedBox(width: 4.w),
           Text(
             '${sister.distance} mi',
-            style: GoogleFonts.inter(fontSize: 10.sp, color: const Color(0xFFD18E8E)),
+            style: GoogleFonts.inter(
+              fontSize: 10.sp,
+              color: const Color(0xFFD18E8E),
+            ),
           ),
         ],
       ),
@@ -167,11 +180,13 @@ class SisterCard extends StatelessWidget {
   Widget _buildActionButton() {
     final ctrl = Get.find<SisterGetController>();
     return Obx(() {
-      final liveSister = ctrl.sisters.length > index ? ctrl.sisters[index] : sister;
+      final liveSister = ctrl.sisters.length > index
+          ? ctrl.sisters[index]
+          : sister;
       final bool isConnected = liveSister.status == 'Connected';
       final bool isRequested = liveSister.status == 'Requested';
-      final bool isReceived  = liveSister.status == 'Received';
-      final bool isConnect   = liveSister.status == 'Connect';
+      final bool isReceived = liveSister.status == 'Received';
+      final bool isConnect = liveSister.status == 'Connect';
 
       // Show Confirm Request for received requests
       if (isReceived) {
@@ -185,11 +200,16 @@ class SisterCard extends StatelessWidget {
               foregroundColor: Colors.white,
               elevation: 0,
               padding: EdgeInsets.symmetric(horizontal: 4.w),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.r),
+              ),
             ),
             child: Text(
               'Confirm Request',
-              style: GoogleFonts.inter(fontSize: 11.sp, fontWeight: FontWeight.w600),
+              style: GoogleFonts.inter(
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         );
@@ -207,8 +227,12 @@ class SisterCard extends StatelessWidget {
             }
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: isConnected || isRequested ? Colors.white : const Color(0xFFD18E8E),
-            foregroundColor: isConnected || isRequested ? const Color(0xFFD18E8E) : Colors.white,
+            backgroundColor: isConnected || isRequested
+                ? Colors.white
+                : const Color(0xFFD18E8E),
+            foregroundColor: isConnected || isRequested
+                ? const Color(0xFFD18E8E)
+                : Colors.white,
             elevation: 0,
             padding: EdgeInsets.symmetric(horizontal: 4.w),
             shape: RoundedRectangleBorder(
@@ -227,7 +251,10 @@ class SisterCard extends StatelessWidget {
               ],
               Text(
                 liveSister.status,
-                style: GoogleFonts.inter(fontSize: 11.sp, fontWeight: FontWeight.w600),
+                style: GoogleFonts.inter(
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),

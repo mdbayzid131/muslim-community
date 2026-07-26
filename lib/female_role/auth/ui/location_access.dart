@@ -22,12 +22,12 @@ class _FemaleLocationAccessUIState extends State<FemaleLocationAccessUI> {
 
     try {
       LocationPermission permission = await Geolocator.checkPermission();
-      
+
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
       }
 
-      if (permission == LocationPermission.always || 
+      if (permission == LocationPermission.always ||
           permission == LocationPermission.whileInUse) {
         // Permission granted, navigate to next page
         Get.toNamed(AppRoutes.femaleIdentityVerification);
@@ -37,7 +37,7 @@ class _FemaleLocationAccessUIState extends State<FemaleLocationAccessUI> {
           'Permission Denied',
           'Please enable location permissions in settings to continue.',
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red.withOpacity(0.8),
+          backgroundColor: Colors.red.withValues(alpha: 0.8),
           colorText: Colors.white,
         );
       }
@@ -70,7 +70,7 @@ class _FemaleLocationAccessUIState extends State<FemaleLocationAccessUI> {
                   height: 140.w,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFFE0E0E0).withOpacity(0.5),
+                    color: const Color(0xFFE0E0E0).withValues(alpha: 0.5),
                   ),
                   child: Center(
                     child: Icon(
@@ -115,7 +115,9 @@ class _FemaleLocationAccessUIState extends State<FemaleLocationAccessUI> {
                   onPressed: _isLoading ? null : _requestLocationPermission,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: themeColor,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.r)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.r),
+                    ),
                     elevation: 0,
                   ),
                   child: _isLoading
@@ -137,10 +139,13 @@ class _FemaleLocationAccessUIState extends State<FemaleLocationAccessUI> {
                 width: double.infinity,
                 height: 56.h,
                 child: TextButton(
-                  onPressed: () => Get.toNamed(AppRoutes.femaleIdentityVerification),
+                  onPressed: () =>
+                      Get.toNamed(AppRoutes.femaleIdentityVerification),
                   style: TextButton.styleFrom(
-                    backgroundColor: Colors.white.withOpacity(0.5),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.r)),
+                    backgroundColor: Colors.white.withValues(alpha: 0.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.r),
+                    ),
                   ),
                   child: Text(
                     'Remind me later',

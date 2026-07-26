@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:video_player/video_player.dart';
 import 'package:muslim_community/app_config.dart';
-import 'package:muslim_community/shared/model/khutbah_model.dart';
 import 'package:muslim_community/jummarole/home/controller/jumma_now_playing_controller.dart';
 
 class JummaNowPlayingUI extends StatefulWidget {
@@ -68,9 +67,12 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
       _audioController!.addListener(() {
         if (mounted) {
           setState(() {
-            _currentPosition = _audioController!.value.position.inMilliseconds /
+            _currentPosition =
+                _audioController!.value.position.inMilliseconds /
                 _audioController!.value.duration.inMilliseconds;
-            _currentTimeText = _formatDuration(_audioController!.value.position);
+            _currentTimeText = _formatDuration(
+              _audioController!.value.position,
+            );
             _isPlaying = _audioController!.value.isPlaying;
           });
         }
@@ -107,8 +109,11 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
           child: CircleAvatar(
             backgroundColor: Colors.white,
             child: IconButton(
-              icon:
-                  Icon(Icons.arrow_back_ios_new, color: themeColor, size: 18.sp),
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: themeColor,
+                size: 18.sp,
+              ),
               onPressed: () => Get.back(),
             ),
           ),
@@ -148,7 +153,7 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
                     borderRadius: BorderRadius.circular(30.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 30,
                         offset: const Offset(0, 15),
                       ),
@@ -162,9 +167,9 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
                                 Image.asset(
-                              'assets/icons/sun.png',
-                              fit: BoxFit.cover,
-                            ),
+                                  'assets/icons/sun.png',
+                                  fit: BoxFit.cover,
+                                ),
                           )
                         : Image.asset(
                             'assets/icons/sun.png',
@@ -188,43 +193,48 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
               ),
               SizedBox(height: 10.h),
               Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 12.r,
-                  backgroundImage:
-                      const AssetImage('assets/icons/abubakr.png'),
-                ),
-                SizedBox(width: 8.w),
-                Flexible(
-                  child: Text(
-                    khutbah.imam,
-                    style: GoogleFonts.inter(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.grey.shade700,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 12.r,
+                    backgroundImage: const AssetImage(
+                      'assets/icons/abubakr.png',
                     ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  child: Icon(Icons.circle, size: 4.sp, color: Colors.grey.shade400),
-                ),
-                Flexible(
-                  child: Text(
-                    khutbah.mosqueName,
-                    style: GoogleFonts.inter(
-                      fontSize: 14.sp,
-                      color: Colors.grey.shade600,
+                  SizedBox(width: 8.w),
+                  Flexible(
+                    child: Text(
+                      khutbah.imam,
+                      style: GoogleFonts.inter(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey.shade700,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
                   ),
-                ),
-              ],
-            ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: Icon(
+                      Icons.circle,
+                      size: 4.sp,
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                  Flexible(
+                    child: Text(
+                      khutbah.mosqueName,
+                      style: GoogleFonts.inter(
+                        fontSize: 14.sp,
+                        color: Colors.grey.shade600,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                ],
+              ),
 
               SizedBox(height: 40.h),
 
@@ -236,7 +246,7 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
                   borderRadius: BorderRadius.circular(25.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.03),
+                      color: Colors.black.withValues(alpha: 0.03),
                       blurRadius: 20,
                       offset: const Offset(0, 8),
                     ),
@@ -248,10 +258,12 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
                         trackHeight: 4.h,
-                        thumbShape:
-                            RoundSliderThumbShape(enabledThumbRadius: 6.r),
-                        overlayShape:
-                            RoundSliderOverlayShape(overlayRadius: 14.r),
+                        thumbShape: RoundSliderThumbShape(
+                          enabledThumbRadius: 6.r,
+                        ),
+                        overlayShape: RoundSliderOverlayShape(
+                          overlayRadius: 14.r,
+                        ),
                         activeTrackColor: themeColor,
                         inactiveTrackColor: Colors.grey.shade200,
                         thumbColor: const Color(0xFFA6864D),
@@ -261,9 +273,11 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
                         onChanged: (v) {
                           if (_isAudioInitialized) {
                             final newPosition =
-                                v * _audioController!.value.duration.inMilliseconds;
-                            _audioController!
-                                .seekTo(Duration(milliseconds: newPosition.toInt()));
+                                v *
+                                _audioController!.value.duration.inMilliseconds;
+                            _audioController!.seekTo(
+                              Duration(milliseconds: newPosition.toInt()),
+                            );
                           }
                         },
                       ),
@@ -273,12 +287,20 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(_currentTimeText,
-                              style: GoogleFonts.inter(
-                                  fontSize: 10.sp, color: Colors.grey)),
-                          Text(_totalDurationText,
-                              style: GoogleFonts.inter(
-                                  fontSize: 10.sp, color: Colors.grey)),
+                          Text(
+                            _currentTimeText,
+                            style: GoogleFonts.inter(
+                              fontSize: 10.sp,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Text(
+                            _totalDurationText,
+                            style: GoogleFonts.inter(
+                              fontSize: 10.sp,
+                              color: Colors.grey,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -288,18 +310,26 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         IconButton(
-                            icon: Icon(Icons.shuffle,
-                                color: const Color(0xFFA6864D), size: 20.sp),
-                            onPressed: () {}),
+                          icon: Icon(
+                            Icons.shuffle,
+                            color: const Color(0xFFA6864D),
+                            size: 20.sp,
+                          ),
+                          onPressed: () {},
+                        ),
                         IconButton(
-                          icon: Icon(Icons.replay_10,
-                              color: const Color(0xFF2D3436), size: 24.sp),
+                          icon: Icon(
+                            Icons.replay_10,
+                            color: const Color(0xFF2D3436),
+                            size: 24.sp,
+                          ),
                           onPressed: () {
                             if (_isAudioInitialized) {
                               final currentPos =
                                   _audioController!.value.position;
                               _audioController!.seekTo(
-                                  currentPos - const Duration(seconds: 10));
+                                currentPos - const Duration(seconds: 10),
+                              );
                             }
                           },
                         ),
@@ -321,32 +351,43 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: themeColor.withOpacity(0.3),
+                                  color: themeColor.withValues(alpha: 0.3),
                                   blurRadius: 15,
                                   offset: const Offset(0, 8),
                                 ),
                               ],
                             ),
-                            child: Icon(_isPlaying ? Icons.pause : Icons.play_arrow,
-                                color: Colors.white, size: 30.sp),
+                            child: Icon(
+                              _isPlaying ? Icons.pause : Icons.play_arrow,
+                              color: Colors.white,
+                              size: 30.sp,
+                            ),
                           ),
                         ),
                         IconButton(
-                          icon: Icon(Icons.forward_10,
-                              color: const Color(0xFF2D3436), size: 24.sp),
+                          icon: Icon(
+                            Icons.forward_10,
+                            color: const Color(0xFF2D3436),
+                            size: 24.sp,
+                          ),
                           onPressed: () {
                             if (_isAudioInitialized) {
                               final currentPos =
                                   _audioController!.value.position;
                               _audioController!.seekTo(
-                                  currentPos + const Duration(seconds: 10));
+                                currentPos + const Duration(seconds: 10),
+                              );
                             }
                           },
                         ),
                         IconButton(
-                            icon: Icon(Icons.repeat,
-                                color: const Color(0xFFA6864D), size: 20.sp),
-                            onPressed: () {}),
+                          icon: Icon(
+                            Icons.repeat,
+                            color: const Color(0xFFA6864D),
+                            size: 20.sp,
+                          ),
+                          onPressed: () {},
+                        ),
                       ],
                     ),
                   ],
@@ -363,8 +404,9 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
                     child: SliderTheme(
                       data: SliderTheme.of(context).copyWith(
                         trackHeight: 2.h,
-                        thumbShape:
-                            RoundSliderThumbShape(enabledThumbRadius: 4.r),
+                        thumbShape: RoundSliderThumbShape(
+                          enabledThumbRadius: 4.r,
+                        ),
                         activeTrackColor: themeColor,
                         inactiveTrackColor: Colors.grey.shade200,
                         thumbColor: const Color(0xFFA6864D),
@@ -401,7 +443,11 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.menu_book, color: themeColor, size: 18.sp),
+                            Icon(
+                              Icons.menu_book,
+                              color: themeColor,
+                              size: 18.sp,
+                            ),
                             SizedBox(width: 10.w),
                             Text(
                               'ABOUT THIS KHUTBAH',
@@ -414,8 +460,11 @@ class _JummaNowPlayingUIState extends State<JummaNowPlayingUI> {
                             ),
                           ],
                         ),
-                        Icon(Icons.keyboard_arrow_down,
-                            color: Colors.grey, size: 20.sp),
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.grey,
+                          size: 20.sp,
+                        ),
                       ],
                     ),
                     SizedBox(height: 15.h),

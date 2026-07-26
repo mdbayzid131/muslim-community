@@ -7,15 +7,14 @@ import 'package:muslim_community/appcolore.dart';
 class AskSuccessUI extends StatelessWidget {
   final String role; // 'brother' or 'sister'
 
-  const AskSuccessUI({
-    super.key,
-    required this.role,
-  });
+  const AskSuccessUI({super.key, required this.role});
 
   @override
   Widget build(BuildContext context) {
     final bool isBrother = role.toLowerCase() == 'brother';
-    final Color roleColor = isBrother ? AppColors.maleColor : AppColors.femaleColor;
+    final Color roleColor = isBrother
+        ? AppColors.maleColor
+        : AppColors.femaleColor;
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -31,7 +30,7 @@ class AskSuccessUI extends StatelessWidget {
                   width: 130.w,
                   height: 130.w,
                   decoration: BoxDecoration(
-                    color: roleColor.withOpacity(0.08), 
+                    color: roleColor.withValues(alpha: 0.08),
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -84,14 +83,16 @@ class AskSuccessUI extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     fontSize: 14.sp,
-                    color: const Color(0xFFA6864D), // AppColors.goldColor equivalent
+                    color: const Color(
+                      0xFFA6864D,
+                    ), // AppColors.goldColor equivalent
                     height: 1.5,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                
+
                 SizedBox(height: 80.h),
-                
+
                 // Minimalist Button Action
                 SizedBox(
                   width: double.infinity,

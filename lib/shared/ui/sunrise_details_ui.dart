@@ -122,7 +122,7 @@ class SunriseDetailsUI extends StatelessWidget {
         borderRadius: BorderRadius.circular(25.r),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFFF57C00).withOpacity(0.3),
+            color: const Color(0xFFF57C00).withValues(alpha: 0.3),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -139,7 +139,7 @@ class SunriseDetailsUI extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(12.w),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -154,7 +154,7 @@ class SunriseDetailsUI extends StatelessWidget {
                     vertical: 6.h,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.25),
+                    color: Colors.white.withValues(alpha: 0.25),
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: Text(
@@ -182,7 +182,7 @@ class SunriseDetailsUI extends StatelessWidget {
               "No prayer is allowed during sunrise. You may perform Ishraq (sunrise prayer) after the sun has fully risen and cleared the horizon (approximately 15-20 minutes after sunrise).",
               style: GoogleFonts.inter(
                 fontSize: 13.sp,
-                color: Colors.white.withOpacity(0.95),
+                color: Colors.white.withValues(alpha: 0.95),
                 height: 1.5,
               ),
             ),
@@ -207,7 +207,7 @@ class SunriseDetailsUI extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade100, width: 1.5),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
+            color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -258,9 +258,12 @@ class SunriseDetailsUI extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: themeColor.withOpacity(0.05),
+        color: themeColor.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: themeColor.withOpacity(0.15), width: 1.2),
+        border: Border.all(
+          color: themeColor.withValues(alpha: 0.15),
+          width: 1.2,
+        ),
       ),
       child: Padding(
         padding: EdgeInsets.all(20.w),

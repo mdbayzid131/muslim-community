@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:muslim_community/male_role/auth/controller/male_create_account_controller.dart';
-import 'package:muslim_community/male_role/auth/controller/male_verify_controller.dart';
 
 class MaleIdentityVerificationUI extends StatelessWidget {
   const MaleIdentityVerificationUI({super.key});
@@ -58,7 +57,7 @@ class MaleIdentityVerificationUI extends StatelessWidget {
                 'To keep SYA a safe, exclusive space, we require a quick verification.',
                 style: GoogleFonts.inter(
                   fontSize: 14.sp,
-                  color: const Color(0xFFA6864D).withOpacity(0.8),
+                  color: const Color(0xFFA6864D).withValues(alpha: 0.8),
                   height: 1.4,
                 ),
               ),
@@ -84,15 +83,18 @@ class MaleIdentityVerificationUI extends StatelessWidget {
                         title: 'Photo Verification',
                         subtitle: 'Take a photo holding today\'s date on paper',
                         icon: Icons.camera_alt_outlined,
-                        onTap: () => verifyController.selectedMethod.value = 'photo',
+                        onTap: () =>
+                            verifyController.selectedMethod.value = 'photo',
                         themeColor: themeColor,
                       ),
                       SizedBox(height: 16.h),
                       _buildMethodSelectionCard(
                         title: 'Video Verification',
-                        subtitle: 'Record a short 5-second video reading your name',
+                        subtitle:
+                            'Record a short 5-second video reading your name',
                         icon: Icons.videocam_outlined,
-                        onTap: () => verifyController.selectedMethod.value = 'video',
+                        onTap: () =>
+                            verifyController.selectedMethod.value = 'video',
                         themeColor: themeColor,
                       ),
                     ],
@@ -106,7 +108,9 @@ class MaleIdentityVerificationUI extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          method == 'photo' ? 'Photo Verification' : 'Video Verification',
+                          method == 'photo'
+                              ? 'Photo Verification'
+                              : 'Video Verification',
                           style: GoogleFonts.inter(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w600,
@@ -117,7 +121,11 @@ class MaleIdentityVerificationUI extends StatelessWidget {
                           onPressed: () {
                             verifyController.selectedMethod.value = null;
                           },
-                          icon: Icon(Icons.edit, size: 14.sp, color: themeColor),
+                          icon: Icon(
+                            Icons.edit,
+                            size: 14.sp,
+                            color: themeColor,
+                          ),
                           label: Text(
                             'Change',
                             style: GoogleFonts.inter(
@@ -127,7 +135,10 @@ class MaleIdentityVerificationUI extends StatelessWidget {
                             ),
                           ),
                           style: TextButton.styleFrom(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 8.w,
+                              vertical: 4.h,
+                            ),
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
                         ),
@@ -143,7 +154,8 @@ class MaleIdentityVerificationUI extends StatelessWidget {
                         buttonText: 'Take Verification Photo',
                         buttonIcon: Icons.camera_alt_outlined,
                         onTap: verifyController.takePhoto,
-                        isCompleted: verifyController.verificationImage.value != null,
+                        isCompleted:
+                            verifyController.verificationImage.value != null,
                         themeColor: themeColor,
                       )
                     else
@@ -154,7 +166,8 @@ class MaleIdentityVerificationUI extends StatelessWidget {
                         buttonText: 'Start recording',
                         buttonIcon: Icons.videocam_outlined,
                         onTap: verifyController.recordVideo,
-                        isCompleted: verifyController.verificationVideo.value != null,
+                        isCompleted:
+                            verifyController.verificationVideo.value != null,
                         themeColor: themeColor,
                       ),
                   ],
@@ -206,7 +219,7 @@ class MaleIdentityVerificationUI extends StatelessWidget {
       height: 8.w,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isActive ? color : color.withOpacity(0.2),
+        color: isActive ? color : color.withValues(alpha: 0.2),
       ),
     );
   }
@@ -220,7 +233,7 @@ class MaleIdentityVerificationUI extends StatelessWidget {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF7F1E9).withOpacity(0.6),
+        color: const Color(0xFFF7F1E9).withValues(alpha: 0.6),
         borderRadius: BorderRadius.circular(24.r),
       ),
       child: Material(
@@ -235,14 +248,10 @@ class MaleIdentityVerificationUI extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(12.w),
                   decoration: BoxDecoration(
-                    color: themeColor.withOpacity(0.1),
+                    color: themeColor.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(
-                    icon,
-                    size: 24.sp,
-                    color: themeColor,
-                  ),
+                  child: Icon(icon, size: 24.sp, color: themeColor),
                 ),
                 SizedBox(width: 16.w),
                 Expanded(
@@ -272,7 +281,7 @@ class MaleIdentityVerificationUI extends StatelessWidget {
                 Icon(
                   Icons.arrow_forward_ios,
                   size: 16.sp,
-                  color: const Color(0xFF2D3436).withOpacity(0.5),
+                  color: const Color(0xFF2D3436).withValues(alpha: 0.5),
                 ),
               ],
             ),
@@ -295,7 +304,7 @@ class MaleIdentityVerificationUI extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
-        color: const Color(0xFFF7F1E9).withOpacity(0.6),
+        color: const Color(0xFFF7F1E9).withValues(alpha: 0.6),
         borderRadius: BorderRadius.circular(24.r),
         border: isCompleted
             ? Border.all(color: Colors.green, width: 1.5)
@@ -306,7 +315,9 @@ class MaleIdentityVerificationUI extends StatelessWidget {
           Icon(
             isCompleted ? Icons.check_circle : icon,
             size: 40.sp,
-            color: isCompleted ? Colors.green : themeColor.withOpacity(0.5),
+            color: isCompleted
+                ? Colors.green
+                : themeColor.withValues(alpha: 0.5),
           ),
           SizedBox(height: 12.h),
           Text(
@@ -336,7 +347,7 @@ class MaleIdentityVerificationUI extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.r),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 10.r,
                   offset: Offset(0, 4.h),
                 ),

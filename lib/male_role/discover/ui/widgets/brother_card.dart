@@ -5,7 +5,6 @@ import 'package:muslim_community/male_role/discover/model/brother_model.dart';
 import 'package:muslim_community/male_role/discover/ui/male_profile_details_ui.dart';
 import 'package:get/get.dart';
 import 'package:muslim_community/male_role/discover/controller/brothergetcontroller.dart';
-import 'package:muslim_community/male_role/discover/controller/requestsendcontroller.dart';
 
 /// Reusable card for a single brother — mirrors SisterCard with maleColor (0xFF5B7C99)
 class BrotherCard extends StatelessWidget {
@@ -38,80 +37,83 @@ class BrotherCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),
           ],
         ),
         child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // --- IMAGE ---
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.r),
-                child: brother.imageUrl.isNotEmpty && brother.imageUrl.startsWith('http')
-                    ? Image.network(
-                        brother.imageUrl,
-                        height: 100.h,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
-                        errorBuilder: (context, error, stackTrace) => Container(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // --- IMAGE ---
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15.r),
+                  child:
+                      brother.imageUrl.isNotEmpty &&
+                          brother.imageUrl.startsWith('http')
+                      ? Image.network(
+                          brother.imageUrl,
+                          height: 100.h,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Container(
+                                height: 100.h,
+                                width: double.infinity,
+                                color: Colors.black,
+                              ),
+                        )
+                      : Container(
                           height: 100.h,
                           width: double.infinity,
                           color: Colors.black,
                         ),
-                      )
-                    : Container(
-                        height: 100.h,
-                        width: double.infinity,
-                        color: Colors.black,
-                      ),
+                ),
+                if (brother.isOnline) _buildOnlineIndicator(),
+                if (brother.isVerified) _buildVerifiedBadge(),
+              ],
+            ),
+
+            SizedBox(height: 8.h),
+
+            // --- NAME ---
+            Text(
+              brother.name,
+              style: GoogleFonts.playfairDisplay(
+                fontSize: 15.sp,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xFF2D3436),
               ),
-              if (brother.isOnline) _buildOnlineIndicator(),
-              if (brother.isVerified) _buildVerifiedBadge(),
-            ],
-          ),
-
-          SizedBox(height: 8.h),
-
-          // --- NAME ---
-          Text(
-            brother.name,
-            style: GoogleFonts.playfairDisplay(
-              fontSize: 15.sp,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF2D3436),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
 
-          SizedBox(height: 2.h),
+            SizedBox(height: 2.h),
 
-          // --- AGE & JOINED ---
-          Text(
-            '${brother.age} • ${brother.joinedAgo}',
-            style: GoogleFonts.inter(
-              fontSize: 10.sp,
-              color: const Color(0xFF636E72),
+            // --- AGE & JOINED ---
+            Text(
+              '${brother.age} • ${brother.joinedAgo}',
+              style: GoogleFonts.inter(
+                fontSize: 10.sp,
+                color: const Color(0xFF636E72),
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
 
-          SizedBox(height: 6.h),
+            SizedBox(height: 6.h),
 
-          _buildDistanceBadge(),
+            _buildDistanceBadge(),
 
-          SizedBox(height: 8.h),
+            SizedBox(height: 8.h),
 
-          _buildActionButton(),
-        ],
-      ),
+            _buildActionButton(),
+          ],
+        ),
       ),
     );
   }
@@ -127,7 +129,9 @@ class BrotherCard extends StatelessWidget {
         decoration: const BoxDecoration(
           color: Colors.green,
           shape: BoxShape.circle,
-          border: Border.fromBorderSide(BorderSide(color: Colors.white, width: 1.5)),
+          border: Border.fromBorderSide(
+            BorderSide(color: Colors.white, width: 1.5),
+          ),
         ),
       ),
     );
@@ -155,7 +159,9 @@ class BrotherCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
       decoration: BoxDecoration(
         color: const Color(0xFFEBF1F7), // Light blue-grey tint of maleColor
-        borderRadius: BorderRadius.circular(20.r), // Pill shape matching female card
+        borderRadius: BorderRadius.circular(
+          20.r,
+        ), // Pill shape matching female card
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -176,11 +182,13 @@ class BrotherCard extends StatelessWidget {
     final ctrl = Get.find<BrotherGetController>();
     return Obx(() {
       // Read live status from the observable list
-      final liveBrother = ctrl.brothers.length > index ? ctrl.brothers[index] : brother;
+      final liveBrother = ctrl.brothers.length > index
+          ? ctrl.brothers[index]
+          : brother;
       final bool isConnected = liveBrother.status == 'Connected';
       final bool isRequested = liveBrother.status == 'Requested';
-      final bool isReceived  = liveBrother.status == 'Received';
-      final bool isConnect   = liveBrother.status == 'Connect';
+      final bool isReceived = liveBrother.status == 'Received';
+      final bool isConnect = liveBrother.status == 'Connect';
 
       // Show Confirm Request for received requests
       if (isReceived) {
@@ -194,11 +202,16 @@ class BrotherCard extends StatelessWidget {
               foregroundColor: Colors.white,
               elevation: 0,
               padding: EdgeInsets.symmetric(horizontal: 4.w),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.r),
+              ),
             ),
             child: Text(
               'Confirm Request',
-              style: GoogleFonts.inter(fontSize: 11.sp, fontWeight: FontWeight.w600),
+              style: GoogleFonts.inter(
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         );
@@ -216,8 +229,12 @@ class BrotherCard extends StatelessWidget {
             }
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: isConnected || isRequested ? Colors.white : _roleColor,
-            foregroundColor: isConnected || isRequested ? _roleColor : Colors.white,
+            backgroundColor: isConnected || isRequested
+                ? Colors.white
+                : _roleColor,
+            foregroundColor: isConnected || isRequested
+                ? _roleColor
+                : Colors.white,
             elevation: 0,
             padding: EdgeInsets.symmetric(horizontal: 4.w),
             shape: RoundedRectangleBorder(
@@ -236,7 +253,10 @@ class BrotherCard extends StatelessWidget {
               ],
               Text(
                 liveBrother.status,
-                style: GoogleFonts.inter(fontSize: 11.sp, fontWeight: FontWeight.w600),
+                style: GoogleFonts.inter(
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),

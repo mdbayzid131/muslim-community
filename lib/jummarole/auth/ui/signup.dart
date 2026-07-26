@@ -38,7 +38,7 @@ class JummaSignUpUI extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFA6864D).withOpacity(0.1),
+                        color: const Color(0xFFA6864D).withValues(alpha: 0.1),
                         blurRadius: 20.r,
                         spreadRadius: 5.r,
                       ),
@@ -68,7 +68,7 @@ class JummaSignUpUI extends StatelessWidget {
                 'Start your spiritual journey with us.',
                 style: GoogleFonts.inter(
                   fontSize: 14.sp,
-                  color: const Color(0xFF636E72).withOpacity(0.8),
+                  color: const Color(0xFF636E72).withValues(alpha: 0.8),
                 ),
               ),
               SizedBox(height: 30.h),
@@ -77,7 +77,7 @@ class JummaSignUpUI extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(20.w),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.6),
+                  color: Colors.white.withValues(alpha: 0.6),
                   borderRadius: BorderRadius.circular(24.r),
                   border: Border.all(color: Colors.white, width: 2),
                 ),
@@ -100,179 +100,198 @@ class JummaSignUpUI extends StatelessWidget {
                       textController: controller.emailController,
                     ),
                     SizedBox(height: 16.h),
-                    Obx(() => _buildInputField(
-                          label: 'PASSWORD',
-                          hint: 'Create a password',
-                          icon: Icons.lock_outline,
-                          themeColor: themeColor,
-                          isPassword: true,
-                          obscureText: !controller.isPasswordVisible.value,
-                          textController: controller.passwordController,
-                          onToggleVisibility: () =>
-                              controller.togglePasswordVisibility(),
-                        )),
+                    Obx(
+                      () => _buildInputField(
+                        label: 'PASSWORD',
+                        hint: 'Create a password',
+                        icon: Icons.lock_outline,
+                        themeColor: themeColor,
+                        isPassword: true,
+                        obscureText: !controller.isPasswordVisible.value,
+                        textController: controller.passwordController,
+                        onToggleVisibility: () =>
+                            controller.togglePasswordVisibility(),
+                      ),
+                    ),
                     SizedBox(height: 16.h),
                     GestureDetector(
                       onTap: () => controller.pickDateOfBirth(context),
                       child: AbsorbPointer(
-                        child: Obx(() => _buildInputField(
-                              label: 'DATE OF BIRTH',
-                              hint: controller.dateOfBirth.value.isEmpty
-                                  ? 'Select date of birth'
-                                  : controller.dateOfBirth.value.split('T')[0],
-                              icon: Icons.calendar_today_outlined,
-                              themeColor: themeColor,
-                            )),
+                        child: Obx(
+                          () => _buildInputField(
+                            label: 'DATE OF BIRTH',
+                            hint: controller.dateOfBirth.value.isEmpty
+                                ? 'Select date of birth'
+                                : controller.dateOfBirth.value.split('T')[0],
+                            icon: Icons.calendar_today_outlined,
+                            themeColor: themeColor,
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(height: 16.h),
 
                     // Consent Checkbox 1
-                    Obx(() => Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 24.w,
-                          height: 24.w,
-                          child: Checkbox(
-                            value: controller.agreeToTerms.value,
-                            onChanged: (val) {
-                              controller.agreeToTerms.value = val ?? false;
-                            },
-                            activeColor: themeColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.r),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 8.w),
-                        Expanded(
-                          child: RichText(
-                            text: TextSpan(
-                              style: GoogleFonts.inter(
-                                fontSize: 12.sp,
-                                color: const Color(0xFF2D3436),
-                                height: 1.4,
+                    Obx(
+                      () => Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 24.w,
+                            height: 24.w,
+                            child: Checkbox(
+                              value: controller.agreeToTerms.value,
+                              onChanged: (val) {
+                                controller.agreeToTerms.value = val ?? false;
+                              },
+                              activeColor: themeColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.r),
                               ),
-                              children: [
-                                const TextSpan(text: 'I agree to the '),
-                                TextSpan(
-                                  text: 'Terms of Service',
-                                  style: TextStyle(
-                                    color: themeColor,
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () => _launchURL('https://example.com/terms-placeholder'),
-                                ),
-                                const TextSpan(text: ' and '),
-                                TextSpan(
-                                  text: 'Privacy Policy',
-                                  style: TextStyle(
-                                    color: themeColor,
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () => _launchURL('https://example.com/privacy-placeholder'),
-                                ),
-                              ],
                             ),
                           ),
-                        ),
-                      ],
-                    )),
+                          SizedBox(width: 8.w),
+                          Expanded(
+                            child: RichText(
+                              text: TextSpan(
+                                style: GoogleFonts.inter(
+                                  fontSize: 12.sp,
+                                  color: const Color(0xFF2D3436),
+                                  height: 1.4,
+                                ),
+                                children: [
+                                  const TextSpan(text: 'I agree to the '),
+                                  TextSpan(
+                                    text: 'Terms of Service',
+                                    style: TextStyle(
+                                      color: themeColor,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => _launchURL(
+                                        'https://example.com/terms-placeholder',
+                                      ),
+                                  ),
+                                  const TextSpan(text: ' and '),
+                                  TextSpan(
+                                    text: 'Privacy Policy',
+                                    style: TextStyle(
+                                      color: themeColor,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => _launchURL(
+                                        'https://example.com/privacy-placeholder',
+                                      ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(height: 12.h),
 
                     // Consent Checkbox 2
-                    Obx(() => Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 24.w,
-                          height: 24.w,
-                          child: Checkbox(
-                            value: controller.consentToReligiousData.value,
-                            onChanged: (val) {
-                              controller.consentToReligiousData.value = val ?? false;
-                            },
-                            activeColor: themeColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.r),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 8.w),
-                        Expanded(
-                          child: RichText(
-                            text: TextSpan(
-                              style: GoogleFonts.inter(
-                                fontSize: 12.sp,
-                                color: const Color(0xFF2D3436),
-                                height: 1.4,
+                    Obx(
+                      () => Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 24.w,
+                            height: 24.w,
+                            child: Checkbox(
+                              value: controller.consentToReligiousData.value,
+                              onChanged: (val) {
+                                controller.consentToReligiousData.value =
+                                    val ?? false;
+                              },
+                              activeColor: themeColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.r),
                               ),
-                              children: [
-                                const TextSpan(
-                                  text: 'I specifically consent to SYA collecting and processing my religious data in accordance with the ',
-                                ),
-                                TextSpan(
-                                  text: 'Privacy Policy',
-                                  style: TextStyle(
-                                    color: themeColor,
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () => _launchURL('https://example.com/privacy-placeholder'),
-                                ),
-                              ],
                             ),
                           ),
-                        ),
-                      ],
-                    )),
+                          SizedBox(width: 8.w),
+                          Expanded(
+                            child: RichText(
+                              text: TextSpan(
+                                style: GoogleFonts.inter(
+                                  fontSize: 12.sp,
+                                  color: const Color(0xFF2D3436),
+                                  height: 1.4,
+                                ),
+                                children: [
+                                  const TextSpan(
+                                    text:
+                                        'I specifically consent to SYA collecting and processing my religious data in accordance with the ',
+                                  ),
+                                  TextSpan(
+                                    text: 'Privacy Policy',
+                                    style: TextStyle(
+                                      color: themeColor,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => _launchURL(
+                                        'https://example.com/privacy-placeholder',
+                                      ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(height: 24.h),
 
                     // Create Account Button
                     SizedBox(
                       width: double.infinity,
                       height: 56.h,
-                      child: Obx(() => ElevatedButton(
-                            onPressed: controller.isLoading.value
-                                ? null
-                                : () => controller.signup(),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: themeColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.r),
-                              ),
-                              elevation: 0,
+                      child: Obx(
+                        () => ElevatedButton(
+                          onPressed: controller.isLoading.value
+                              ? null
+                              : () => controller.signup(),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: themeColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.r),
                             ),
-                            child: controller.isLoading.value
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white)
-                                : Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/icons/creataccout.png',
-                                        width: 20.w,
-                                        height: 20.w,
+                            elevation: 0,
+                          ),
+                          child: controller.isLoading.value
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/creataccout.png',
+                                      width: 20.w,
+                                      height: 20.w,
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(width: 10.w),
+                                    Text(
+                                      'Create Account',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w600,
                                         color: Colors.white,
                                       ),
-                                      SizedBox(width: 10.w),
-                                      Text(
-                                        'Create Account',
-                                        style: GoogleFonts.inter(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                          )),
+                                    ),
+                                  ],
+                                ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -283,7 +302,11 @@ class JummaSignUpUI extends StatelessWidget {
               Row(
                 children: [
                   const Expanded(child: Divider(indent: 40, endIndent: 10)),
-                  Icon(Icons.nights_stay_outlined, size: 16.sp, color: themeColor.withOpacity(0.5)),
+                  Icon(
+                    Icons.nights_stay_outlined,
+                    size: 16.sp,
+                    color: themeColor.withValues(alpha: 0.5),
+                  ),
                   const Expanded(child: Divider(indent: 10, endIndent: 40)),
                 ],
               ),
@@ -346,7 +369,7 @@ class JummaSignUpUI extends StatelessWidget {
                 style: GoogleFonts.inter(
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w600,
-                  color: themeColor.withOpacity(0.8),
+                  color: themeColor.withValues(alpha: 0.8),
                   letterSpacing: 1.0,
                 ),
               ),
@@ -360,8 +383,10 @@ class JummaSignUpUI extends StatelessWidget {
           style: GoogleFonts.inter(fontSize: 14.sp),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle:
-                GoogleFonts.inter(color: Colors.grey.shade400, fontSize: 14.sp),
+            hintStyle: GoogleFonts.inter(
+              color: Colors.grey.shade400,
+              fontSize: 14.sp,
+            ),
             prefixIcon: icon != null
                 ? Icon(icon, color: Colors.grey.shade400, size: 20.sp)
                 : null,
@@ -378,13 +403,15 @@ class JummaSignUpUI extends StatelessWidget {
                   )
                 : null,
             filled: true,
-            fillColor: const Color(0xFFEDF4F1).withOpacity(0.5),
+            fillColor: const Color(0xFFEDF4F1).withValues(alpha: 0.5),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide.none,
             ),
-            contentPadding:
-                EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 14.h,
+            ),
           ),
         ),
       ],

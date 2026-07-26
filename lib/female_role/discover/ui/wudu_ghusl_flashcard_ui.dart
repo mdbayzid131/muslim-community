@@ -653,13 +653,13 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: themeColor.withOpacity(0.1),
+                              color: themeColor.withValues(alpha: 0.1),
                               blurRadius: 8,
                               offset: const Offset(0, 3),
                             ),
                           ],
                           border: Border.all(
-                            color: themeColor.withOpacity(0.2),
+                            color: themeColor.withValues(alpha: 0.2),
                           ),
                         ),
                         child: Icon(
@@ -696,13 +696,13 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: themeColor.withOpacity(0.1),
+                              color: themeColor.withValues(alpha: 0.1),
                               blurRadius: 8,
                               offset: const Offset(0, 3),
                             ),
                           ],
                           border: Border.all(
-                            color: themeColor.withOpacity(0.2),
+                            color: themeColor.withValues(alpha: 0.2),
                           ),
                         ),
                         child: Icon(
@@ -732,12 +732,15 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
         borderRadius: BorderRadius.circular(32.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
         ],
-        border: Border.all(color: themeColor.withOpacity(0.2), width: 1.5),
+        border: Border.all(
+          color: themeColor.withValues(alpha: 0.2),
+          width: 1.5,
+        ),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
@@ -747,7 +750,7 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
             Container(
               padding: EdgeInsets.all(22.w),
               decoration: BoxDecoration(
-                color: themeColor.withOpacity(0.1),
+                color: themeColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -818,7 +821,7 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
         borderRadius: BorderRadius.circular(32.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.12),
+            color: Colors.black.withValues(alpha: 0.12),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -838,7 +841,7 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
                     Container(
                       width: 50.w,
                       height: 1.h,
-                      color: Colors.white.withOpacity(0.3),
+                      color: Colors.white.withValues(alpha: 0.3),
                     ),
                     SizedBox(height: 10.h),
                     Text(
@@ -856,7 +859,7 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
                       style: GoogleFonts.inter(
                         fontSize: 9.sp,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white.withOpacity(0.7),
+                        color: Colors.white.withValues(alpha: 0.7),
                         letterSpacing: 4.0,
                       ),
                     ),
@@ -889,7 +892,7 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
                       style: GoogleFonts.playfairDisplay(
                         fontSize: 14.sp,
                         fontStyle: FontStyle.italic,
-                        color: Colors.white.withOpacity(0.85),
+                        color: Colors.white.withValues(alpha: 0.85),
                         height: 1.5,
                       ),
                     ),
@@ -904,7 +907,7 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
                       children: [
                         Icon(
                           Icons.swipe_left_rounded,
-                          color: Colors.white.withOpacity(0.5),
+                          color: Colors.white.withValues(alpha: 0.5),
                           size: 15.sp,
                         ),
                         SizedBox(width: 8.w),
@@ -913,7 +916,7 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
                           style: GoogleFonts.inter(
                             fontSize: 9.sp,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.white.withValues(alpha: 0.8),
                             letterSpacing: 0.5,
                           ),
                         ),
@@ -923,7 +926,7 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
                     Container(
                       width: 50.w,
                       height: 1.h,
-                      color: Colors.white.withOpacity(0.3),
+                      color: Colors.white.withValues(alpha: 0.3),
                     ),
                   ],
                 ),
@@ -946,7 +949,7 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
         borderRadius: BorderRadius.circular(32.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -1028,7 +1031,7 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: themeColor.withOpacity(0.3),
+                                      color: themeColor.withValues(alpha: 0.3),
                                       blurRadius: 8,
                                       offset: const Offset(0, 4),
                                     ),
@@ -1339,7 +1342,7 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
         borderRadius: BorderRadius.circular(32.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -1506,7 +1509,9 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
                                     borderRadius: BorderRadius.circular(16.r),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.02),
+                                        color: Colors.black.withValues(
+                                          alpha: 0.02,
+                                        ),
                                         blurRadius: 6,
                                         offset: const Offset(0, 2),
                                       ),
@@ -1590,7 +1595,7 @@ class _WuduGhuslFlashcardUIState extends State<WuduGhuslFlashcardUI> {
                               style: GoogleFonts.inter(
                                 fontSize: 12.sp,
                                 fontStyle: FontStyle.italic,
-                                color: themeColor.withOpacity(0.8),
+                                color: themeColor.withValues(alpha: 0.8),
                               ),
                             ),
                           ],

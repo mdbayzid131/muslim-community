@@ -28,7 +28,7 @@ class JummaLoginUI extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFFA6864D).withOpacity(0.15),
+                        color: const Color(0xFFA6864D).withValues(alpha: 0.15),
                         blurRadius: 25,
                         spreadRadius: 5,
                       ),
@@ -56,7 +56,7 @@ class JummaLoginUI extends StatelessWidget {
                 'Continue your journey with the community.',
                 style: GoogleFonts.inter(
                   fontSize: 16,
-                  color: const Color(0xFF636E72).withOpacity(0.8),
+                  color: const Color(0xFF636E72).withValues(alpha: 0.8),
                 ),
               ),
               const SizedBox(height: 50),
@@ -75,26 +75,29 @@ class JummaLoginUI extends StatelessWidget {
                   const SizedBox(height: 25),
                   _buildLabel('PASSWORD', themeColor),
                   const SizedBox(height: 8),
-                  Obx(() => _buildTextField(
-                        hint: 'Enter your password',
-                        icon: Icons.lock_outline,
-                        isPassword: true,
-                        obscureText: !controller.isPasswordVisible.value,
-                        controller: controller.passwordController,
-                        onToggleVisibility: () =>
-                            controller.togglePasswordVisibility(),
-                      )),
-                  
+                  Obx(
+                    () => _buildTextField(
+                      hint: 'Enter your password',
+                      icon: Icons.lock_outline,
+                      isPassword: true,
+                      obscureText: !controller.isPasswordVisible.value,
+                      controller: controller.passwordController,
+                      onToggleVisibility: () =>
+                          controller.togglePasswordVisibility(),
+                    ),
+                  ),
+
                   // Forgot Password
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () => Get.toNamed(AppRoutes.jummaForgetPasswordEmail),
+                      onPressed: () =>
+                          Get.toNamed(AppRoutes.jummaForgetPasswordEmail),
                       child: Text(
                         'Forgot Password?',
                         style: GoogleFonts.inter(
                           fontSize: 14,
-                          color: themeColor.withOpacity(0.8),
+                          color: themeColor.withValues(alpha: 0.8),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -106,26 +109,32 @@ class JummaLoginUI extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     height: 56,
-                    child: Obx(() => ElevatedButton(
-                      onPressed: controller.isLoading.value ? null : () => controller.login(),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: themeColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: controller.isLoading.value 
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : Text(
-                            'Login',
-                            style: GoogleFonts.inter(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
+                    child: Obx(
+                      () => ElevatedButton(
+                        onPressed: controller.isLoading.value
+                            ? null
+                            : () => controller.login(),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: themeColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                    )),
+                          elevation: 0,
+                        ),
+                        child: controller.isLoading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                'Login',
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -148,7 +157,7 @@ class JummaLoginUI extends StatelessWidget {
                       'Sign Up',
                       style: GoogleFonts.inter(
                         fontSize: 15,
-                        color: const Color(0xFF436E50), 
+                        color: const Color(0xFF436E50),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -168,7 +177,7 @@ class JummaLoginUI extends StatelessWidget {
       style: GoogleFonts.inter(
         fontSize: 12,
         fontWeight: FontWeight.w600,
-        color: themeColor.withOpacity(0.8),
+        color: themeColor.withValues(alpha: 0.8),
         letterSpacing: 1.2,
       ),
     );
@@ -202,12 +211,15 @@ class JummaLoginUI extends StatelessWidget {
               )
             : null,
         filled: true,
-        fillColor: const Color(0xFFEDF4F1).withOpacity(0.6),
+        fillColor: const Color(0xFFEDF4F1).withValues(alpha: 0.6),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
           borderSide: BorderSide.none,
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 18,
+        ),
       ),
     );
   }

@@ -12,7 +12,8 @@ class FemaleJummaNowPlayingUI extends StatefulWidget {
   const FemaleJummaNowPlayingUI({super.key});
 
   @override
-  State<FemaleJummaNowPlayingUI> createState() => _FemaleJummaNowPlayingUIState();
+  State<FemaleJummaNowPlayingUI> createState() =>
+      _FemaleJummaNowPlayingUIState();
 }
 
 class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
@@ -20,7 +21,7 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
   double _currentVolume = 0.7;
   bool _isPlaying = false;
   late final JummaNowPlayingController _controller;
-  
+
   VideoPlayerController? _audioController;
   bool _isAudioInitialized = false;
   String _currentTimeText = "0:00";
@@ -33,7 +34,9 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
 
     try {
       final args = Get.arguments;
-      debugPrint("FemaleJummaNowPlayingUI: Get.arguments received: $args (Type: ${args?.runtimeType})");
+      debugPrint(
+        "FemaleJummaNowPlayingUI: Get.arguments received: $args (Type: ${args?.runtimeType})",
+      );
 
       if (args is KhutbahModel) {
         _controller.khutbah.value = args;
@@ -66,23 +69,26 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
         debugPrint("Warning: Get.arguments is null in FemaleJummaNowPlayingUI");
       }
     } catch (e, stack) {
-      debugPrint("Exception inside FemaleJummaNowPlayingUI initState: $e\n$stack");
+      debugPrint(
+        "Exception inside FemaleJummaNowPlayingUI initState: $e\n$stack",
+      );
     }
   }
 
   String _resolveMediaUrl(String url) {
     if (url.isEmpty) return '';
-    
+
     String serverBase = AppConfig.baseUrl.replaceAll('/api/v1', '');
     String resolvedUrl = url.trim();
-    
+
     if (resolvedUrl.startsWith('/')) {
       resolvedUrl = "$serverBase$resolvedUrl";
     } else if (resolvedUrl.startsWith('uploads/')) {
       resolvedUrl = "$serverBase/$resolvedUrl";
     }
-    
-    if (resolvedUrl.contains('localhost') || resolvedUrl.contains('127.0.0.1')) {
+
+    if (resolvedUrl.contains('localhost') ||
+        resolvedUrl.contains('127.0.0.1')) {
       try {
         final uri = Uri.parse(AppConfig.baseUrl);
         final actualHost = "${uri.scheme}://${uri.host}:${uri.port}";
@@ -95,16 +101,18 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
         debugPrint("Error parsing base URL for resolution: $e");
       }
     }
-    
+
     return resolvedUrl;
   }
 
   Future<void> _initAudio(String rawAudioUrl) async {
     if (rawAudioUrl.isEmpty) {
-      debugPrint("Audio Playback: Received empty audio URL, skipping initialization.");
+      debugPrint(
+        "Audio Playback: Received empty audio URL, skipping initialization.",
+      );
       return;
     }
-    
+
     final String cleanUrl = _resolveMediaUrl(rawAudioUrl);
     debugPrint("===== AUDIO PLAYBACK INITIALIZATION =====");
     debugPrint("Raw Audio URL from Server: '$rawAudioUrl'");
@@ -120,16 +128,16 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
 
       debugPrint("Instantiating VideoPlayerController for audio...");
       _audioController = VideoPlayerController.networkUrl(Uri.parse(cleanUrl));
-      
+
       debugPrint("Starting Audio VideoPlayerController.initialize()...");
       await _audioController!.initialize();
-      
+
       debugPrint("Audio VideoPlayerController initialization SUCCESSFUL");
       debugPrint("Audio Duration: ${_audioController!.value.duration}");
-      
+
       _audioController!.setVolume(_currentVolume);
       _audioController!.addListener(_audioListener);
-      
+
       setState(() {
         _isAudioInitialized = true;
         _totalDurationText = _formatDuration(_audioController!.value.duration);
@@ -146,19 +154,19 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
 
   void _audioListener() {
     if (!mounted || _audioController == null) return;
-    
+
     final value = _audioController!.value;
     if (value.isInitialized) {
       setState(() {
         _isPlaying = value.isPlaying;
-        
+
         final duration = value.duration;
         final position = value.position;
-        
+
         if (duration.inMilliseconds > 0) {
           _currentPosition = position.inMilliseconds / duration.inMilliseconds;
         }
-        
+
         _currentTimeText = _formatDuration(position);
         _totalDurationText = _formatDuration(duration);
       });
@@ -199,7 +207,11 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
           child: CircleAvatar(
             backgroundColor: Colors.white,
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new, color: themeColor, size: 18.sp),
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: themeColor,
+                size: 18.sp,
+              ),
               onPressed: () => Get.back(),
             ),
           ),
@@ -218,9 +230,7 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
       body: Obx(() {
         if (_controller.isLoading.value && _controller.khutbah.value == null) {
           return const Center(
-            child: CircularProgressIndicator(
-              color: themeColor,
-            ),
+            child: CircularProgressIndicator(color: themeColor),
           );
         }
 
@@ -259,7 +269,7 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                     borderRadius: BorderRadius.circular(30.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 30,
                         offset: const Offset(0, 15),
                       ),
@@ -271,10 +281,11 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                         ? Image.network(
                             khutbah.thumbnailUrl,
                             fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) => Image.asset(
-                              'assets/icons/sun.png',
-                              fit: BoxFit.cover,
-                            ),
+                            errorBuilder: (context, error, stackTrace) =>
+                                Image.asset(
+                                  'assets/icons/sun.png',
+                                  fit: BoxFit.cover,
+                                ),
                           )
                         : Image.asset(
                             'assets/icons/sun.png',
@@ -302,7 +313,9 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                 children: [
                   CircleAvatar(
                     radius: 12.r,
-                    backgroundImage: const AssetImage('assets/icons/abubakr.png'),
+                    backgroundImage: const AssetImage(
+                      'assets/icons/abubakr.png',
+                    ),
                   ),
                   SizedBox(width: 8.w),
                   Flexible(
@@ -342,7 +355,7 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                   borderRadius: BorderRadius.circular(25.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.03),
+                      color: Colors.black.withValues(alpha: 0.03),
                       blurRadius: 20,
                       offset: const Offset(0, 8),
                     ),
@@ -354,8 +367,12 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
                         trackHeight: 4.h,
-                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.r),
-                        overlayShape: RoundSliderOverlayShape(overlayRadius: 14.r),
+                        thumbShape: RoundSliderThumbShape(
+                          enabledThumbRadius: 6.r,
+                        ),
+                        overlayShape: RoundSliderOverlayShape(
+                          overlayRadius: 14.r,
+                        ),
                         activeTrackColor: themeColor,
                         inactiveTrackColor: Colors.grey.shade200,
                         thumbColor: const Color(0xFFA6864D),
@@ -372,7 +389,8 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                         onChangeEnd: _isAudioInitialized
                             ? (v) {
                                 if (_audioController != null) {
-                                  final duration = _audioController!.value.duration;
+                                  final duration =
+                                      _audioController!.value.duration;
                                   final target = duration * v;
                                   _audioController!.seekTo(target);
                                 }
@@ -385,8 +403,20 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(_currentTimeText, style: GoogleFonts.inter(fontSize: 10.sp, color: Colors.grey)),
-                          Text(_totalDurationText, style: GoogleFonts.inter(fontSize: 10.sp, color: Colors.grey)),
+                          Text(
+                            _currentTimeText,
+                            style: GoogleFonts.inter(
+                              fontSize: 10.sp,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Text(
+                            _totalDurationText,
+                            style: GoogleFonts.inter(
+                              fontSize: 10.sp,
+                              color: Colors.grey,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -396,15 +426,27 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         IconButton(
-                          icon: Icon(Icons.shuffle, color: const Color(0xFFA6864D), size: 20.sp),
+                          icon: Icon(
+                            Icons.shuffle,
+                            color: const Color(0xFFA6864D),
+                            size: 20.sp,
+                          ),
                           onPressed: () {},
                         ),
                         IconButton(
-                          icon: Icon(Icons.replay_10, color: const Color(0xFF2D3436), size: 24.sp),
-                          onPressed: _isAudioInitialized && _audioController != null
+                          icon: Icon(
+                            Icons.replay_10,
+                            color: const Color(0xFF2D3436),
+                            size: 24.sp,
+                          ),
+                          onPressed:
+                              _isAudioInitialized && _audioController != null
                               ? () {
-                                  final position = _audioController!.value.position;
-                                  _audioController!.seekTo(position - const Duration(seconds: 10));
+                                  final position =
+                                      _audioController!.value.position;
+                                  _audioController!.seekTo(
+                                    position - const Duration(seconds: 10),
+                                  );
                                 }
                               : null,
                         ),
@@ -424,12 +466,16 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                             width: 65.w,
                             height: 65.w,
                             decoration: BoxDecoration(
-                              color: _isAudioInitialized ? themeColor : Colors.grey.shade400,
+                              color: _isAudioInitialized
+                                  ? themeColor
+                                  : Colors.grey.shade400,
                               shape: BoxShape.circle,
                               boxShadow: _isAudioInitialized
                                   ? [
                                       BoxShadow(
-                                        color: themeColor.withOpacity(0.3),
+                                        color: themeColor.withValues(
+                                          alpha: 0.3,
+                                        ),
                                         blurRadius: 15,
                                         offset: const Offset(0, 8),
                                       ),
@@ -444,16 +490,28 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                           ),
                         ),
                         IconButton(
-                          icon: Icon(Icons.forward_10, color: const Color(0xFF2D3436), size: 24.sp),
-                          onPressed: _isAudioInitialized && _audioController != null
+                          icon: Icon(
+                            Icons.forward_10,
+                            color: const Color(0xFF2D3436),
+                            size: 24.sp,
+                          ),
+                          onPressed:
+                              _isAudioInitialized && _audioController != null
                               ? () {
-                                  final position = _audioController!.value.position;
-                                  _audioController!.seekTo(position + const Duration(seconds: 10));
+                                  final position =
+                                      _audioController!.value.position;
+                                  _audioController!.seekTo(
+                                    position + const Duration(seconds: 10),
+                                  );
                                 }
                               : null,
                         ),
                         IconButton(
-                          icon: Icon(Icons.repeat, color: const Color(0xFFA6864D), size: 20.sp),
+                          icon: Icon(
+                            Icons.repeat,
+                            color: const Color(0xFFA6864D),
+                            size: 20.sp,
+                          ),
                           onPressed: () {},
                         ),
                       ],
@@ -472,7 +530,9 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                     child: SliderTheme(
                       data: SliderTheme.of(context).copyWith(
                         trackHeight: 2.h,
-                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 4.r),
+                        thumbShape: RoundSliderThumbShape(
+                          enabledThumbRadius: 4.r,
+                        ),
                         activeTrackColor: themeColor,
                         inactiveTrackColor: Colors.grey.shade200,
                         thumbColor: const Color(0xFFA6864D),
@@ -509,7 +569,11 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.menu_book, color: themeColor, size: 18.sp),
+                            Icon(
+                              Icons.menu_book,
+                              color: themeColor,
+                              size: 18.sp,
+                            ),
                             SizedBox(width: 10.w),
                             Text(
                               'ABOUT THIS KHUTBAH',
@@ -522,7 +586,11 @@ class _FemaleJummaNowPlayingUIState extends State<FemaleJummaNowPlayingUI> {
                             ),
                           ],
                         ),
-                        Icon(Icons.keyboard_arrow_down, color: Colors.grey, size: 20.sp),
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.grey,
+                          size: 20.sp,
+                        ),
                       ],
                     ),
                     SizedBox(height: 15.h),

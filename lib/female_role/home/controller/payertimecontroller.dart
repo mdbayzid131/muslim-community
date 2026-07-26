@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:muslim_community/female_role/home/service/payertimeservice.dart';
-import 'package:intl/intl.dart';
 
 class FemalePrayerTimeController extends GetxController {
   final FemalePrayerTimeService _service = FemalePrayerTimeService();
@@ -23,7 +22,7 @@ class FemalePrayerTimeController extends GetxController {
         if (data['success'] == true && data['data'] != null) {
           final resData = data['data'];
           final timings = resData['timings'];
-          
+
           if (timings != null) {
             // API returns lowercase keys (fajr, sunrise, etc.)
             prayerTimings.value = {
@@ -34,10 +33,10 @@ class FemalePrayerTimeController extends GetxController {
               'Maghrib': timings['maghrib'] ?? timings['Maghrib'] ?? '',
               'Isha': timings['isha'] ?? timings['Isha'] ?? '',
             };
-            
+
             _calculateNextPrayer();
           }
-          
+
           todayDate.value = resData['weekday'] ?? "";
           hijriDate.value = resData['hijriDate'] ?? "";
         }
@@ -53,14 +52,14 @@ class FemalePrayerTimeController extends GetxController {
     if (prayerTimings.isEmpty) return;
 
     final now = DateTime.now();
-    
+
     String? nextName;
     String? nextTime;
     DateTime? minDiffTime;
 
     prayerTimings.forEach((name, time) {
       if (name == 'Sunrise') return;
-      
+
       try {
         final prayerTimeParts = time.split(':');
         final prayerDateTime = DateTime(

@@ -31,7 +31,7 @@ class FemaleLoginUI extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: themeColor.withOpacity(0.1),
+                        color: themeColor.withValues(alpha: 0.1),
                         blurRadius: 20.r,
                         spreadRadius: 5.r,
                       ),
@@ -58,7 +58,7 @@ class FemaleLoginUI extends StatelessWidget {
                 'Sign in to continue your journey.',
                 style: GoogleFonts.inter(
                   fontSize: 14.sp,
-                  color: const Color(0xFF636E72).withOpacity(0.8),
+                  color: const Color(0xFF636E72).withValues(alpha: 0.8),
                 ),
               ),
               SizedBox(height: 40.h),
@@ -67,39 +67,44 @@ class FemaleLoginUI extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(24.w),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.7),
+                  color: Colors.white.withValues(alpha: 0.7),
                   borderRadius: BorderRadius.circular(24.r),
                   border: Border.all(color: Colors.white, width: 2),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Obx(() => _buildInputField(
-                          label: 'EMAIL ADDRESS',
-                          hint: 'Enter your email',
-                          icon: Icons.email_outlined,
-                          themeColor: themeColor,
-                          controller: controller.emailController,
-                          errorText: controller.emailError.value,
-                        )),
+                    Obx(
+                      () => _buildInputField(
+                        label: 'EMAIL ADDRESS',
+                        hint: 'Enter your email',
+                        icon: Icons.email_outlined,
+                        themeColor: themeColor,
+                        controller: controller.emailController,
+                        errorText: controller.emailError.value,
+                      ),
+                    ),
                     SizedBox(height: 20.h),
-                    Obx(() => _buildInputField(
-                          label: 'PASSWORD',
-                          hint: 'Enter your password',
-                          icon: Icons.lock_outline,
-                          themeColor: themeColor,
-                          isPassword: true,
-                          obscureText: !controller.isPasswordVisible.value,
-                          controller: controller.passwordController,
-                          onToggleVisibility: () =>
-                              controller.togglePasswordVisibility(),
-                          errorText: controller.passwordError.value,
-                        )),
+                    Obx(
+                      () => _buildInputField(
+                        label: 'PASSWORD',
+                        hint: 'Enter your password',
+                        icon: Icons.lock_outline,
+                        themeColor: themeColor,
+                        isPassword: true,
+                        obscureText: !controller.isPasswordVisible.value,
+                        controller: controller.passwordController,
+                        onToggleVisibility: () =>
+                            controller.togglePasswordVisibility(),
+                        errorText: controller.passwordError.value,
+                      ),
+                    ),
                     SizedBox(height: 12.h),
                     Align(
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
-                        onTap: () => Get.toNamed(AppRoutes.femaleForgetPasswordEmail),
+                        onTap: () =>
+                            Get.toNamed(AppRoutes.femaleForgetPasswordEmail),
                         child: Text(
                           'Forgot Password?',
                           style: GoogleFonts.inter(
@@ -116,28 +121,32 @@ class FemaleLoginUI extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       height: 56.h,
-                      child: Obx(() => ElevatedButton(
-                        onPressed: controller.isLoading.value 
-                            ? null 
-                            : () => controller.login(),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: themeColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.r),
+                      child: Obx(
+                        () => ElevatedButton(
+                          onPressed: controller.isLoading.value
+                              ? null
+                              : () => controller.login(),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: themeColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.r),
+                            ),
+                            elevation: 0,
                           ),
-                          elevation: 0,
-                        ),
-                        child: controller.isLoading.value
-                            ? const CircularProgressIndicator(color: Colors.white)
-                            : Text(
-                                'Login',
-                                style: GoogleFonts.inter(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
+                          child: controller.isLoading.value
+                              ? const CircularProgressIndicator(
                                   color: Colors.white,
+                                )
+                              : Text(
+                                  'Login',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                      )),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -195,7 +204,7 @@ class FemaleLoginUI extends StatelessWidget {
           style: GoogleFonts.inter(
             fontSize: 11.sp,
             fontWeight: FontWeight.w600,
-            color: themeColor.withOpacity(0.8),
+            color: themeColor.withValues(alpha: 0.8),
             letterSpacing: 1.2,
           ),
         ),
@@ -205,12 +214,15 @@ class FemaleLoginUI extends StatelessWidget {
           obscureText: isPassword ? obscureText : false,
           style: GoogleFonts.inter(fontSize: 14.sp),
           decoration: InputDecoration(
-            errorText: errorText != null && errorText.isNotEmpty ? errorText : null,
+            errorText: errorText != null && errorText.isNotEmpty
+                ? errorText
+                : null,
             hintText: hint,
-            hintStyle:
-                GoogleFonts.inter(color: Colors.grey.shade400, fontSize: 14.sp),
-            prefixIcon:
-                Icon(icon, color: Colors.grey.shade400, size: 20.sp),
+            hintStyle: GoogleFonts.inter(
+              color: Colors.grey.shade400,
+              fontSize: 14.sp,
+            ),
+            prefixIcon: Icon(icon, color: Colors.grey.shade400, size: 20.sp),
             suffixIcon: isPassword
                 ? GestureDetector(
                     onTap: onToggleVisibility,
@@ -224,13 +236,15 @@ class FemaleLoginUI extends StatelessWidget {
                   )
                 : null,
             filled: true,
-            fillColor: const Color(0xFFEDF4F1).withOpacity(0.5),
+            fillColor: const Color(0xFFEDF4F1).withValues(alpha: 0.5),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide.none,
             ),
-            contentPadding:
-                EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 14.h,
+            ),
           ),
         ),
       ],

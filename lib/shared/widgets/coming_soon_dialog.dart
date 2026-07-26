@@ -7,9 +7,7 @@ void showComingSoonDialog() {
   Get.dialog(
     AlertDialog(
       backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.r),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
       contentPadding: EdgeInsets.all(24.w),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -17,7 +15,7 @@ void showComingSoonDialog() {
           Container(
             padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
-              color: const Color(0xFF436E50).withOpacity(0.1),
+              color: const Color(0xFF436E50).withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(

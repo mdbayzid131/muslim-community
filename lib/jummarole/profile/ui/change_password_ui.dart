@@ -30,13 +30,17 @@ class JummaChangePasswordUI extends StatelessWidget {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 5,
                     offset: const Offset(0, 2),
                   ),
                 ],
               ),
-              child: Icon(Icons.arrow_back_ios_new, color: AppColors.titleColor, size: 16.sp),
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: AppColors.titleColor,
+                size: 16.sp,
+              ),
             ),
           ),
         ),
@@ -62,7 +66,7 @@ class JummaChangePasswordUI extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.r),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.02),
+                    color: Colors.black.withValues(alpha: 0.02),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -71,53 +75,65 @@ class JummaChangePasswordUI extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Obx(() => _buildPasswordField(
-                    label: "PREVIOUS PASSWORD",
-                    hint: "Enter your current password",
-                    controller: controller.currentPasswordCtrl,
-                    obscureText: !controller.isCurrentPasswordVisible.value,
-                    onToggle: controller.toggleCurrentPasswordVisibility,
-                  )),
+                  Obx(
+                    () => _buildPasswordField(
+                      label: "PREVIOUS PASSWORD",
+                      hint: "Enter your current password",
+                      controller: controller.currentPasswordCtrl,
+                      obscureText: !controller.isCurrentPasswordVisible.value,
+                      onToggle: controller.toggleCurrentPasswordVisibility,
+                    ),
+                  ),
                   SizedBox(height: 20.h),
-                  Obx(() => _buildPasswordField(
-                    label: "NEW PASSWORD",
-                    hint: "Enter your new password",
-                    controller: controller.newPasswordCtrl,
-                    obscureText: !controller.isNewPasswordVisible.value,
-                    onToggle: controller.toggleNewPasswordVisibility,
-                  )),
+                  Obx(
+                    () => _buildPasswordField(
+                      label: "NEW PASSWORD",
+                      hint: "Enter your new password",
+                      controller: controller.newPasswordCtrl,
+                      obscureText: !controller.isNewPasswordVisible.value,
+                      onToggle: controller.toggleNewPasswordVisibility,
+                    ),
+                  ),
                   SizedBox(height: 20.h),
-                  Obx(() => _buildPasswordField(
-                    label: "CONFIRM NEW PASSWORD",
-                    hint: "Re-enter your new password",
-                    controller: controller.confirmPasswordCtrl,
-                    obscureText: !controller.isConfirmPasswordVisible.value,
-                    onToggle: controller.toggleConfirmPasswordVisibility,
-                  )),
+                  Obx(
+                    () => _buildPasswordField(
+                      label: "CONFIRM NEW PASSWORD",
+                      hint: "Re-enter your new password",
+                      controller: controller.confirmPasswordCtrl,
+                      obscureText: !controller.isConfirmPasswordVisible.value,
+                      onToggle: controller.toggleConfirmPasswordVisibility,
+                    ),
+                  ),
                   SizedBox(height: 40.h),
                   SizedBox(
                     width: double.infinity,
                     height: 56.h,
-                    child: Obx(() => ElevatedButton(
-                      onPressed: controller.isLoading.value ? null : () => controller.changePassword(),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.jummaColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.r),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: controller.isLoading.value
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : Text(
-                            "Change Password",
-                            style: GoogleFonts.inter(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
+                    child: Obx(
+                      () => ElevatedButton(
+                        onPressed: controller.isLoading.value
+                            ? null
+                            : () => controller.changePassword(),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.jummaColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.r),
                           ),
-                    )),
+                          elevation: 0,
+                        ),
+                        child: controller.isLoading.value
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                "Change Password",
+                                style: GoogleFonts.inter(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -143,7 +159,7 @@ class JummaChangePasswordUI extends StatelessWidget {
           style: GoogleFonts.inter(
             fontSize: 12.sp,
             fontWeight: FontWeight.w600,
-            color: AppColors.bodyColor.withOpacity(0.7),
+            color: AppColors.bodyColor.withValues(alpha: 0.7),
             letterSpacing: 1.2,
           ),
         ),
@@ -157,19 +173,27 @@ class JummaChangePasswordUI extends StatelessWidget {
           ),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: GoogleFonts.inter(color: Colors.grey.withOpacity(0.5), fontSize: 14.sp),
+            hintStyle: GoogleFonts.inter(
+              color: Colors.grey.withValues(alpha: 0.5),
+              fontSize: 14.sp,
+            ),
             filled: true,
             fillColor: AppColors.surfaceColor,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide.none,
             ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 16.h,
+            ),
             suffixIcon: GestureDetector(
               onTap: onToggle,
               child: Icon(
-                obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                color: Colors.grey.withOpacity(0.5),
+                obscureText
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
+                color: Colors.grey.withValues(alpha: 0.5),
                 size: 20.sp,
               ),
             ),

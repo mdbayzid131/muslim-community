@@ -20,7 +20,11 @@ class MaleSignUpOTPUI extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: const Color(0xFF2D3436), size: 24.sp),
+          icon: Icon(
+            Icons.arrow_back,
+            color: const Color(0xFF2D3436),
+            size: 24.sp,
+          ),
           onPressed: () => Get.back(),
         ),
       ),
@@ -38,7 +42,7 @@ class MaleSignUpOTPUI extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: themeColor.withOpacity(0.15),
+                        color: themeColor.withValues(alpha: 0.15),
                         blurRadius: 30.r,
                         spreadRadius: 5.r,
                       ),
@@ -73,31 +77,48 @@ class MaleSignUpOTPUI extends StatelessWidget {
               SizedBox(height: 20.h),
 
               // Email Badge
-              Obx(() => Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.r),
-                  border: Border.all(color: Colors.grey.shade200),
+              Obx(
+                () => Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 8.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.r),
+                    border: Border.all(color: Colors.grey.shade200),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.email_outlined,
+                        size: 14.sp,
+                        color: themeColor.withValues(alpha: 0.6),
+                      ),
+                      SizedBox(width: 8.w),
+                      Text(
+                        controller.email.value.isNotEmpty
+                            ? controller.email.value
+                            : '... @gmail.com',
+                        style: GoogleFonts.inter(
+                          fontSize: 12.sp,
+                          color: const Color(0xFF2D3436),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.email_outlined, size: 14.sp, color: themeColor.withOpacity(0.6)),
-                    SizedBox(width: 8.w),
-                    Text(
-                      controller.email.value.isNotEmpty ? controller.email.value : '... @gmail.com',
-                      style: GoogleFonts.inter(fontSize: 12.sp, color: const Color(0xFF2D3436)),
-                    ),
-                  ],
-                ),
-              )),
+              ),
               SizedBox(height: 25.h),
 
               // Workable OTP Fields (6 boxes)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(6, (index) => _buildOTPBox(index, themeColor, controller)),
+                children: List.generate(
+                  6,
+                  (index) => _buildOTPBox(index, themeColor, controller),
+                ),
               ),
               SizedBox(height: 15.h),
               Text(
@@ -115,58 +136,80 @@ class MaleSignUpOTPUI extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.access_time, size: 16.sp, color: Colors.grey.shade400),
+                  Icon(
+                    Icons.access_time,
+                    size: 16.sp,
+                    color: Colors.grey.shade400,
+                  ),
                   SizedBox(width: 8.w),
                   Text(
                     'Code expires in ',
-                    style: GoogleFonts.inter(fontSize: 13.sp, color: Colors.grey.shade600),
-                  ),
-                  Obx(() => Text(
-                    controller.timerText.value,
                     style: GoogleFonts.inter(
-                      fontSize: 13.sp, 
-                      color: themeColor,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 13.sp,
+                      color: Colors.grey.shade600,
                     ),
-                  )),
+                  ),
+                  Obx(
+                    () => Text(
+                      controller.timerText.value,
+                      style: GoogleFonts.inter(
+                        fontSize: 13.sp,
+                        color: themeColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ],
               ),
               SizedBox(height: 25.h),
 
               // Button
-              Obx(() => SizedBox(
-                width: double.infinity,
-                height: 52.h,
-                child: ElevatedButton(
-                  onPressed: controller.isLoading.value ? null : () => controller.verifyOtp(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: themeColor,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.r)),
-                    elevation: 0,
-                  ),
-                  child: controller.isLoading.value 
-                    ? const SizedBox(
-                        height: 20, 
-                        width: 20, 
-                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)
-                      )
-                    : Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.check_circle_outline, size: 18.sp, color: Colors.white),
-                      SizedBox(width: 8.w),
-                      Text(
-                        'Verify & Continue',
-                        style: GoogleFonts.inter(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
+              Obx(
+                () => SizedBox(
+                  width: double.infinity,
+                  height: 52.h,
+                  child: ElevatedButton(
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () => controller.verifyOtp(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: themeColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.r),
                       ),
-                    ],
+                      elevation: 0,
+                    ),
+                    child: controller.isLoading.value
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.check_circle_outline,
+                                size: 18.sp,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 8.w),
+                              Text(
+                                'Verify & Continue',
+                                style: GoogleFonts.inter(
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
                   ),
                 ),
-              )),
+              ),
               SizedBox(height: 30.h),
 
               // Resend
@@ -175,26 +218,35 @@ class MaleSignUpOTPUI extends StatelessWidget {
                 children: [
                   Text(
                     "Didn't receive the code? ",
-                    style: GoogleFonts.inter(fontSize: 14.sp, color: Colors.grey.shade600),
+                    style: GoogleFonts.inter(
+                      fontSize: 14.sp,
+                      color: Colors.grey.shade600,
+                    ),
                   ),
-                  Obx(() => GestureDetector(
-                    onTap: (resendController.isLoading.value || controller.secondsRemaining.value > 0)
-                        ? null
-                        : () => resendController.resendOtp(
+                  Obx(
+                    () => GestureDetector(
+                      onTap:
+                          (resendController.isLoading.value ||
+                              controller.secondsRemaining.value > 0)
+                          ? null
+                          : () => resendController.resendOtp(
                               controller.email.value,
                               () => controller.startTimer(),
                             ),
-                    child: Text(
-                      'Resend',
-                      style: GoogleFonts.inter(
-                        fontSize: 14.sp,
-                        color: (resendController.isLoading.value || controller.secondsRemaining.value > 0)
-                            ? Colors.grey
-                            : themeColor,
-                        fontWeight: FontWeight.bold,
+                      child: Text(
+                        'Resend',
+                        style: GoogleFonts.inter(
+                          fontSize: 14.sp,
+                          color:
+                              (resendController.isLoading.value ||
+                                  controller.secondsRemaining.value > 0)
+                              ? Colors.grey
+                              : themeColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  )),
+                  ),
                 ],
               ),
               SizedBox(height: 20.h),
@@ -205,7 +257,11 @@ class MaleSignUpOTPUI extends StatelessWidget {
     );
   }
 
-  Widget _buildOTPBox(int index, Color themeColor, MaleOtpController controller) {
+  Widget _buildOTPBox(
+    int index,
+    Color themeColor,
+    MaleOtpController controller,
+  ) {
     return Container(
       width: 50.w,
       height: 65.h,
@@ -213,7 +269,7 @@ class MaleSignUpOTPUI extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(
-          color: themeColor.withOpacity(0.3),
+          color: themeColor.withValues(alpha: 0.3),
           width: 1.5,
         ),
       ),

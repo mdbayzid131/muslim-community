@@ -14,7 +14,8 @@ class FemalePostDetailsUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final FemaleGroupController controller = Get.find<FemaleGroupController>();
-    final FemaleUserDataController userDataController = Get.isRegistered<FemaleUserDataController>()
+    final FemaleUserDataController userDataController =
+        Get.isRegistered<FemaleUserDataController>()
         ? Get.find<FemaleUserDataController>()
         : Get.put(FemaleUserDataController());
 
@@ -35,7 +36,11 @@ class FemalePostDetailsUI extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: Colors.white,
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new, color: AppColors.femaleColor, size: 18.sp),
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: AppColors.femaleColor,
+                size: 18.sp,
+              ),
               onPressed: () => Get.back(),
             ),
           ),
@@ -71,7 +76,7 @@ class FemalePostDetailsUI extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25.r),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.02),
+                            color: Colors.black.withValues(alpha: 0.02),
                             blurRadius: 10,
                             offset: const Offset(0, 4),
                           ),
@@ -86,8 +91,14 @@ class FemalePostDetailsUI extends StatelessWidget {
                                 radius: 18.r,
                                 backgroundImage: post.userImage.isNotEmpty
                                     ? NetworkImage(post.userImage)
-                                    : const AssetImage('assets/image/female.png') as ImageProvider,
-                                onBackgroundImageError: post.userImage.isNotEmpty ? (e, s) {} : null,
+                                    : const AssetImage(
+                                            'assets/image/female.png',
+                                          )
+                                          as ImageProvider,
+                                onBackgroundImageError:
+                                    post.userImage.isNotEmpty
+                                    ? (e, s) {}
+                                    : null,
                               ),
                               SizedBox(width: 12.w),
                               Expanded(
@@ -112,15 +123,22 @@ class FemalePostDetailsUI extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              if (post.userId == userDataController.userId.value)
+                              if (post.userId ==
+                                  userDataController.userId.value)
                                 PopupMenuButton<String>(
-                                  icon: Icon(Icons.more_vert, color: AppColors.bodyColor, size: 20.sp),
+                                  icon: Icon(
+                                    Icons.more_vert,
+                                    color: AppColors.bodyColor,
+                                    size: 20.sp,
+                                  ),
                                   onSelected: (value) {
                                     if (value == 'delete') {
                                       Get.dialog(
                                         AlertDialog(
                                           title: const Text("Delete Post"),
-                                          content: const Text("Are you sure you want to delete this post?"),
+                                          content: const Text(
+                                            "Are you sure you want to delete this post?",
+                                          ),
                                           actions: [
                                             TextButton(
                                               onPressed: () => Get.back(),
@@ -129,10 +147,18 @@ class FemalePostDetailsUI extends StatelessWidget {
                                             TextButton(
                                               onPressed: () {
                                                 Get.back();
-                                                controller.deletePost(post.groupId, post.id);
+                                                controller.deletePost(
+                                                  post.groupId,
+                                                  post.id,
+                                                );
                                                 Get.back(); // Back to group details
                                               },
-                                              child: const Text("Delete", style: TextStyle(color: Colors.red)),
+                                              child: const Text(
+                                                "Delete",
+                                                style: TextStyle(
+                                                  color: Colors.red,
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -144,9 +170,16 @@ class FemalePostDetailsUI extends StatelessWidget {
                                       value: 'delete',
                                       child: Row(
                                         children: [
-                                          Icon(Icons.delete_outline, color: Colors.red, size: 20),
+                                          Icon(
+                                            Icons.delete_outline,
+                                            color: Colors.red,
+                                            size: 20,
+                                          ),
                                           SizedBox(width: 10),
-                                          Text("Delete", style: TextStyle(color: Colors.red)),
+                                          Text(
+                                            "Delete",
+                                            style: TextStyle(color: Colors.red),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -159,29 +192,38 @@ class FemalePostDetailsUI extends StatelessWidget {
                             post.content,
                             style: GoogleFonts.inter(
                               fontSize: 14.sp,
-                              color: AppColors.titleColor.withOpacity(0.8),
+                              color: AppColors.titleColor.withValues(
+                                alpha: 0.8,
+                              ),
                               height: 1.5,
                             ),
                           ),
                           if (post.attachments.isNotEmpty) ...[
                             SizedBox(height: 15.h),
-                            ...post.attachments.map((url) => Padding(
-                              padding: EdgeInsets.only(bottom: 10.h),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(15.r),
-                                child: Image.network(
-                                  url,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) => Container(
+                            ...post.attachments.map(
+                              (url) => Padding(
+                                padding: EdgeInsets.only(bottom: 10.h),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15.r),
+                                  child: Image.network(
+                                    url,
                                     width: double.infinity,
-                                    height: 200.h,
-                                    color: Colors.grey[200],
-                                    child: Icon(Icons.image_not_supported, color: Colors.grey),
+                                    fit: BoxFit.cover,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Container(
+                                              width: double.infinity,
+                                              height: 200.h,
+                                              color: Colors.grey[200],
+                                              child: Icon(
+                                                Icons.image_not_supported,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
                                   ),
                                 ),
                               ),
-                            )),
+                            ),
                           ],
                           SizedBox(height: 20.h),
                           Row(
@@ -191,8 +233,12 @@ class FemalePostDetailsUI extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Icon(
-                                      post.isLiked ? Icons.favorite : Icons.favorite_border,
-                                      color: post.isLiked ? const Color(0xFFE57373) : AppColors.bodyColor,
+                                      post.isLiked
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: post.isLiked
+                                          ? const Color(0xFFE57373)
+                                          : AppColors.bodyColor,
                                       size: 18.sp,
                                     ),
                                     SizedBox(width: 6.w),
@@ -207,7 +253,11 @@ class FemalePostDetailsUI extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(width: 20.w),
-                              Icon(Icons.chat_bubble_outline, color: AppColors.bodyColor, size: 18.sp),
+                              Icon(
+                                Icons.chat_bubble_outline,
+                                color: AppColors.bodyColor,
+                                size: 18.sp,
+                              ),
                               SizedBox(width: 6.w),
                               Text(
                                 post.commentsCount.toString(),
@@ -221,9 +271,9 @@ class FemalePostDetailsUI extends StatelessWidget {
                         ],
                       ),
                     ),
-                    
+
                     SizedBox(height: 30.h),
-                    
+
                     // --- COMMENTS SECTION ---
                     Text(
                       'Comments',
@@ -234,14 +284,16 @@ class FemalePostDetailsUI extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 15.h),
-                    
+
                     if (controller.postComments.isEmpty)
                       Center(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 20.h),
                           child: Text(
                             'No comments yet. Write a comment below!',
-                            style: GoogleFonts.inter(color: AppColors.bodyColor),
+                            style: GoogleFonts.inter(
+                              color: AppColors.bodyColor,
+                            ),
                           ),
                         ),
                       )
@@ -249,26 +301,42 @@ class FemalePostDetailsUI extends StatelessWidget {
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.postComments.where((c) => c.parentCommentId == null).length,
+                        itemCount: controller.postComments
+                            .where((c) => c.parentCommentId == null)
+                            .length,
                         itemBuilder: (context, index) {
-                          final mainComments = controller.postComments.where((c) => c.parentCommentId == null).toList();
-                          if (index >= mainComments.length) return const SizedBox.shrink();
+                          final mainComments = controller.postComments
+                              .where((c) => c.parentCommentId == null)
+                              .toList();
+                          if (index >= mainComments.length)
+                            return const SizedBox.shrink();
                           final mainComment = mainComments[index];
-                          final replies = controller.postComments.where((c) => c.parentCommentId == mainComment.id).toList();
-                          
+                          final replies = controller.postComments
+                              .where((c) => c.parentCommentId == mainComment.id)
+                              .toList();
+
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _buildCommentItem(context, mainComment, isReply: false),
+                              _buildCommentItem(
+                                context,
+                                mainComment,
+                                isReply: false,
+                              ),
                               if (replies.isNotEmpty)
                                 Padding(
                                   padding: EdgeInsets.only(left: 40.w),
                                   child: ListView.builder(
                                     shrinkWrap: true,
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     itemCount: replies.length,
                                     itemBuilder: (context, rIndex) {
-                                      return _buildCommentItem(context, replies[rIndex], isReply: true);
+                                      return _buildCommentItem(
+                                        context,
+                                        replies[rIndex],
+                                        isReply: true,
+                                      );
                                     },
                                   ),
                                 ),
@@ -285,10 +353,11 @@ class FemalePostDetailsUI extends StatelessWidget {
 
           // --- REPLY PREVIEW ---
           Obx(() {
-            if (controller.replyingToCommentId.value.isEmpty) return const SizedBox.shrink();
+            if (controller.replyingToCommentId.value.isEmpty)
+              return const SizedBox.shrink();
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-              color: AppColors.backgroundColor.withOpacity(0.8),
+              color: AppColors.backgroundColor.withValues(alpha: 0.8),
               child: Row(
                 children: [
                   Icon(Icons.reply, size: 16.sp, color: AppColors.femaleColor),
@@ -296,12 +365,19 @@ class FemalePostDetailsUI extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'Replying to ${controller.replyingToUserName.value}',
-                      style: GoogleFonts.inter(fontSize: 12.sp, color: AppColors.bodyColor),
+                      style: GoogleFonts.inter(
+                        fontSize: 12.sp,
+                        color: AppColors.bodyColor,
+                      ),
                     ),
                   ),
                   GestureDetector(
                     onTap: () => controller.cancelReply(),
-                    child: Icon(Icons.close, size: 16.sp, color: AppColors.bodyColor),
+                    child: Icon(
+                      Icons.close,
+                      size: 16.sp,
+                      color: AppColors.bodyColor,
+                    ),
                   ),
                 ],
               ),
@@ -319,7 +395,7 @@ class FemalePostDetailsUI extends StatelessWidget {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: Colors.black.withValues(alpha: 0.05),
                   blurRadius: 10,
                   offset: const Offset(0, -5),
                 ),
@@ -334,28 +410,34 @@ class FemalePostDetailsUI extends StatelessWidget {
                       radius: 20.r,
                       backgroundImage: img.isNotEmpty
                           ? NetworkImage(img)
-                          : const AssetImage('assets/image/female.png') as ImageProvider,
+                          : const AssetImage('assets/image/female.png')
+                                as ImageProvider,
                       onBackgroundImageError: img.isNotEmpty ? (e, s) {} : null,
                     );
                   }),
                   SizedBox(width: 15.w),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 8.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 15.w,
+                        vertical: 8.h,
+                      ),
                       decoration: BoxDecoration(
-                        color: AppColors.femaleColor.withOpacity(0.05),
+                        color: AppColors.femaleColor.withValues(alpha: 0.05),
                         borderRadius: BorderRadius.circular(20.r),
-                        border: Border.all(color: AppColors.femaleColor.withOpacity(0.1)),
+                        border: Border.all(
+                          color: AppColors.femaleColor.withValues(alpha: 0.1),
+                        ),
                       ),
                       child: TextField(
                         controller: controller.commentContentCtrl,
                         decoration: InputDecoration(
-                          hintText: controller.replyingToCommentId.value.isEmpty 
-                              ? 'Write a comment...' 
+                          hintText: controller.replyingToCommentId.value.isEmpty
+                              ? 'Write a comment...'
                               : 'Write a reply...',
                           hintStyle: GoogleFonts.inter(
                             fontSize: 13.sp,
-                            color: AppColors.bodyColor.withOpacity(0.6),
+                            color: AppColors.bodyColor.withValues(alpha: 0.6),
                           ),
                           border: InputBorder.none,
                           isDense: true,
@@ -366,11 +448,15 @@ class FemalePostDetailsUI extends StatelessWidget {
                   SizedBox(width: 10.w),
                   Container(
                     decoration: BoxDecoration(
-                      color: AppColors.femaleColor.withOpacity(0.15),
+                      color: AppColors.femaleColor.withValues(alpha: 0.15),
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
-                      icon: Icon(Icons.send_rounded, color: AppColors.femaleColor, size: 20.sp),
+                      icon: Icon(
+                        Icons.send_rounded,
+                        color: AppColors.femaleColor,
+                        size: 20.sp,
+                      ),
                       onPressed: () {
                         controller.addComment(initialPost.id);
                       },
@@ -385,7 +471,11 @@ class FemalePostDetailsUI extends StatelessWidget {
     );
   }
 
-  Widget _buildCommentItem(BuildContext context, GroupCommentModel comment, {required bool isReply}) {
+  Widget _buildCommentItem(
+    BuildContext context,
+    GroupCommentModel comment, {
+    required bool isReply,
+  }) {
     final controller = Get.find<FemaleGroupController>();
     final userDataController = Get.find<FemaleUserDataController>();
     return Container(
@@ -396,7 +486,7 @@ class FemalePostDetailsUI extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.01),
+            color: Colors.black.withValues(alpha: 0.01),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -410,7 +500,9 @@ class FemalePostDetailsUI extends StatelessWidget {
             backgroundImage: comment.userImage.isNotEmpty
                 ? NetworkImage(comment.userImage)
                 : const AssetImage('assets/image/female.png') as ImageProvider,
-            onBackgroundImageError: comment.userImage.isNotEmpty ? (e, s) {} : null,
+            onBackgroundImageError: comment.userImage.isNotEmpty
+                ? (e, s) {}
+                : null,
           ),
           SizedBox(width: 10.w),
           Expanded(
@@ -439,12 +531,16 @@ class FemalePostDetailsUI extends StatelessWidget {
                               : comment.createdAt,
                           style: GoogleFonts.inter(
                             fontSize: 10.sp,
-                            color: AppColors.bodyColor.withOpacity(0.6),
+                            color: AppColors.bodyColor.withValues(alpha: 0.6),
                           ),
                         ),
                         if (comment.userId == userDataController.userId.value)
                           PopupMenuButton<String>(
-                            icon: Icon(Icons.more_vert, size: 16.sp, color: AppColors.bodyColor),
+                            icon: Icon(
+                              Icons.more_vert,
+                              size: 16.sp,
+                              color: AppColors.bodyColor,
+                            ),
                             padding: EdgeInsets.zero,
                             constraints: const BoxConstraints(),
                             onSelected: (value) {
@@ -452,7 +548,9 @@ class FemalePostDetailsUI extends StatelessWidget {
                                 Get.dialog(
                                   AlertDialog(
                                     title: const Text("Delete Comment"),
-                                    content: const Text("Are you sure you want to delete this comment?"),
+                                    content: const Text(
+                                      "Are you sure you want to delete this comment?",
+                                    ),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Get.back(),
@@ -462,9 +560,15 @@ class FemalePostDetailsUI extends StatelessWidget {
                                         onPressed: () {
                                           Get.back();
                                           final postId = Get.arguments.id;
-                                          controller.deleteComment(postId, comment.id);
+                                          controller.deleteComment(
+                                            postId,
+                                            comment.id,
+                                          );
                                         },
-                                        child: const Text("Delete", style: TextStyle(color: Colors.red)),
+                                        child: const Text(
+                                          "Delete",
+                                          style: TextStyle(color: Colors.red),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -476,9 +580,16 @@ class FemalePostDetailsUI extends StatelessWidget {
                                 value: 'delete',
                                 child: Row(
                                   children: [
-                                    Icon(Icons.delete_outline, color: Colors.red, size: 18),
+                                    Icon(
+                                      Icons.delete_outline,
+                                      color: Colors.red,
+                                      size: 18,
+                                    ),
                                     SizedBox(width: 8),
-                                    Text("Delete", style: TextStyle(color: Colors.red)),
+                                    Text(
+                                      "Delete",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -493,12 +604,13 @@ class FemalePostDetailsUI extends StatelessWidget {
                   comment.content,
                   style: GoogleFonts.inter(
                     fontSize: 12.sp,
-                    color: AppColors.titleColor.withOpacity(0.8),
+                    color: AppColors.titleColor.withValues(alpha: 0.8),
                   ),
                 ),
                 if (!isReply)
                   GestureDetector(
-                    onTap: () => controller.setReply(comment.id, comment.userName),
+                    onTap: () =>
+                        controller.setReply(comment.id, comment.userName),
                     child: Padding(
                       padding: EdgeInsets.only(top: 8.h),
                       child: Text(
