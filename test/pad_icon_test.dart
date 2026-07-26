@@ -4,8 +4,8 @@ import 'package:image/image.dart' as img;
 
 void main() {
   test('pad icon', () {
-    final inputPath = 'assets/image/logo.png';
-    final outputPath = 'assets/image/logo_padded.png';
+    final inputPath = 'assets/image/app_logo.png';
+    final outputPath = 'assets/image/app_logo_adaptive_foreground.png';
     
     final imageBytes = File(inputPath).readAsBytesSync();
     final original = img.decodeImage(imageBytes);

@@ -7,6 +7,7 @@ class FemaleVerifyController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   var verificationImage = Rxn<File>();
   var verificationVideo = Rxn<File>();
+  var selectedMethod = RxnString();
 
   Future<void> takePhoto() async {
     final XFile? photo = await _picker.pickImage(source: ImageSource.camera);

@@ -64,35 +64,102 @@ class FemaleIdentityVerificationUI extends StatelessWidget {
               ),
               SizedBox(height: 30.h),
 
-              // Photo Verification Card
-              Obx(
-                () => _buildVerificationCard(
-                  icon: Icons.shield_outlined,
-                  title: 'Photo Verification',
-                  description:
-                      'Please take a clear photo holding a piece of paper with today\'s date. This is for manual review only and will never be shared.',
-                  buttonText: 'Take Verification Photo',
-                  buttonIcon: Icons.camera_alt_outlined,
-                  onTap: verifyController.takePhoto,
-                  isCompleted: verifyController.verificationImage.value != null,
-                  themeColor: themeColor,
-                ),
-              ),
-              SizedBox(height: 24.h),
+              // Verification Section
+              Obx(() {
+                final method = verifyController.selectedMethod.value;
+                if (method == null) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Choose Verification Method',
+                        style: GoogleFonts.inter(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF2D3436),
+                        ),
+                      ),
+                      SizedBox(height: 16.h),
+                      _buildMethodSelectionCard(
+                        title: 'Photo Verification',
+                        subtitle: 'Take a photo holding today\'s date on paper',
+                        icon: Icons.camera_alt_outlined,
+                        onTap: () => verifyController.selectedMethod.value = 'photo',
+                        themeColor: themeColor,
+                      ),
+                      SizedBox(height: 16.h),
+                      _buildMethodSelectionCard(
+                        title: 'Video Verification',
+                        subtitle: 'Record a short 5-second video reading your name',
+                        icon: Icons.videocam_outlined,
+                        onTap: () => verifyController.selectedMethod.value = 'video',
+                        themeColor: themeColor,
+                      ),
+                    ],
+                  );
+                }
 
-              // Video Verification Card
-              Obx(
-                () => _buildVerificationCard(
-                  icon: Icons.shield_outlined,
-                  title: 'Record Video Verification',
-                  description: '5-second video reading your name ',
-                  buttonText: 'Start recording',
-                  buttonIcon: Icons.videocam_outlined,
-                  onTap: verifyController.recordVideo,
-                  isCompleted: verifyController.verificationVideo.value != null,
-                  themeColor: themeColor,
-                ),
-              ),
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          method == 'photo' ? 'Photo Verification' : 'Video Verification',
+                          style: GoogleFonts.inter(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF2D3436),
+                          ),
+                        ),
+                        TextButton.icon(
+                          onPressed: () {
+                            verifyController.selectedMethod.value = null;
+                          },
+                          icon: Icon(Icons.edit, size: 14.sp, color: themeColor),
+                          label: Text(
+                            'Change',
+                            style: GoogleFonts.inter(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w600,
+                              color: themeColor,
+                            ),
+                          ),
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    if (method == 'photo')
+                      _buildVerificationCard(
+                        icon: Icons.shield_outlined,
+                        title: 'Photo Verification',
+                        description:
+                            'Please take a clear photo holding a piece of paper with today\'s date. This is for manual review only and will never be shared.',
+                        buttonText: 'Take Verification Photo',
+                        buttonIcon: Icons.camera_alt_outlined,
+                        onTap: verifyController.takePhoto,
+                        isCompleted: verifyController.verificationImage.value != null,
+                        themeColor: themeColor,
+                      )
+                    else
+                      _buildVerificationCard(
+                        icon: Icons.shield_outlined,
+                        title: 'Record Video Verification',
+                        description: '5-second video reading your name ',
+                        buttonText: 'Start recording',
+                        buttonIcon: Icons.videocam_outlined,
+                        onTap: verifyController.recordVideo,
+                        isCompleted: verifyController.verificationVideo.value != null,
+                        themeColor: themeColor,
+                      ),
+                  ],
+                );
+              }),
               SizedBox(height: 40.h),
 
               // Continue Button
@@ -140,6 +207,77 @@ class FemaleIdentityVerificationUI extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: isActive ? color : color.withOpacity(0.2),
+      ),
+    );
+  }
+
+  Widget _buildMethodSelectionCard({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required VoidCallback onTap,
+    required Color themeColor,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFF7F1E9).withOpacity(0.6),
+        borderRadius: BorderRadius.circular(24.r),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(24.r),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(12.w),
+                  decoration: BoxDecoration(
+                    color: themeColor.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 24.sp,
+                    color: themeColor,
+                  ),
+                ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: GoogleFonts.playfairDisplay(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF2D3436),
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
+                      Text(
+                        subtitle,
+                        style: GoogleFonts.inter(
+                          fontSize: 12.sp,
+                          color: const Color(0xFFA6864D),
+                          height: 1.3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16.sp,
+                  color: const Color(0xFF2D3436).withOpacity(0.5),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
