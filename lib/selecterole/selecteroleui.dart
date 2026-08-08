@@ -69,12 +69,29 @@ class SelecteRoleUI extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          // Just the Image as requested (no container border)
-                          Image.asset(
-                            'assets/icons/brotherlogo.png',
-                            width: 100.w, // Large icon
-                            height: 100.w,
-                            fit: BoxFit.contain,
+                          Container(
+                            width: 85.w,
+                            height: 85.w,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF5B7C99),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(
+                                    0xFF5B7C99,
+                                  ).withValues(alpha: 0.35),
+                                  blurRadius: 16.r,
+                                  spreadRadius: 2.r,
+                                  offset: Offset(0, 6.h),
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.all(16.w),
+                            child: Image.asset(
+                              'assets/icons/brotherlogo.png',
+                              fit: BoxFit.contain,
+                              filterQuality: FilterQuality.high,
+                            ),
                           ),
                           SizedBox(width: 15.w),
                           Expanded(
@@ -156,11 +173,29 @@ class SelecteRoleUI extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          Image.asset(
-                            'assets/icons/sisterlogo.png',
-                            width: 100.w,
-                            height: 100.w,
-                            fit: BoxFit.contain,
+                          Container(
+                            width: 85.w,
+                            height: 85.w,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFD18E8E),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(
+                                    0xFFD18E8E,
+                                  ).withValues(alpha: 0.35),
+                                  blurRadius: 16.r,
+                                  spreadRadius: 2.r,
+                                  offset: Offset(0, 6.h),
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.all(16.w),
+                            child: Image.asset(
+                              'assets/icons/sisterlogo.png',
+                              fit: BoxFit.contain,
+                              filterQuality: FilterQuality.high,
+                            ),
                           ),
                           SizedBox(width: 15.w),
                           Expanded(
@@ -240,11 +275,29 @@ class SelecteRoleUI extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          Image.asset(
-                            'assets/icons/jummalogo.png',
-                            width: 100.w,
-                            height: 100.w,
-                            fit: BoxFit.contain,
+                          Container(
+                            width: 85.w,
+                            height: 85.w,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF436E50),
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(
+                                    0xFF436E50,
+                                  ).withValues(alpha: 0.35),
+                                  blurRadius: 16.r,
+                                  spreadRadius: 2.r,
+                                  offset: Offset(0, 6.h),
+                                ),
+                              ],
+                            ),
+                            padding: EdgeInsets.all(16.w),
+                            child: Image.asset(
+                              'assets/icons/jummalogo.png',
+                              fit: BoxFit.contain,
+                              filterQuality: FilterQuality.high,
+                            ),
                           ),
                           SizedBox(width: 15.w),
                           Expanded(
