@@ -16,8 +16,8 @@ void main() {
   int maxDim = original.width > original.height
       ? original.width
       : original.height;
-  int targetDim = (maxDim / 0.65)
-      .round(); // Zoomed ratio (65% of canvas for maximum safe zone fit)
+  int targetDim = (maxDim / 0.72)
+      .round(); // Zoomed ratio (72% of canvas)
 
   final padded = img.Image(
     width: targetDim,
