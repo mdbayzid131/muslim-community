@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:get/get.dart';
@@ -21,10 +22,18 @@ class QiblaController extends GetxController {
   var accuracyStatus = "".obs;
 
   // =====================
-  // STREAM SUBSCRIPTIONS
+  // STREAM SUBSCRIPTIONS & FILTERING
   // =====================
   StreamSubscription? _compassSub;
   StreamSubscription? _positionSub;
+
+  double _smoothedHeading = 0.0;
+  bool _hasInitialHeading = false;
+
+  double _continuousHeadingAngle = 0.0;
+  double _continuousNeedleAngle = 0.0;
+
+  int _lowAccuracyCount = 0;
 
   @override
   void onInit() {
@@ -50,22 +59,56 @@ class QiblaController extends GetxController {
         return;
       }
 
-      double heading = event.heading!;
+      isSensorAvailable.value = true;
+      double rawHeading = event.heading!;
 
       // normalize 0 - 360
-      if (heading < 0) heading += 360;
+      if (rawHeading < 0) rawHeading += 360;
 
-      compassHeading.value = heading;
-      isSensorAvailable.value = true;
+      // Low-pass filter for sensor smoothing
+      if (!_hasInitialHeading) {
+        _smoothedHeading = rawHeading;
+        _hasInitialHeading = true;
+      } else {
+        double diff = rawHeading - _smoothedHeading;
+        while (diff < -180) diff += 360;
+        while (diff > 180) diff -= 360;
 
+        if (diff.abs() > 0.2) {
+          _smoothedHeading = (_smoothedHeading + diff * 0.25) % 360;
+          if (_smoothedHeading < 0) _smoothedHeading += 360;
+        }
+      }
+
+      compassHeading.value = _smoothedHeading;
       _updateRotations();
 
-      // Accuracy check (safe)
+      // Accuracy check (Safe for Android & iOS)
       final accuracy = event.accuracy;
+      if (accuracy != null) {
+        bool isLowAccuracy = false;
+        if (Platform.isAndroid) {
+          // Android SensorManager status: 0=unreliable, 1=low
+          if (accuracy == 0 || accuracy == 1) {
+            isLowAccuracy = true;
+          }
+        } else {
+          // iOS: deviation in degrees (>30 or negative)
+          if (accuracy < 0 || accuracy > 30) {
+            isLowAccuracy = true;
+          }
+        }
 
-      if (accuracy != null && accuracy > 15) {
-        accuracyStatus.value =
-        "Low Accuracy: Move phone in 8-shape to calibrate compass";
+        if (isLowAccuracy) {
+          _lowAccuracyCount++;
+          if (_lowAccuracyCount > 5) {
+            accuracyStatus.value =
+                "Low Accuracy: Move phone in 8-shape to calibrate compass";
+          }
+        } else {
+          _lowAccuracyCount = 0;
+          accuracyStatus.value = "";
+        }
       } else {
         accuracyStatus.value = "";
       }
@@ -91,9 +134,16 @@ class QiblaController extends GetxController {
         return;
       }
 
+      // Fast initial position fallback
+      Position? lastPosition = await Geolocator.getLastKnownPosition();
+      if (lastPosition != null) {
+        _updateQiblaFromPosition(lastPosition);
+      }
+
       // initial position
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
+        timeLimit: const Duration(seconds: 5),
       );
 
       _updateQiblaFromPosition(position);
@@ -135,7 +185,8 @@ class QiblaController extends GetxController {
     double deltaLambda = (meccaLng - lng) * (math.pi / 180);
 
     double y = math.sin(deltaLambda) * math.cos(phi2);
-    double x = math.cos(phi1) * math.sin(phi2) -
+    double x =
+        math.cos(phi1) * math.sin(phi2) -
         math.sin(phi1) * math.cos(phi2) * math.cos(deltaLambda);
 
     double bearing = math.atan2(y, x);
@@ -149,17 +200,23 @@ class QiblaController extends GetxController {
   // ROTATION UPDATE
   // =====================
   void _updateRotations() {
-    // dialRotation keeps N pointing to true North
-    dialRotation.value = -compassHeading.value / 360.0;
-    
-    // needleRotation points to Qibla relative to device heading
-    // If heading == qiblaDirection, needle should be at 0 (UP)
+    // 1. Dial rotation (True North)
+    double targetDialAngle = -compassHeading.value;
+    double dialDiff = targetDialAngle - (_continuousHeadingAngle % 360);
+    while (dialDiff < -180) dialDiff += 360;
+    while (dialDiff > 180) dialDiff -= 360;
+    _continuousHeadingAngle += dialDiff;
+    dialRotation.value = _continuousHeadingAngle / 360.0;
+
+    // 2. Needle rotation (Qibla relative to heading)
     double relativeAngle = qiblaDirection.value - compassHeading.value;
-    
-    // Normalize to [0, 360]
     while (relativeAngle < 0) relativeAngle += 360;
     while (relativeAngle >= 360) relativeAngle -= 360;
-    
-    needleRotation.value = relativeAngle / 360.0;
+
+    double needleDiff = relativeAngle - (_continuousNeedleAngle % 360);
+    while (needleDiff < -180) needleDiff += 360;
+    while (needleDiff > 180) needleDiff -= 360;
+    _continuousNeedleAngle += needleDiff;
+    needleRotation.value = _continuousNeedleAngle / 360.0;
   }
 }

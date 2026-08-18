@@ -39,8 +39,8 @@ class QiblaCompassWidget extends StatelessWidget {
         Obx(
           () => AnimatedRotation(
             turns: needleRotation.value,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeOutBack,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeOutCubic,
             child: SizedBox(
               width: 200,
               height: 200,

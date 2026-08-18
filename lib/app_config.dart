@@ -1,5 +1,5 @@
 class AppConfig {
-  static const String baseUrl = "https://nayem5001.binarybards.online/api/v1";
+  static const String baseUrl = "https://nayem5002.binarybards.online/api/v1";
   static const String createUserEndpoint = "$baseUrl/users";
   static const String verifyOtpEndpoint = "$baseUrl/auth/verify-otp";
   static const String loginEndpoint = "$baseUrl/auth/login";

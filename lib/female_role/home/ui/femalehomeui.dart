@@ -459,11 +459,14 @@ class FemaleHomeUI extends StatelessWidget {
             ),
           ),
           SizedBox(height: 5.h),
-          Text(
-            "Live Compass Direction",
-            style: GoogleFonts.inter(
-              fontSize: 13.sp,
-              color: AppColors.bodyColor.withValues(alpha: 0.6),
+          Obx(
+            () => Text(
+              "Qibla: ${controller.qiblaController.qiblaDirection.value.toStringAsFixed(1)}° from North",
+              style: GoogleFonts.inter(
+                fontSize: 13.sp,
+                color: AppColors.bodyColor.withValues(alpha: 0.6),
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
           SizedBox(height: 35.h),
