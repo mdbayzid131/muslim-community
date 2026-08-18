@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:muslim_community/appcolore.dart';
 import 'package:muslim_community/shared/controller/prayer_guide_controller.dart';
 import 'package:muslim_community/shared/model/prayer_guide_model.dart';
+import 'package:muslim_community/shared/utils/rakat_info.dart';
 
 class PrayerRecitationPage extends StatefulWidget {
   final String waqt;
@@ -118,31 +119,63 @@ class _PrayerRecitationPageState extends State<PrayerRecitationPage> {
   }
 
   Widget _buildPrayerHeader() {
+    final rakatInfo = RakatInfo.getRakatInfo(widget.waqt);
     return Container(
-      padding: EdgeInsets.all(15.w),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF1F1),
-        borderRadius: BorderRadius.circular(15.r),
+        color: widget.themeColor.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: widget.themeColor.withValues(alpha: 0.2)),
       ),
       child: Row(
         children: [
+          Container(
+            padding: EdgeInsets.all(12.w),
+            decoration: BoxDecoration(
+              color: widget.themeColor.withValues(alpha: 0.15),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.mosque_rounded,
+              color: widget.themeColor,
+              size: 24.sp,
+            ),
+          ),
+          SizedBox(width: 14.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.waqt,
+                  "${widget.waqt} Prayer Guide",
                   style: GoogleFonts.inter(
-                    fontSize: 18.sp,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
                     color: AppColors.titleColor,
                   ),
                 ),
+                SizedBox(height: 4.h),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
+                  decoration: BoxDecoration(
+                    color: widget.themeColor,
+                    borderRadius: BorderRadius.circular(6.r),
+                  ),
+                  child: Text(
+                    "${rakatInfo.waqt}: ${rakatInfo.farzRakats} Rakat Farz (Total ${rakatInfo.totalRakats} Rakats)",
+                    style: GoogleFonts.inter(
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 4.h),
                 Text(
-                  "Prayer Guide",
+                  "Breakdown: ${rakatInfo.rakatDetailsEn}",
                   style: GoogleFonts.inter(
-                    fontSize: 12.sp,
-                    color: AppColors.bodyColor,
+                    fontSize: 10.sp,
+                    color: AppColors.bodyColor.withValues(alpha: 0.8),
                   ),
                 ),
               ],

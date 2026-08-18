@@ -13,6 +13,7 @@ import 'package:muslim_community/shared/ui/prayer_recitation_page.dart';
 import 'package:muslim_community/shared/widgets/qibla_compass_widget.dart';
 import 'package:muslim_community/shared/widgets/coming_soon_dialog.dart';
 import 'package:muslim_community/shared/ui/sunrise_details_ui.dart';
+import 'package:muslim_community/shared/utils/rakat_info.dart';
 
 class MaleHomeUI extends StatelessWidget {
   const MaleHomeUI({super.key});
@@ -408,6 +409,17 @@ class MaleHomeUI extends StatelessWidget {
                       color: AppColors.bodyColor,
                     ),
                   ),
+                  if (name != "Sunrise") ...[
+                    SizedBox(height: 2.h),
+                    Text(
+                      "${RakatInfo.getRakatInfo(name).farzRakats} Rakat",
+                      style: GoogleFonts.inter(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.maleColor,
+                      ),
+                    ),
+                  ],
                   const Spacer(),
                   Container(
                     padding: EdgeInsets.all(4.w),

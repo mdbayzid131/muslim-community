@@ -6,6 +6,8 @@ import 'package:muslim_community/appcolore.dart';
 import 'package:muslim_community/male_role/discover/ui/wudu_ghusl_flashcard_ui.dart';
 import 'package:muslim_community/shared/ui/three_quls_ui.dart';
 
+import 'package:muslim_community/shared/ui/prayer_rakat_guide_ui.dart';
+
 class LearningUI extends StatelessWidget {
   const LearningUI({super.key});
 
@@ -17,6 +19,23 @@ class LearningUI extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       children: [
         SizedBox(height: 15.h),
+
+        // Card 0: Prayer & Rakat Guide
+        _buildLearningSectionCard(
+          title: "Prayer Rakat & Learning Guide",
+          subtitle: "Complete Rakat count & recitation guide (Fajr 2, Dhuhr 4 Rakats...)",
+          icon: Icons.mosque_rounded,
+          onTap: () {
+            Get.to(
+              () => const PrayerRakatGuideUI(
+                themeColor: Color(0xFF3A5C78),
+                isMale: true,
+              ),
+            );
+          },
+        ),
+
+        SizedBox(height: 16.h),
 
         // Card 1: How to Perform Ghusl
         _buildLearningSectionCard(
