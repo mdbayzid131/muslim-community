@@ -21,47 +21,45 @@ class HomeController extends GetxController {
     try {
       isLoading(true);
 
-      // Check and request location permission if needed
-      LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-      }
+      double lat = 51.5074; // Default London/UK latitude fallback
+      double lng = -0.1278; // Default London/UK longitude fallback
+      bool hasLocation = false;
 
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
-        print("Location permission denied.");
-        isLoading(false);
-        return;
-      }
-
-      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        print("Location services are disabled.");
-        isLoading(false);
-        return;
-      }
-
-      Position? position;
       try {
-        // Use low accuracy and a timeout to ensure it resolves quickly (even indoors)
-        position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.low,
-          timeLimit: const Duration(seconds: 5),
-        );
+        LocationPermission permission = await Geolocator.checkPermission();
+        if (permission == LocationPermission.denied) {
+          permission = await Geolocator.requestPermission();
+        }
+
+        if (permission != LocationPermission.denied &&
+            permission != LocationPermission.deniedForever &&
+            await Geolocator.isLocationServiceEnabled()) {
+          Position? position;
+          try {
+            position = await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.low,
+              timeLimit: const Duration(seconds: 5),
+            );
+          } catch (e) {
+            position = await Geolocator.getLastKnownPosition();
+          }
+
+          if (position != null) {
+            lat = position.latitude;
+            lng = position.longitude;
+            hasLocation = true;
+          }
+        }
       } catch (e) {
-        print("getCurrentPosition failed: $e. Trying getLastKnownPosition...");
-        position = await Geolocator.getLastKnownPosition();
+        print("Location retrieval warning: $e");
       }
 
-      if (position != null) {
-        // Fetch prayer times using the new controller
-        await prayerTimeController.fetchPrayerTimes(position.latitude, position.longitude);
+      // Always fetch prayer times using resolved or default coordinates
+      await prayerTimeController.fetchPrayerTimes(lat, lng);
 
+      if (hasLocation) {
         try {
-          List<Placemark> placemarks = await placemarkFromCoordinates(
-            position.latitude,
-            position.longitude,
-          );
+          List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
           if (placemarks.isNotEmpty) {
             Placemark place = placemarks[0];
             String city = place.locality ?? place.subAdministrativeArea ?? place.name ?? "";
@@ -75,16 +73,15 @@ class HomeController extends GetxController {
             }
           }
         } catch (geocodingError) {
-          print("Geocoding failed: $geocodingError");
           currentLocation.value = "GPS Location";
         }
       } else {
-        print("Both getCurrentPosition and getLastKnownPosition returned null.");
+        currentLocation.value = "Richmond, United Kingdom";
       }
 
       isLoading(false);
     } catch (e) {
-      print("Error fetching location: $e");
+      print("Error in fetchData: $e");
       isLoading(false);
     }
   }
