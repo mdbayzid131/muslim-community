@@ -23,7 +23,9 @@ class PrayerTimeController extends GetxController {
 
     // 1. Fetch accurate local prayer times directly using coordinates
     try {
-      final aladhanUri = Uri.parse('http://api.aladhan.com/v1/timings?latitude=$lat&longitude=$lng');
+      final aladhanUri = Uri.parse(
+        'https://api.aladhan.com/v1/timings?latitude=$lat&longitude=$lng&method=3&latitudeAdjustmentMethod=3',
+      );
       final aladhanRes = await http.get(aladhanUri).timeout(const Duration(seconds: 5));
       if (aladhanRes.statusCode == 200) {
         final data = jsonDecode(aladhanRes.body);

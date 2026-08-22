@@ -1,181 +1,29 @@
-okjt100
- 
-17 Jun, 14:14
-Hi Abduallah that is looking great, I didnt see the namaaz section though with the 3 quls i sent have that been added like under one that says 3 quls? i also sent the translations
- 
-O
-okjt100
- 
-17 Jun, 14:14
-Surah Al-Falaq (سورة الفلق)
- 
-1
- 
-Arabic:
-قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ
- 
-Transliteration:
-Qul a‘ūdhu birabbil-falaq
- 
-English:
-Say, “I seek refuge in the Lord of daybreak,”
- 
-⸻
- 
-2
- 
-Arabic:
-مِن شَرِّ مَا خَلَقَ
- 
-Transliteration:
-Min sharri mā khalaq
- 
-English:
-“From the evil of what He created,”
- 
-⸻
- 
-3
- 
-Arabic:
-وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ
- 
-Transliteration:
-Wa min sharri ghāsiqin idhā waqab
- 
-English:
-“And from the evil of darkness when it spreads,”
- 
-⸻
- 
-4
- 
-Arabic:
-وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ
- 
-Transliteration:
-Wa min sharrin-naffāthāti fil-‘uqad
- 
-English:
-“And from the evil of those who blow on knots (practicing witchcraft),”
- 
-⸻
- 
-5
- 
-Arabic:
-وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ
- 
-Transliteration:
-Wa min sharri ḥāsidin idhā ḥasad
- 
-English:
-“And from the evil of an envier when he envies.”
- 
-A
-Profile Image
-Abdullah Shah
- 
-Jun 04, 7:27 PM
-Surah An-Nas (سورة الناس)
- 
-1
- 
-Arabic:
-قُلْ أَعُوذُ بِرَبِّ النَّاسِ
- 
-Transliteration:
-Qul a‘ūdhu birabbin-nās
- 
-English:
-Say, “I seek refuge in the Lord of mankind,”
- 
-⸻
- 
-2
- 
-Arabic:
-مَلِكِ النَّاسِ
- 
-Transliteration:
-Malikin-nās
- 
-English:
-“The King of mankind,”
- 
-⸻
- 
-3
- 
-Arabic:
-إِلَٰهِ النَّاسِ
- 
-Transliteration:
-Ilāhin-nās
- 
-English:
-“The God of mankind,”
- 
-⸻
- 
-4
- 
-Arabic:
-مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ
- 
-Transliteration:
-Min sharril-waswāsil-khannās
- 
-English:
-“From the evil of the whisperer who withdraws,”
- 
-⸻
- 
-5
- 
-Arabic:
-الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ
- 
-Transliteration:
-Alladhī yuwaswisu fī ṣudūrin-nās
- 
-English:
-“Who whispers into the hearts of mankind,”
- 
-⸻
- 
-6
- 
-Arabic:
-مِنَ الْجِنَّةِ وَالنَّاسِ
- 
-Transliteration:
-Minal-jinnati wan-nās
- 
-English:
-“From among jinn and mankind.”
- 
-O
-okjt100
- 
-17 Jun, 14:16
-Also remeber we talked about the app needs to be gdpr compliant UK and ternams and condtions 
-1. Please can you add two separate consent tick boxes on the signup screen that must both be ticked before a user can create an account:
-— 'I agree to the Terms of Service and Privacy Policy'
- 
-— 'I specifically consent to SYA collecting and processing my religious data in accordance with the Privacy Policy'
-2. Both tick boxes need clickable links — one to the Privacy Policy and one to the Terms of Service. I will send you both of these links once they are ready — please leave these as placeholder links for now.
-3. Please can you also make the Privacy Policy and Terms of Service accessible in the app settings so users can read them anytime after signing up.
-This is a legal requirement under UK GDPR as religious belief is Special Category Data. JazakAllah Khair"
- 
-O
-okjt100
- 
-17 Jun, 14:17
-i will send  Privacy Policy and Terms of Service policy across shortly
- 
-O
-okjt100
- 
-17 Jun, 14:17
-its comming along nicely
+ক্লায়েন্টের মেসেজ ও স্ক্রিনশট অনুযায়ী ফিডব্যাক এবং প্রয়োজনীয় পরিবর্তনের তালিকা নিচে পয়েন্ট আকারে দেওয়া হলো:
+
+---
+
+### 📋 ক্লায়েন্টের ফিডব্যাক ও প্রয়োজনীয় পরিবর্তনের তালিকা (Outstanding Fixes Needed)
+
+1. **সালাতের সময়সূচী ভুল (Prayer Times Issue):**
+   - **সমস্যা:** আসর, মাগরিব, এশা সহ সালাতের সময়গুলো সঠিক দেখাচ্ছে না।
+   - **প্রয়োজন:** ইউজারদের বর্তমান লোকেশন (Location) অনুযায়ী নির্ভুল সময়সূচী ফেচ (pull) করে দেখাতে হবে।
+
+2. **রুকুর ক্বিরাআত প্লে বাটন অনুপস্থিত (Ruku Recitation Play Button Missing):**
+   - **সমস্যা:** প্রেয়ার গাইড (Prayer Guide)-এর প্রতিটি ধাপে অডিও প্লে করার বাটন থাকলেও রুকুর (Ruku) পরের ধাপে কোনো Play Button নেই।
+   - **প্রয়োজন:** রুকুর ধাপের জন্য প্লে বাটনটি যুক্ত করতে হবে।
+
+3. **মসজিদ অনুসন্ধান কাজ করছে না (Mosque Search/Discovery Not Working):**
+   - **সমস্যা:** যেকোনো মসজিদ সার্চ করলে বা কাছাকাছি মসজিদ খুঁজলে `"No nearby mosques found"` দেখাচ্ছে (এমনকি পরিচিত মসজিদ যেমন: *Central London Mosque*, *Finsbury Mosque* লিখে সার্চ করলেও খুঁজে পাচ্ছে না)।
+   - **প্রয়োজন:** ফিগমা (Figma) ডিজাইন অনুযায়ী ইউজারদের লোকেশন ভিত্তিক সঠিক মসজিদ সার্চ ও রেকমেন্ডেশন ফিচার চালু করতে হবে।
+
+4. **ইউজারদের দূরত্ব/লোকেশন টেস্টিং (User Distance / Location):**
+   - **প্রয়োজন:** নতুন অ্যাকাউন্ট যুক্ত হলে অ্যাপে ইউজারদের একে অপরের থেকে কত দূরত্বে রয়েছে (distance) তা সঠিকভাবে শো করে কিনা তা টেস্ট করে নিশ্চিত হতে হবে।
+
+5. **মেসেজিং ফিচার টেস্টিং (Messaging System):**
+   - **প্রয়োজন:** টেস্ট অ্যাকাউন্টগুলোর মধ্যে মেসেজ আদান-প্রদান (Send/Receive) সঠিকভাবে কাজ করছে কিনা তা টেস্ট করে নিশ্চিত হতে হবে।
+
+---
+
+### ⚠️ গুরুত্বপূর্ণ নোট (Server & Timeline):
+* **Hostinger Server:** ক্লায়েন্ট জানিয়েছেন যে লোকেশন ও মস্ক ডিসকভারির মতো কোর ফিচারগুলো পুরোপুরি চালু না হওয়া পর্যন্ত তিনি হোস্টিনগার সার্ভার কিনতে প্রস্তুত নন।
+* **Timeline:** রিয়েল ইউজারদের দিয়ে টেস্টিং শুরু করার আগে তিনি এই ফিক্সগুলোর জন্য একটি সুনির্দিষ্ট **Timeline (সময়সীমা)** চেয়েছেন।
