@@ -26,7 +26,9 @@ class _AskImamViewState extends State<AskImamView> {
   Widget build(BuildContext context) {
     return Obx(() {
       final roleColor = controller.roleColor;
-      final roleLabel = controller.userRole == 'female' ? 'Sister' : 'Brother';
+      final roleLabel = controller.userRole == 'female'
+          ? 'Sister'
+          : (controller.userRole == 'jumma' ? 'Imam' : 'Brother');
 
       return RefreshIndicator(
         onRefresh: () => controller.fetchMyQuestions(),

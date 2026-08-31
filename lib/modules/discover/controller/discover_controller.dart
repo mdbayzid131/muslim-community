@@ -33,11 +33,15 @@ class DiscoverController extends GetxController {
   Color get roleColor => AppColors.getRoleColor(userRole);
 
   List<String> get categories => [
-        userRole == 'female' ? 'Sisters' : 'Brothers',
+        userRole == 'female'
+            ? 'Sisters'
+            : (userRole == 'jumma' ? 'Members' : 'Brothers'),
         'Learning',
         'Mosques',
         'Jumma',
-        'Ask Imam',
+        userRole == 'female'
+            ? 'Ask Sister'
+            : (userRole == 'jumma' ? 'Ask Imam' : 'Ask Brother'),
       ];
 
   @override
