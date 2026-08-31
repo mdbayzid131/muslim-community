@@ -15,10 +15,12 @@ class ChatView extends GetView<ChatController> {
     final chatId = args['chatId']?.toString() ?? '';
     final userName = args['userName']?.toString() ?? 'Brother';
     final userImage = args['userImage']?.toString() ?? '';
+    final isOnline = args['isOnline'] == true;
+    final participantId = args['participantId']?.toString();
 
     if (chatId.isNotEmpty) {
-      controller.fetchMessages(chatId);
-      controller.setupSocket(chatId);
+      controller.fetchMessages(chatId, participantId: participantId);
+      controller.setupSocket(chatId, initialOnline: isOnline);
     }
 
     return Obx(() {
@@ -38,47 +40,71 @@ class ChatView extends GetView<ChatController> {
               ),
 
               Expanded(
-                child: Obx(() {
-                  if (controller.isLoading.value &&
-                      controller.messages.isEmpty) {
-                    return Center(
-                        child: CircularProgressIndicator(color: roleColor));
-                  }
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    if (chatId.isNotEmpty) {
+                      await controller.fetchMessages(chatId);
+                    }
+                  },
+                  color: roleColor,
+                  child: Obx(() {
+                    if (controller.isLoading.value &&
+                        controller.messages.isEmpty) {
+                      return ListView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        children: [
+                          SizedBox(height: 150.h),
+                          Center(
+                            child:
+                                CircularProgressIndicator(color: roleColor),
+                          ),
+                        ],
+                      );
+                    }
 
-                  if (controller.messages.isEmpty) {
-                    return Center(
-                      child: Text(
-                        'No messages yet. Start a conversation!',
-                        style: GoogleFonts.inter(color: AppColors.bodyColor),
+                    if (controller.messages.isEmpty) {
+                      return ListView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        children: [
+                          SizedBox(height: 150.h),
+                          Center(
+                            child: Text(
+                              'No messages yet. Start a conversation!',
+                              style:
+                                  GoogleFonts.inter(color: AppColors.bodyColor),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+
+                    return ListView.builder(
+                      controller: controller.scrollController,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      reverse: true, // Newest messages at bottom
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                        vertical: 20.h,
                       ),
+                      itemCount: controller.messages.length,
+                      itemBuilder: (context, index) {
+                        final msg = controller.messages[index];
+
+                        if (index == controller.messages.length - 1) {
+                          return Column(
+                            children: [
+                              _buildTodayPill(),
+                              SizedBox(height: 20.h),
+                              _buildChatBubble(msg, roleColor),
+                            ],
+                          );
+                        }
+
+                        return _buildChatBubble(msg, roleColor);
+                      },
                     );
-                  }
-
-                  return ListView.builder(
-                    controller: controller.scrollController,
-                    reverse: true, // Newest messages at bottom
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20.w,
-                      vertical: 20.h,
-                    ),
-                    itemCount: controller.messages.length,
-                    itemBuilder: (context, index) {
-                      final msg = controller.messages[index];
-
-                      if (index == controller.messages.length - 1) {
-                        return Column(
-                          children: [
-                            _buildTodayPill(),
-                            SizedBox(height: 20.h),
-                            _buildChatBubble(msg, roleColor),
-                          ],
-                        );
-                      }
-
-                      return _buildChatBubble(msg, roleColor);
-                    },
-                  );
-                }),
+                  }),
+                ),
               ),
 
               // --- MESSAGE INPUT ---
@@ -120,7 +146,7 @@ class ChatView extends GetView<ChatController> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10.r),
                     child: userImage.isNotEmpty
-                        ? (userImage.startsWith('http')
+                        ? (userImage.startsWith('http') && !userImage.endsWith('.svg')
                             ? Image.network(
                                 userImage,
                                 fit: BoxFit.cover,
@@ -137,12 +163,22 @@ class ChatView extends GetView<ChatController> {
                                   ),
                                 ),
                               )
-                            : Image.asset(
-                                userImage,
-                                fit: BoxFit.cover,
-                                width: 40.h,
-                                height: 40.h,
-                              ))
+                            : (userImage.startsWith('assets/')
+                                ? Image.asset(
+                                    userImage,
+                                    fit: BoxFit.cover,
+                                    width: 40.h,
+                                    height: 40.h,
+                                  )
+                                : Center(
+                                    child: Text(
+                                      userName.isNotEmpty ? userName[0] : '',
+                                      style: TextStyle(
+                                        color: roleColor,
+                                        fontSize: 18.sp,
+                                      ),
+                                    ),
+                                  )))
                         : Center(
                             child: Text(
                               userName.isNotEmpty ? userName[0] : '',

@@ -56,7 +56,8 @@ class MemberCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15.r),
                   child: user.image.isNotEmpty &&
-                          user.image.startsWith('http')
+                          user.image.startsWith('http') &&
+                          !user.image.endsWith('.svg')
                       ? Image.network(
                           user.image,
                           height: 100.h,

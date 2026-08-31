@@ -86,7 +86,8 @@ class ProfileDetailsView extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             user.profileImage.isNotEmpty &&
-                    user.profileImage.startsWith('http')
+                    user.profileImage.startsWith('http') &&
+                    !user.profileImage.endsWith('.svg')
                 ? Image.network(
                     user.profileImage,
                     fit: BoxFit.cover,

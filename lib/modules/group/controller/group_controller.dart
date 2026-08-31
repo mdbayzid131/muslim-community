@@ -78,19 +78,30 @@ class GroupController extends GetxController {
     }
   }
 
+  String? _currentLoadingGroupId;
+
   void updateInitialGroup(GroupModel initialGroup) {
+    final prevId = currentGroup.value?.id;
     currentGroup.value =
         groups.firstWhereOrNull((g) => g.id == initialGroup.id) ?? initialGroup;
-    fetchGroupPosts(initialGroup.id);
+    if (prevId != initialGroup.id ||
+        (!isPostsLoading.value && groupPosts.isEmpty)) {
+      fetchGroupPosts(initialGroup.id);
+    }
   }
 
   void selectGroup(GroupModel group) {
+    final prevId = currentGroup.value?.id;
     currentGroup.value =
         groups.firstWhereOrNull((g) => g.id == group.id) ?? group;
-    fetchGroupPosts(group.id);
+    if (prevId != group.id || (!isPostsLoading.value && groupPosts.isEmpty)) {
+      fetchGroupPosts(group.id);
+    }
   }
 
   Future<void> fetchGroupPosts(String groupId) async {
+    if (isPostsLoading.value && _currentLoadingGroupId == groupId) return;
+    _currentLoadingGroupId = groupId;
     isPostsLoading.value = true;
     try {
       final response = await groupRepository.getGroupPosts(groupId);
@@ -104,6 +115,7 @@ class GroupController extends GetxController {
       Helpers.error("Fetch group posts error: $e");
     } finally {
       isPostsLoading.value = false;
+      _currentLoadingGroupId = null;
     }
   }
 

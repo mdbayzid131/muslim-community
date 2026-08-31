@@ -28,6 +28,8 @@ class MessageTile extends StatelessWidget {
             'chatId': message.id,
             'userName': message.name,
             'userImage': message.imageUrl,
+            'isOnline': message.isOnline,
+            'participantId': message.participantId,
           },
         );
       },
@@ -125,7 +127,10 @@ class MessageTile extends StatelessWidget {
   }
 
   Widget _buildAvatar() {
-    if (message.imageUrl.isNotEmpty) {
+    if (message.imageUrl.isNotEmpty &&
+        (message.imageUrl.startsWith('http') ||
+            message.imageUrl.startsWith('assets/')) &&
+        !message.imageUrl.endsWith('.svg')) {
       return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.r),

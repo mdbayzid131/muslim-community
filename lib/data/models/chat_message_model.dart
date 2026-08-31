@@ -79,12 +79,14 @@ class ChatMessageModel {
 
   factory ChatMessageModel.fromJson(
     Map<String, dynamic> json,
-    String currentUserId,
-  ) {
+    String currentUserId, {
+    String? otherParticipantId,
+  }) {
     String sId = (json['senderId'] ??
             json['userId'] ??
             json['creatorId'] ??
             json['from'] ??
+            json['sender_id'] ??
             '')
         .toString();
     String sName = (json['senderName'] ?? json['userName'] ?? '').toString();
@@ -101,25 +103,8 @@ class ChatMessageModel {
           senderData['fullName'] ??
           senderData['userName'];
       if (nameValue != null) sName = nameValue.toString();
-    } else if (senderData is String && sId.isEmpty) {
+    } else if (senderData is String && senderData.isNotEmpty) {
       sId = senderData;
-    }
-
-    if (sId.isEmpty || sId == 'null') {
-      json.forEach((key, value) {
-        if (value is String &&
-            value.length == 24 &&
-            RegExp(r'^[0-9a-fA-F]+$').hasMatch(value)) {
-          final lowKey = key.toLowerCase();
-          if (lowKey.contains('id') ||
-              lowKey.contains('user') ||
-              lowKey.contains('sender') ||
-              lowKey.contains('creator') ||
-              lowKey.contains('from')) {
-            sId = value;
-          }
-        }
-      });
     }
 
     sId = sId.trim();
@@ -129,11 +114,19 @@ class ChatMessageModel {
     bool isMe = false;
     if (sId.isNotEmpty && currentUserId.isNotEmpty) {
       isMe = sId.toLowerCase() == currentUserId.trim().toLowerCase();
+    } else if (otherParticipantId != null && otherParticipantId.isNotEmpty) {
+      if (sId.isNotEmpty) {
+        isMe = sId.toLowerCase() != otherParticipantId.trim().toLowerCase();
+      } else {
+        isMe = true;
+      }
+    } else if (sId.isEmpty) {
+      isMe = true;
     }
 
     MessageStatus msgStatus = MessageStatus.sent;
     if (json['isRead'] == true ||
-        (json['readBy'] != null && (json['readBy'] as List).isNotEmpty) ||
+        (json['readBy'] is List && (json['readBy'] as List).isNotEmpty) ||
         json['status'] == 'read') {
       msgStatus = MessageStatus.read;
     } else if (json['isDelivered'] == true ||

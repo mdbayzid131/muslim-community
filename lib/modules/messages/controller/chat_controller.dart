@@ -22,6 +22,7 @@ class ChatController extends GetxController {
   final isMoreLoading = false.obs;
 
   String? currentChatId;
+  String? otherParticipantId;
   String? nextCursor;
 
   String get userRole => Get.find<AuthService>().userRole;
@@ -44,17 +45,35 @@ class ChatController extends GetxController {
     }
   }
 
-  void setupSocket(String chatId) {
+  void setupSocket(String chatId, {bool initialOnline = false}) {
     currentChatId = chatId;
+    isOtherUserOnline.value = initialOnline;
     final socket = Get.find<SocketService>();
 
-    socket.emit('JOIN_CHAT', {'chatId': chatId});
+    void joinRoom() {
+      socket.emit('JOIN_CHAT', {'chatId': chatId});
+      socket.emit('join', {'chatId': chatId});
+      socket.emit('join_chat', chatId);
+    }
+
+    if (!socket.isConnected) {
+      socket.connect().then((_) {
+        joinRoom();
+      }).catchError((e) {
+        Helpers.debug('Socket connect error in setupSocket: $e');
+      });
+    } else {
+      joinRoom();
+    }
 
     socket.on('MESSAGE_SENT', (data) {
       if (data != null) {
-        final currentUserId =
-            Get.find<AuthService>().currentUser.value?.id ?? '';
-        final newMsg = ChatMessageModel.fromJson(data, currentUserId);
+        final currentUserId = Get.find<AuthService>().userId;
+        final newMsg = ChatMessageModel.fromJson(
+          data,
+          currentUserId,
+          otherParticipantId: otherParticipantId,
+        );
 
         final idx = messages.indexWhere((m) =>
             m.id == newMsg.id ||
@@ -72,6 +91,21 @@ class ChatController extends GetxController {
       }
     });
 
+    socket.on('NEW_MESSAGE', (data) {
+      if (data != null) {
+        final currentUserId = Get.find<AuthService>().userId;
+        final newMsg = ChatMessageModel.fromJson(
+          data,
+          currentUserId,
+          otherParticipantId: otherParticipantId,
+        );
+        final idx = messages.indexWhere((m) => m.id == newMsg.id);
+        if (idx == -1) {
+          messages.insert(0, newMsg);
+        }
+      }
+    });
+
     socket.on('USER_ONLINE', (data) {
       isOtherUserOnline.value = true;
     });
@@ -79,27 +113,58 @@ class ChatController extends GetxController {
     socket.on('USER_OFFLINE', (data) {
       isOtherUserOnline.value = false;
     });
+
+    socket.on('user_online', (data) {
+      isOtherUserOnline.value = true;
+    });
+
+    socket.on('user_offline', (data) {
+      isOtherUserOnline.value = false;
+    });
   }
 
-  Future<void> fetchMessages(String chatId) async {
+  Future<void> fetchMessages(String chatId, {String? participantId}) async {
     isLoading.value = true;
     currentChatId = chatId;
+    if (participantId != null && participantId.isNotEmpty) {
+      otherParticipantId = participantId;
+    }
     try {
       final response = await chatRepository.getMessages(chatId: chatId);
       if (response.statusCode == 200) {
-        final List list = response.data['data']?['messages'] ??
-            response.data['data'] ??
-            response.data ??
-            [];
-        final currentUserId =
-            Get.find<AuthService>().currentUser.value?.id ?? '';
-        messages.value =
-            list.map((e) => ChatMessageModel.fromJson(e, currentUserId)).toList();
+        dynamic rawData = response.data['data'];
+        List list = [];
+        if (rawData is List) {
+          list = rawData;
+        } else if (rawData is Map) {
+          list = (rawData['messages'] is List) ? rawData['messages'] : [];
+        } else if (response.data is List) {
+          list = response.data;
+        }
 
-        final pagination = response.data['data']?['pagination'];
-        if (pagination != null) {
-          hasNextPage.value = pagination['hasNextPage'] ?? false;
-          nextCursor = pagination['nextCursor'];
+        final currentUserId = Get.find<AuthService>().userId;
+        final parsedMessages = list
+            .map((e) => ChatMessageModel.fromJson(
+                  e,
+                  currentUserId,
+                  otherParticipantId: otherParticipantId,
+                ))
+            .toList();
+
+        // Sort descending by timestamp so newest is at index 0 (matching reverse: true ListView)
+        parsedMessages.sort((a, b) {
+          final tA = a.timestamp ?? DateTime.fromMillisecondsSinceEpoch(0);
+          final tB = b.timestamp ?? DateTime.fromMillisecondsSinceEpoch(0);
+          return tB.compareTo(tA);
+        });
+
+        messages.value = parsedMessages;
+
+        final meta = response.data['meta'] ??
+            (rawData is Map ? rawData['pagination'] : null);
+        if (meta is Map) {
+          hasNextPage.value = meta['hasNextPage'] ?? (meta['hasNext'] ?? false);
+          nextCursor = meta['nextCursor']?.toString();
         }
       }
     } catch (e) {
@@ -118,17 +183,38 @@ class ChatController extends GetxController {
         cursor: nextCursor,
       );
       if (response.statusCode == 200) {
-        final List list = response.data['data']?['messages'] ?? [];
-        final currentUserId =
-            Get.find<AuthService>().currentUser.value?.id ?? '';
-        final more =
-            list.map((e) => ChatMessageModel.fromJson(e, currentUserId)).toList();
+        dynamic rawData = response.data['data'];
+        List list = [];
+        if (rawData is List) {
+          list = rawData;
+        } else if (rawData is Map) {
+          list = (rawData['messages'] is List) ? rawData['messages'] : [];
+        } else if (response.data is List) {
+          list = response.data;
+        }
+
+        final currentUserId = Get.find<AuthService>().userId;
+        final more = list
+            .map((e) => ChatMessageModel.fromJson(
+                  e,
+                  currentUserId,
+                  otherParticipantId: otherParticipantId,
+                ))
+            .toList();
+
+        more.sort((a, b) {
+          final tA = a.timestamp ?? DateTime.fromMillisecondsSinceEpoch(0);
+          final tB = b.timestamp ?? DateTime.fromMillisecondsSinceEpoch(0);
+          return tB.compareTo(tA);
+        });
+
         messages.addAll(more);
 
-        final pagination = response.data['data']?['pagination'];
-        if (pagination != null) {
-          hasNextPage.value = pagination['hasNextPage'] ?? false;
-          nextCursor = pagination['nextCursor'];
+        final meta = response.data['meta'] ??
+            (rawData is Map ? rawData['pagination'] : null);
+        if (meta is Map) {
+          hasNextPage.value = meta['hasNextPage'] ?? (meta['hasNext'] ?? false);
+          nextCursor = meta['nextCursor']?.toString();
         }
       }
     } catch (e) {
@@ -163,9 +249,12 @@ class ChatController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = response.data['data'] ?? response.data;
-        final currentUserId =
-            Get.find<AuthService>().currentUser.value?.id ?? '';
-        final serverMsg = ChatMessageModel.fromJson(data, currentUserId);
+        final currentUserId = Get.find<AuthService>().userId;
+        final serverMsg = ChatMessageModel.fromJson(
+          data,
+          currentUserId,
+          otherParticipantId: otherParticipantId,
+        );
 
         final idx = messages.indexWhere((m) => m.id == tempId);
         if (idx != -1) {

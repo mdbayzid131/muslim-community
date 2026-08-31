@@ -29,11 +29,15 @@ class GroupDetailsView extends GetView<GroupController> {
         );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (initialGroup.id.isNotEmpty) {
+      if (initialGroup.id.isNotEmpty &&
+          controller.currentGroup.value?.id != initialGroup.id) {
         controller.updateInitialGroup(initialGroup);
       }
     });
 
+    final myProfileImage = Get.isRegistered<AuthService>()
+        ? Get.find<AuthService>().currentUser.value?.profileImage ?? ''
+        : '';
     final myUserId =
         Get.isRegistered<AuthService>() ? Get.find<AuthService>().userId : '';
 
@@ -155,7 +159,21 @@ class GroupDetailsView extends GetView<GroupController> {
                     CircleAvatar(
                       radius: 20.r,
                       backgroundColor: roleColor.withValues(alpha: 0.15),
-                      child: Icon(Icons.person, size: 20.sp, color: roleColor),
+                      backgroundImage: (myProfileImage.isNotEmpty &&
+                              myProfileImage.startsWith('http') &&
+                              !myProfileImage.endsWith('.svg'))
+                          ? NetworkImage(myProfileImage)
+                          : null,
+                      onBackgroundImageError: (myProfileImage.isNotEmpty &&
+                              myProfileImage.startsWith('http') &&
+                              !myProfileImage.endsWith('.svg'))
+                          ? (e, s) {}
+                          : null,
+                      child: (myProfileImage.isEmpty ||
+                              !myProfileImage.startsWith('http') ||
+                              myProfileImage.endsWith('.svg'))
+                          ? Icon(Icons.person, size: 20.sp, color: roleColor)
+                          : null,
                     ),
                     SizedBox(width: 15.w),
                     Expanded(

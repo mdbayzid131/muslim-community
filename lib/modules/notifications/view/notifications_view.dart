@@ -113,7 +113,8 @@ class NotificationsView extends GetView<NotificationsController> {
                     itemBuilder: (context, index) {
                       final notification = controller.notifications[index];
                       return GestureDetector(
-                        onTap: () => controller.markAsRead(notification.id),
+                        onTap: () =>
+                            controller.handleNotificationTap(notification),
                         child: _buildNotificationCard(notification, roleColor),
                       );
                     },
@@ -125,6 +126,10 @@ class NotificationsView extends GetView<NotificationsController> {
   Widget _buildNotificationCard(
       NotificationModel notification, Color roleColor) {
     final isUnread = !notification.isRead;
+    final hasActorImage = notification.actorImage != null &&
+        notification.actorImage!.isNotEmpty &&
+        notification.actorImage!.startsWith('http') &&
+        !notification.actorImage!.endsWith('.svg');
 
     return Container(
       margin: EdgeInsets.only(bottom: 15.h),
@@ -164,19 +169,24 @@ class NotificationsView extends GetView<NotificationsController> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Icon in Circle
-                Container(
-                  width: 45.w,
-                  height: 45.w,
-                  decoration: BoxDecoration(
-                    color: roleColor.withValues(alpha: 0.1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.notifications_outlined,
-                    color: roleColor,
-                    size: 22.sp,
-                  ),
+                // Avatar / Icon
+                CircleAvatar(
+                  radius: 22.r,
+                  backgroundColor: roleColor.withValues(alpha: 0.1),
+                  backgroundImage: hasActorImage
+                      ? NetworkImage(notification.actorImage!)
+                      : null,
+                  onBackgroundImageError: hasActorImage ? (e, s) {} : null,
+                  child: !hasActorImage
+                      ? Icon(
+                          (notification.actorName != null &&
+                                  notification.actorName!.isNotEmpty)
+                              ? Icons.person
+                              : Icons.notifications_outlined,
+                          color: roleColor,
+                          size: 22.sp,
+                        )
+                      : null,
                 ),
                 SizedBox(width: 15.w),
                 // Content
@@ -187,14 +197,18 @@ class NotificationsView extends GetView<NotificationsController> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            notification.title,
-                            style: GoogleFonts.inter(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.bold,
-                              color: const Color(0xFF2D3436),
+                          Expanded(
+                            child: Text(
+                              notification.title,
+                              style: GoogleFonts.inter(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xFF2D3436),
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
+                          SizedBox(width: 8.w),
                           Text(
                             DateFormatter.timeAgo(notification.createdAt),
                             style: GoogleFonts.inter(
@@ -213,6 +227,46 @@ class NotificationsView extends GetView<NotificationsController> {
                           height: 1.4,
                         ),
                       ),
+                      if (notification.chatId != null &&
+                          notification.chatId!.isNotEmpty) ...[
+                        SizedBox(height: 10.h),
+                        GestureDetector(
+                          onTap: () =>
+                              controller.handleNotificationTap(notification),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 14.w,
+                              vertical: 6.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: roleColor.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(15.r),
+                              border: Border.all(
+                                color: roleColor.withValues(alpha: 0.25),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.chat_bubble_outline,
+                                  size: 14.sp,
+                                  color: roleColor,
+                                ),
+                                SizedBox(width: 6.w),
+                                Text(
+                                  'Open Chat',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: roleColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),

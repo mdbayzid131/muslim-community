@@ -61,4 +61,20 @@ class NotificationsController extends GetxController {
       Helpers.error("Mark all as read error: $e");
     }
   }
+
+  void handleNotificationTap(NotificationModel notification) {
+    markAsRead(notification.id);
+
+    if (notification.chatId != null && notification.chatId!.isNotEmpty) {
+      Get.toNamed(
+        '/chat',
+        arguments: {
+          'chatId': notification.chatId,
+          'userName': notification.actorName ?? 'Brother',
+          'userImage': notification.actorImage ?? '',
+          'participantId': notification.actorId,
+        },
+      );
+    }
+  }
 }

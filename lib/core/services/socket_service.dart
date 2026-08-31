@@ -34,8 +34,10 @@ class SocketService extends GetxService {
     _socket = io.io(
       serverUrl,
       io.OptionBuilder()
-          .setTransports(['websocket'])
+          .setTransports(['websocket', 'polling'])
           .setAuth({'token': token})
+          .setQuery({'token': token})
+          .setExtraHeaders({'Authorization': 'Bearer $token', 'token': token})
           .enableAutoConnect()
           .enableReconnection()
           .setReconnectionAttempts(10)

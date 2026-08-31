@@ -6,9 +6,13 @@ class ApiConstants {
   static const String serverUrl = "https://nayem5002.binarybards.online";
 
   static String getImageUrl(String? url) {
-    const String placeholder = 'https://i.ibb.co/z5YHLV9/profile.png';
-    if (url == null || url.isEmpty || url == 'null' || url == '/') {
-      return placeholder;
+    if (url == null ||
+        url.isEmpty ||
+        url == 'null' ||
+        url == '/' ||
+        url.toLowerCase().endsWith('.svg') ||
+        url.toLowerCase().contains('default-avatar')) {
+      return '';
     }
     if (url.startsWith('http')) return url;
     if (url.startsWith('/')) return '$serverUrl$url';

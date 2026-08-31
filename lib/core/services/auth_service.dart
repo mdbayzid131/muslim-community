@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:muslim_community/config/constants/storage_constants.dart';
 import 'package:muslim_community/config/routes/app_routes.dart';
+import 'package:muslim_community/core/services/socket_service.dart';
 import 'package:muslim_community/core/services/storage_service.dart';
 import 'package:muslim_community/data/models/user_model.dart';
 
@@ -33,6 +34,9 @@ class AuthService extends GetxService {
         email: '',
         role: _userRole.value,
       );
+      if (Get.isRegistered<SocketService>()) {
+        Get.find<SocketService>().connect();
+      }
     } else {
       _isLoggedIn.value = false;
       _userId.value = '';
@@ -68,6 +72,9 @@ class AuthService extends GetxService {
       email: '',
       role: _userRole.value,
     );
+    if (Get.isRegistered<SocketService>()) {
+      Get.find<SocketService>().connect();
+    }
   }
 
   String? getUserIdFromToken(String token) {
@@ -129,6 +136,9 @@ class AuthService extends GetxService {
   }
 
   Future<void> logout() async {
+    if (Get.isRegistered<SocketService>()) {
+      Get.find<SocketService>().disconnect();
+    }
     await StorageService.clearAll();
     _isLoggedIn.value = false;
     _userId.value = '';

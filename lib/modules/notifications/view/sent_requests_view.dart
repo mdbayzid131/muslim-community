@@ -91,10 +91,19 @@ class SentRequestsView extends StatelessWidget {
             CircleAvatar(
               radius: 30.r,
               backgroundColor: roleColor.withValues(alpha: 0.15),
-              backgroundImage: user.profileImage.isNotEmpty
+              backgroundImage: (user.profileImage.isNotEmpty &&
+                      user.profileImage.startsWith('http') &&
+                      !user.profileImage.endsWith('.svg'))
                   ? NetworkImage(user.profileImage)
                   : null,
-              child: user.profileImage.isEmpty
+              onBackgroundImageError: (user.profileImage.isNotEmpty &&
+                      user.profileImage.startsWith('http') &&
+                      !user.profileImage.endsWith('.svg'))
+                  ? (e, s) {}
+                  : null,
+              child: (user.profileImage.isEmpty ||
+                      !user.profileImage.startsWith('http') ||
+                      user.profileImage.endsWith('.svg'))
                   ? Icon(Icons.person, size: 30.sp, color: roleColor)
                   : null,
             ),

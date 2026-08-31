@@ -52,43 +52,54 @@ class MessagesView extends GetView<MessagesController> {
 
                 // --- MESSAGES LIST ---
                 Expanded(
-                  child: Obx(() {
-                    if (controller.isLoading.value &&
-                        controller.conversations.isEmpty) {
-                      return Center(
-                        child: CircularProgressIndicator(color: roleColor),
-                      );
-                    }
+                  child: RefreshIndicator(
+                    onRefresh: () => controller.fetchChatList(),
+                    color: roleColor,
+                    child: Obx(() {
+                      if (controller.isLoading.value &&
+                          controller.conversations.isEmpty) {
+                        return ListView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          children: [
+                            SizedBox(height: 100.h),
+                            Center(
+                              child:
+                                  CircularProgressIndicator(color: roleColor),
+                            ),
+                          ],
+                        );
+                      }
 
-                    if (controller.filteredConversations.isEmpty) {
-                      return Center(
-                        child: Text(
-                          controller.searchQuery.value.isEmpty
-                              ? 'No chats found'
-                              : 'No matches found',
-                          style: GoogleFonts.inter(
-                              color: AppColors.bodyColor),
-                        ),
-                      );
-                    }
+                      if (controller.filteredConversations.isEmpty) {
+                        return ListView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          children: [
+                            SizedBox(height: 100.h),
+                            Center(
+                              child: Text(
+                                controller.searchQuery.value.isEmpty
+                                    ? 'No chats found'
+                                    : 'No matches found',
+                                style: GoogleFonts.inter(
+                                    color: AppColors.bodyColor),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
 
-                    return RefreshIndicator(
-                      onRefresh: () => controller.fetchChatList(),
-                      color: roleColor,
-                      child: ListView.builder(
+                      return ListView.builder(
                         physics: const AlwaysScrollableScrollPhysics(),
-                        itemCount:
-                            controller.filteredConversations.length,
+                        itemCount: controller.filteredConversations.length,
                         itemBuilder: (context, index) {
                           return MessageTile(
-                            message:
-                                controller.filteredConversations[index],
+                            message: controller.filteredConversations[index],
                             themeColor: roleColor,
                           );
                         },
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+                  ),
                 ),
               ],
             ),

@@ -101,18 +101,29 @@ class PostDetailsView extends GetView<GroupController> {
                         children: [
                           Row(
                             children: [
-                              CircleAvatar(
-                                radius: 18.r,
-                                backgroundColor:
-                                    roleColor.withValues(alpha: 0.15),
-                                backgroundImage: post.userImage.isNotEmpty
-                                    ? NetworkImage(post.userImage)
-                                    : null,
-                                child: post.userImage.isEmpty
-                                    ? Icon(Icons.person,
-                                        size: 18.sp, color: roleColor)
-                                    : null,
-                              ),
+                               CircleAvatar(
+                                 radius: 18.r,
+                                 backgroundColor:
+                                     roleColor.withValues(alpha: 0.15),
+                                 backgroundImage: (post.userImage.isNotEmpty &&
+                                         post.userImage.startsWith('http') &&
+                                         !post.userImage.endsWith('.svg'))
+                                     ? NetworkImage(post.userImage)
+                                     : null,
+                                 onBackgroundImageError:
+                                     (post.userImage.isNotEmpty &&
+                                             post.userImage
+                                                 .startsWith('http') &&
+                                             !post.userImage.endsWith('.svg'))
+                                         ? (e, s) {}
+                                         : null,
+                                 child: (post.userImage.isEmpty ||
+                                         !post.userImage.startsWith('http') ||
+                                         post.userImage.endsWith('.svg'))
+                                     ? Icon(Icons.person,
+                                         size: 18.sp, color: roleColor)
+                                     : null,
+                               ),
                               SizedBox(width: 12.w),
                               Expanded(
                                 child: Column(
@@ -281,10 +292,21 @@ class PostDetailsView extends GetView<GroupController> {
                                   radius: 16.r,
                                   backgroundColor:
                                       roleColor.withValues(alpha: 0.15),
-                                  backgroundImage: comment.userImage.isNotEmpty
+                                  backgroundImage: (comment.userImage.isNotEmpty &&
+                                          comment.userImage.startsWith('http') &&
+                                          !comment.userImage.endsWith('.svg'))
                                       ? NetworkImage(comment.userImage)
                                       : null,
-                                  child: comment.userImage.isEmpty
+                                  onBackgroundImageError:
+                                      (comment.userImage.isNotEmpty &&
+                                              comment.userImage
+                                                  .startsWith('http') &&
+                                              !comment.userImage.endsWith('.svg'))
+                                          ? (e, s) {}
+                                          : null,
+                                  child: (comment.userImage.isEmpty ||
+                                          !comment.userImage.startsWith('http') ||
+                                          comment.userImage.endsWith('.svg'))
                                       ? Icon(Icons.person,
                                           size: 16.sp, color: roleColor)
                                       : null,

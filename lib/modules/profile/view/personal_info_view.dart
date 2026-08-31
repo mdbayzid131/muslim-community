@@ -119,6 +119,7 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
                                 height: 100.w,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
+                                  color: themeColor.withValues(alpha: 0.2),
                                   border: Border.all(
                                     color: Colors.white,
                                     width: 4,
@@ -132,22 +133,18 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
                                           ),
                                           fit: BoxFit.cover,
                                         )
-                                      : controller.profileImageUrl.isNotEmpty
+                                      : (controller.profileImageUrl.isNotEmpty &&
+                                              controller.profileImageUrl.value.startsWith('http') &&
+                                              !controller.profileImageUrl.value.endsWith('.svg'))
                                           ? DecorationImage(
                                               image: NetworkImage(
                                                 controller
                                                     .profileImageUrl.value,
                                               ),
+                                              onError: (exception, stackTrace) {},
                                               fit: BoxFit.cover,
                                             )
-                                          : DecorationImage(
-                                              image: AssetImage(
-                                                isSister
-                                                    ? 'assets/image/female.png'
-                                                    : 'assets/image/male.png',
-                                              ),
-                                              fit: BoxFit.cover,
-                                            ),
+                                          : null,
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.black.withValues(alpha: 0.1),
@@ -156,6 +153,21 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
                                     ),
                                   ],
                                 ),
+                                child: (controller.selectedProfileImage.value ==
+                                            null &&
+                                        (controller.profileImageUrl.isEmpty ||
+                                            !controller.profileImageUrl.value
+                                                .startsWith('http') ||
+                                            controller.profileImageUrl.value
+                                                .endsWith('.svg')))
+                                    ? Center(
+                                        child: Icon(
+                                          Icons.person,
+                                          size: 50.sp,
+                                          color: themeColor,
+                                        ),
+                                      )
+                                    : null,
                               ),
                               Positioned(
                                 bottom: 5,

@@ -78,10 +78,14 @@ class HomeView extends GetView<HomeController> {
                 radius: 25.r,
                 backgroundColor: Colors.black,
                 backgroundImage:
-                    img.isNotEmpty ? NetworkImage(img) : null,
+                    (img.isNotEmpty && img.startsWith('http') && !img.endsWith('.svg'))
+                        ? NetworkImage(img)
+                        : null,
                 onBackgroundImageError:
-                    img.isNotEmpty ? (e, s) {} : null,
-                child: img.isEmpty
+                    (img.isNotEmpty && img.startsWith('http') && !img.endsWith('.svg'))
+                        ? (e, s) {}
+                        : null,
+                child: (img.isEmpty || !img.startsWith('http') || img.endsWith('.svg'))
                     ? Icon(Icons.person, color: Colors.white, size: 28.sp)
                     : null,
               ),
