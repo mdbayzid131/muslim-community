@@ -1,0 +1,30 @@
+Assalamu-alaikum
+ 
+JazakAllah Khair for your detailed feedback and for your continued patience. We completely understand your concerns about ensuring these core features work perfectly before moving forward, and we truly appreciate your kind words about our team's effort.
+ 
+Here is the update and resolution status for each of the outstanding points you raised:
+ 
+1. Prayer Times Issue (Fixed):
+
+We have updated the prayer time calculation engine with High-Latitude Adjustments (Angle-based & MWL method) specifically configured for UK/London coordinates. Asr (5:01 PM), Maghrib (8:20 PM), and Isha (9:27 PM) will now accurately align with standard UK prayer timetables.
+ 
+2. Ruku & Step Recitation Audios:
+
+We are currently working on integrating audio playback for the remaining prayer steps, including Ruku. We will need a few days to properly process, format, and attach all the recitation audio files to make sure nothing is missing.
+ 
+3. Mosque Search / Discovery (Access Required):
+
+To enable dynamic, real-time location searching for mosques across the UK (such as Central London Mosque, Finsbury Park Mosque, etc.), we need access to your Google Cloud Console / Firebase Console. Once you grant us this access, we will set up and enable the Google Places API for live mosque discovery exactly as designed in Figma.
+ 
+4. User Distance / Location:
+
+Yes, absolutely. Once accounts are created and active, users will be able to see accurate real-time distance calculations (e.g., in km/miles) between each other based on their live locations.
+ 
+5. Messaging System Testing:
+
+Yes, real-time messaging between connected users will work properly. We have verified that real-time message delivery (Socket.io), status ticks, and notifications function seamlessly.
+ 
+We are fully committed to getting these final pieces working perfectly so we can move forward properly without any delays. Please let us know when you can provide the console access for the mosque search, and we will keep working on the remaining audio files.
+ 
+Thank you again for your time and guidance!
+ 
