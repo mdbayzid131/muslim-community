@@ -1,9 +1,10 @@
+// ignore_for_file: avoid_print
 import 'dart:io';
 import 'package:image/image.dart' as img;
 
 void main() {
-  final inputPath = 'assets/image/app_logo.png';
-  final outputPath = 'assets/image/app_logo_adaptive_foreground.png';
+  const inputPath = 'assets/image/app_logo.png';
+  const outputPath = 'assets/image/app_logo_adaptive_foreground.png';
 
   final imageBytes = File(inputPath).readAsBytesSync();
   final original = img.decodeImage(imageBytes);
@@ -31,5 +32,5 @@ void main() {
   img.compositeImage(padded, original, dstX: dstX, dstY: dstY);
 
   File(outputPath).writeAsBytesSync(img.encodePng(padded));
-  print('Successfully created padded image: ' + outputPath);
+  print('Successfully created padded image: $outputPath');
 }

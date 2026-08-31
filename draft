@@ -1,0 +1,338 @@
+Launching lib\main.dart on sdk gphone16k x86 64 in debug mode...
+Warning: Flutter support for your project's Gradle version (8.14.0) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at C:\Users\mdbay\StudioProjects\muslim-community\android/gradle/wrapper/gradle-wrapper.properties.
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.11.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (C:\Users\mdbay\StudioProjects\muslim-community\android/settings.gradle), by a plugin with the id of com.android.application.
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (C:\Users\mdbay\StudioProjects\muslim-community\android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Warning: Flutter support for your project's Kotlin version (2.2.20) will soon be dropped. Please upgrade your Kotlin version to a version of at least 2.3.20 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's KGP version is typically defined in the plugins block of the `settings.gradle` file (C:\Users\mdbay\StudioProjects\muslim-community\android/settings.gradle), by a plugin with the id of org.jetbrains.kotlin.android.
+If you don't see a plugins block, your project was likely created with an older template version, in which case it is most likely defined in the top-level build.gradle file (C:\Users\mdbay\StudioProjects\muslim-community\android/build.gradle) by the ext.kotlin_version property.
+
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+I/FlutterActivityAndFragmentDelegate(13769): If you are attempting to set --start-paused via Intent extras to launch a Flutter component outside of using the Flutter CLI, note that support for setting engine flags on Android via Intent will soon be dropped; see https://github.com/flutter/flutter/issues/180686 for more information on this breaking change. To migrate, set --start-paused or any other flags specified via Intent extras on the command line instead or see https://github.com/flutter/flutter/blob/main/docs/engine/Flutter-Android-Engine-Flags.md for alternative methods.
+D/FlutterJNI(13769): Beginning load of flutter...
+D/FlutterJNI(13769): flutter (null) was loaded normally!
+I/flutter (13769): [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+D/AudioSystem(13769): onNewService: media.audio_policy service obtained 0x7338d00ae450
+D/AudioSystem(13769): getService: IAudioPolicyService retrieved: 0x7338d00ae450  cached: 0x7338d00ae450
+D/FLTFireContextHolder(13769): received application context.
+D/FlutterGeolocator(13769): Attaching Geolocator to activity
+D/nativeloader(13769): Load /data/app/~~ZuleNIzPunS4Y1ofsaZzVw==/com.syamuslim.app-rOF9E4UXGb1vnbSWtG5KCQ==/base.apk!/lib/x86_64/libdartjni.so using class loader ns clns-9 (caller=/data/app/~~ZuleNIzPunS4Y1ofsaZzVw==/com.syamuslim.app-rOF9E4UXGb1vnbSWtG5KCQ==/base.apk!classes12.dex): ok
+I/m.syamuslim.app(13769): hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported,test-api) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+I/m.syamuslim.app(13769): hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+I/m.syamuslim.app(13769): hiddenapi: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+I/m.syamuslim.app(13769): hiddenapi: Accessing hidden method Landroid/util/LongArray;->get(I)J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+D/AccessibilityBridge(13769): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer(13769): Width is zero. 0,0
+D/CompatChangeReporter(13769): Compat change id reported: 377864165; UID 10229; state: ENABLED
+W/HWUI    (13769): Unknown dataspace 0
+W/libc    (13769): Access denied finding property "vendor.mesa.virtgpu.kumquat"
+D/FlutterGeolocator(13769): Creating service.
+D/FlutterGeolocator(13769): Binding to location service.
+D/WindowOnBackDispatcher(13769): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@1d72f6e
+D/WindowOnBackDispatcher(13769): setOnBackInvokedCallbackInfo: android.app.Activity$$ExternalSyntheticLambda0@1d72f6e
+I/WindowExtensionsImpl(13769): Initializing Window Extensions, vendor API level=10, activity embedding enabled=true
+W/UiContextUtils(13769): Requested context is a non-UI Context. Creating a UI-Context with display: 0. Context: Context=android.app.Application@f266f9f, of which baseContext=android.app.ContextImpl@1fba82
+D/VRI[MainActivity](13769): WindowInsets changed: 1080x2400 statusBars:[0,74,0,0] navigationBars:[0,0,0,63] mandatorySystemGestures:[0,74,0,84]
+D/FlutterRenderer(13769): Width is zero. 0,0
+I/Surface (13769): Creating surface for consumer unnamed-13769-0 with slotExpansion=1 for 64 slots
+I/Surface (13769): Creating surface for consumer VRI[MainActivity]#0(BLAST Consumer)0 with slotExpansion=1 for 64 slots
+D/nativeloader(13769): Load libstats_jni.so using APEX ns com_android_os_statsd for caller /apex/com.android.os.statsd/javalib/framework-statsd.jar: ok
+D/FlutterJNI(13769): Sending viewport metrics to the engine.
+I/Surface (13769): Creating surface for consumer unnamed-13769-1 with slotExpansion=1 for 64 slots
+I/Surface (13769): Creating surface for consumer 715b2fc SurfaceView[com.syamuslim.app/com.syamuslim.app.MainActivity]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+Connecting to VM Service at ws://127.0.0.1:61699/1nq0FyEwe8Y=/ws
+Connected to the VM Service.
+I/m.syamuslim.app(13769): Compiler allocated 5559KB to compile void android.view.ViewRootImpl.performTraversals(long)
+D/FlutterGeolocator(13769): Geolocator foreground service connected
+D/FlutterGeolocator(13769): Initializing Geolocator services
+D/FlutterGeolocator(13769): Flutter engine connected. Connected engine count 1
+I/Choreographer(13769): Skipped 63 frames!  The application may be doing too much work on its main thread.
+D/WindowLayoutComponentImpl(13769): Register WindowLayoutInfoListener on Context=com.syamuslim.app.MainActivity@dd8c40b, of which baseContext=android.app.ContextImpl@abfc832
+D/ProfileInstaller(13769): Installing profile for com.syamuslim.app
+D/FlutterJNI(13769): Sending viewport metrics to the engine.
+I/FLTFireBGExecutor(13769): Creating background FlutterEngine instance, with args: [--start-paused, --enable-dart-profiling]
+W/libc    (13769): Access denied finding property "vendor.mesa.virtgpu.kumquat"
+D/FLTFireContextHolder(13769): received application context.
+I/flutter (13769): [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+W/libc    (13769): Access denied finding property "vendor.mesa.virtgpu.kumquat"
+[GETX] Instance "StorageService" has been created
+[GETX] Instance "StorageService" has been initialized
+[GETX] Instance "ApiClient" has been created
+[GETX] Instance "ApiClient" has been initialized
+[GETX] Instance "AuthService" has been created
+[GETX] Instance "AuthService" has been initialized
+[GETX] Instance "SocketService" has been created
+[GETX] Instance "SocketService" has been initialized
+[GETX] Instance "NotificationService" has been created
+[GETX] Instance "NotificationService" has been initialized
+I/m.syamuslim.app(13769): Background concurrent mark compact GC freed 3255KB AllocSpace bytes, 11(352KB) LOS objects, 49% free, 3524KB/7048KB, paused 140us,6.212ms total 22.597ms
+[GETX] Instance "AzanService" has been created
+[GETX] Instance "AzanService" has been initialized
+[GETX] Instance "InternetController" has been created
+[GETX] Instance "InternetController" has been initialized
+[GETX] Instance "GetMaterialController" has been created
+[GETX] Instance "GetMaterialController" has been initialized
+[GETX] GOING TO ROUTE /splash
+[GETX] Instance "SplashController" has been created
+[GETX] Instance "SplashController" has been initialized
+I/Choreographer(13769): Skipped 100 frames!  The application may be doing too much work on its main thread.
+D/FlutterGeolocator(13769): Geolocator foreground service connected
+D/FlutterGeolocator(13769): Initializing Geolocator services
+D/FlutterGeolocator(13769): Flutter engine connected. Connected engine count 2
+I/flutter (13769): ℹ️ INFO: Notification permission status: AuthorizationStatus.authorized
+D/InsetsController(13769): hide(ime())
+I/ImeTracker(13769): com.syamuslim.app:9da11bcf: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+I/FLTFireMsgService(13769): FlutterFirebaseMessagingBackgroundService started!
+I/flutter (13769): ℹ️ INFO: FCM Token: c1mpWGHFRjecZdAQq01Ip6:APA91bHw2db97si67-zTHxd6pCukH2UuLd9IUuepHjSx69DTNs1vUhnBWU4dESTjrgUjUpyFVDJpsZgRu_f1lIYagzHxEQkMnfIPLju28pTjXbmKeQzFp9s
+[GETX] GOING TO ROUTE /maleNavbar
+[GETX] REMOVING ROUTE /splash
+[GETX] Instance "NavigationController" has been created
+[GETX] Instance "NavigationController" has been initialized
+[GETX] Instance "HomeController" has been created
+
+════════ Exception caught by widgets library ═══════════════════════════════════
+The following message was thrown building Obx(has builder, dirty, state: ObxState#67e09):
+"UserRepository?" not found. You need to call "Get.put(UserRepository?())" or "Get.lazyPut(()=>UserRepository?())"
+
+The relevant error-causing widget was:
+    Obx Obx:file:///C:/Users/mdbay/StudioProjects/muslim-community/lib/modules/home/view/home_view.dart:18:12
+
+When the exception was thrown, this was the stack:
+#0      GetInstance.find (package:get/get_instance/src/get_instance.dart:306:7)
+#1      Inst.find (package:get/get_instance/src/extension_instance.dart:69:45)
+#2      NavigationBinding.dependencies.<anonymous closure> (package:muslim_community/modules/navigation/binding/navigation_binding.dart:17:74)
+#3      _InstanceBuilderFactory.getDependency (package:get/get_instance/src/get_instance.dart:544:33)
+#4      GetInstance._startController (package:get/get_instance/src/get_instance.dart:252:28)
+#5      GetInstance._initDependencies (package:get/get_instance/src/get_instance.dart:205:11)
+#6      GetInstance.find (package:get/get_instance/src/get_instance.dart:302:17)
+#7      GetView.controller (package:get/get_state_manager/src/simple/get_view.dart:38:37)
+#8      HomeView.build.<anonymous closure> (package:muslim_community/modules/home/view/home_view.dart:19:48)
+#9      Obx.build (package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart:72:28)
+#10     RxInterface.notifyChildren (package:get/get_rx/src/rx_types/rx_core/rx_interface.dart:26:27)
+#11     ObxState.build (package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart:56:19)
+#12     StatefulElement.build (package:flutter/src/widgets/framework.dart:5944:27)
+#13     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5830:15)
+#14     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+#15     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+#16     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5812:5)
+#17     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5986:11)
+#18     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5806:5)
+...     Normal element mounting (33 frames)
+#51     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4600:20)
+#52     MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7277:36)
+#53     MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7292:32)
+...     Normal element mounting (31 frames)
+#84     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4600:20)
+#85     MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7277:36)
+#86     MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7292:32)
+...     Normal element mounting (140 frames)
+#226    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4600:20)
+#227    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7277:36)
+#228    MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7292:32)
+...     Normal element mounting (186 frames)
+#414    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4600:20)
+#415    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7277:36)
+#416    Element.updateChild (package:flutter/src/widgets/framework.dart:4072:18)
+#417    Element.updateChildren (package:flutter/src/widgets/framework.dart:4268:32)
+#418    MultiChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7308:17)
+#419    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+#420    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+#421    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+#422    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+#423    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+#424    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+#425    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+#426    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+#427    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+#428    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+#429    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+#430    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+#431    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+#432    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+#433    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+#434    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+#435    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+#436    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+#437    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+#438    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+#439    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+#440    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+#441    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+#442    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+#443    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+#444    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+#445    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+#446    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+#447    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+#448    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+#449    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+#450    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+#451    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+#452    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+#453    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+#454    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+#455    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+#456    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+#457    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+#458    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+#459    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+#460    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+#461    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+#462    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+#463    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+#464    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+#465    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+#466    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+#467    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+#468    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+#469    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2763:15)
+#470    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2820:11)
+#471    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3124:18)
+#472    WidgetsBinding.drawFrame (package:flutter/src/widgets/binding.dart:1571:21)
+#473    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#474    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#475    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#476    SchedulerBinding._handleDrawFrame (package:flutter/src/scheduler/binding.dart:1198:5)
+#477    _invoke (dart:ui/hooks.dart:441:13)
+#478    PlatformDispatcher._drawFrame (dart:ui/platform_dispatcher.dart:450:5)
+#479    _drawFrame (dart:ui/hooks.dart:413:31)
+
+════════════════════════════════════════════════════════════════════════════════
+[GETX] Instance "GroupController" has been created
+[GETX] Instance "GroupRepository" has been created
+[GETX] Instance "GroupController" has been initialized
+[GETX] Instance "DiscoverController" has been created
+[GETX] Instance "UserRepository" has been created
+[GETX] Instance "ConnectionRepository" has been created
+[GETX] Instance "DiscoverController" has been initialized
+[GETX] Instance "MessagesController" has been created
+[GETX] Instance "ChatRepository" has been created
+[GETX] Instance "MessagesController" has been initialized
+[GETX] Instance "ProfileController" has been created
+[GETX] Instance "ProfileController" has been initialized
+I/flutter (13769):
+I/flutter (13769): ┌ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
+I/flutter (13769): │ GET https://nayem5002.binarybards.online/api/v1/groups
+I/flutter (13769): │ Headers: {Content-Type: application/json, Authorization: Bearer ***}
+I/flutter (13769): └ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
+I/flutter (13769): 
+I/flutter (13769):
+I/flutter (13769): ┌ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
+I/flutter (13769): │ GET https://nayem5002.binarybards.online/api/v1/chats
+I/flutter (13769): │ Headers: {Content-Type: application/json, Authorization: Bearer ***}
+I/flutter (13769): └ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
+I/flutter (13769): 
+I/flutter (13769):
+I/flutter (13769): ┌ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
+I/flutter (13769): │ GET https://nayem5002.binarybards.online/api/v1/users/me
+I/flutter (13769): │ Headers: {Content-Type: application/json, Authorization: Bearer ***}
+I/flutter (13769): └ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
+I/flutter (13769):
+[GETX] "SplashController" onDelete() called
+[GETX] "SplashController" deleted from memory
+I/flutter (13769):
+I/flutter (13769): ┌ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
+I/flutter (13769): │ GET https://nayem5002.binarybards.online/api/v1/users/profiles?page=1&limit=20&latitude=37.4219983&longitude=-122.084
+I/flutter (13769): │ Headers: {Content-Type: application/json, Authorization: Bearer ***}
+I/flutter (13769): │ Query: {page: 1, limit: 20, latitude: 37.4219983, longitude: -122.084}
+I/flutter (13769): └ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
+I/flutter (13769): 
+I/flutter (13769):
+I/flutter (13769): ┌ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
+I/flutter (13769): │ [ GET 200 ] https://nayem5002.binarybards.online/api/v1/users/profiles?page=1&limit=20&latitude=37.4219983&longitude=-122.084
+I/flutter (13769): │ Data:
+I/flutter (13769): │ {
+I/flutter (13769): │   "success": true,
+I/flutter (13769): │   "statusCode": 200,
+I/flutter (13769): │   "message": "User profiles fetched successfully",
+I/flutter (13769): │   "meta": {
+I/flutter (13769): │     "limit": 20,
+I/flutter (13769): │     "nextCursor": null,
+I/flutter (13769): │     "hasNext": false
+I/flutter (13769): │   },
+I/flutter (13769): │   "data": []
+I/flutter (13769): │ }
+I/flutter (13769): └ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
+I/flutter (13769): 
+I/flutter (13769):
+I/flutter (13769): ┌ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
+I/flutter (13769): │ [ GET 200 ] https://nayem5002.binarybards.online/api/v1/groups
+I/flutter (13769): │ Data:
+I/flutter (13769): │ {
+I/flutter (13769): │   "success": true,
+I/flutter (13769): │   "statusCode": 200,
+I/flutter (13769): │   "message": "Groups fetched successfully",
+I/flutter (13769): │   "meta": {
+I/flutter (13769): │     "total": 0,
+I/flutter (13769): │     "limit": 10,
+I/flutter (13769): │     "page": 1,
+I/flutter (13769): │     "totalPages": 0,
+I/flutter (13769): │     "hasNext": false,
+I/flutter (13769): │     "hasPrev": false
+I/flutter (13769): │   },
+I/flutter (13769): │   "data": []
+I/flutter (13769): │ }
+I/flutter (13769): └ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
+I/flutter (13769): 
+I/flutter (13769):
+I/flutter (13769): ┌ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
+I/flutter (13769): │ [ GET 200 ] https://nayem5002.binarybards.online/api/v1/chats
+I/flutter (13769): │ Data:
+I/flutter (13769): │ {
+I/flutter (13769): │   "success": true,
+I/flutter (13769): │   "statusCode": 200,
+I/flutter (13769): │   "message": "Chat list retrieved successfully",
+I/flutter (13769): │   "data": []
+I/flutter (13769): │ }
+I/flutter (13769): └ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
+I/flutter (13769):
+[GETX] Instance "HomeController" has been created
+
+════════ Exception caught by widgets library ═══════════════════════════════════
+"UserRepository?" not found. You need to call "Get.put(UserRepository?())" or "Get.lazyPut(()=>UserRepository?())"
+The relevant error-causing widget was:
+    Obx Obx:file:///C:/Users/mdbay/StudioProjects/muslim-community/lib/modules/home/view/home_view.dart:18:12
+════════════════════════════════════════════════════════════════════════════════
+I/flutter (13769):
+I/flutter (13769): ┌ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
+I/flutter (13769): │ [ GET 200 ] https://nayem5002.binarybards.online/api/v1/users/me
+I/flutter (13769): │ Data:
+I/flutter (13769): │ {
+I/flutter (13769): │   "success": true,
+I/flutter (13769): │   "statusCode": 200,
+I/flutter (13769): │   "message": "Profile data retrieved successfully",
+I/flutter (13769): │   "data": {
+I/flutter (13769): │     "id": "6a94f3a10d61932cdb3466ae",
+I/flutter (13769): │     "name": "Pronoy",
+I/flutter (13769): │     "role": "BROTHER",
+I/flutter (13769): │     "email": "mdbayazid131.dev@gmail.com",
+I/flutter (13769): │     "revertDate": "2010-08-30T18:00:00.000Z",
+I/flutter (13769): │     "dateOfBirth": "2004-09-03T18:00:00.000Z",
+I/flutter (13769): │     "profileImage": "/default-avatar.svg",
+I/flutter (13769): │     "verificationImage": "https://nayem5002.binarybards.online/uploads/users/verifications/1788146593126-qp3qia.jpg",
+I/flutter (13769): │     "interests": [],
+I/flutter (13769): │     "status": "ACTIVE",
+I/flutter (13769): │     "isVerified": true,
+I/flutter (13769): │     "subscriptionTier": "FREE",
+I/flutter (13769): │     "subscriptionStatus": "NONE",
+I/flutter (13769): │     "createdAt": "2026-08-31T03:23:13.366Z",
+I/flutter (13769): │     "updatedAt": "2026-08-31T04:27:24.427Z",
+I/flutter (13769): │     "_v": 0,
+I/flutter (13769): │     "country": "United States",
+I/flutter (13769): │     "city": "Mountain View",
+I/flutter (13769): │     "latitude": 37.4219983,
+I/flutter (13769): │     "longitude": -122.084
+I/flutter (13769): │   }
+I/flutter (13769): │ }
+I/flutter (13769): └ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
+I/flutter (13769):
