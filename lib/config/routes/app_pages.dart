@@ -16,6 +16,7 @@ import 'package:muslim_community/modules/auth/view/verification_complete_view.da
 import 'package:muslim_community/modules/discover/binding/discover_binding.dart';
 import 'package:muslim_community/modules/discover/view/jumma_now_playing_view.dart';
 import 'package:muslim_community/modules/discover/view/learning_view.dart';
+import 'package:muslim_community/modules/discover/view/mosque_details_view.dart';
 import 'package:muslim_community/modules/discover/view/wudu_ghusl_flashcard_view.dart';
 import 'package:muslim_community/modules/group/binding/group_binding.dart';
 import 'package:muslim_community/modules/group/view/group_details_view.dart';
@@ -330,6 +331,18 @@ class AppPages {
     GetPage(
       name: AppRoutes.wuduGhuslFlashcard,
       page: () => const WuduGhuslFlashcardView(title: "How to Make Wudu"),
+    ),
+    GetPage(
+      name: AppRoutes.mosqueDetails,
+      page: () => const MosqueDetailsView(),
+    ),
+    GetPage(
+      name: AppRoutes.maleMosqueDetails,
+      page: () => const MosqueDetailsView(),
+    ),
+    GetPage(
+      name: AppRoutes.femaleMosqueDetails,
+      page: () => const MosqueDetailsView(),
     ),
 
     // Messages

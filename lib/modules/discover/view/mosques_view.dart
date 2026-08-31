@@ -3,6 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:muslim_community/config/themes/app_colors.dart';
+import 'package:muslim_community/core/services/auth_service.dart';
+import 'package:muslim_community/data/models/mosque_model.dart';
+import 'package:muslim_community/data/repositories/mosque_repository.dart';
+import 'package:muslim_community/modules/discover/controller/mosque_controller.dart';
+import 'package:muslim_community/modules/discover/view/mosque_details_view.dart';
 import 'package:muslim_community/modules/home/controller/home_controller.dart';
 
 class MosquesView extends StatelessWidget {
@@ -10,33 +15,13 @@ class MosquesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String loc = 'Unknown';
-    try {
-      if (Get.isRegistered<HomeController>()) {
-        loc = Get.find<HomeController>().currentLocation.value;
-      }
-    } catch (_) {}
+    final MosqueController controller = Get.isRegistered<MosqueController>()
+        ? Get.find<MosqueController>()
+        : Get.put(MosqueController(mosqueRepository: Get.find<MosqueRepository>()));
 
-    final dummyMosques = [
-      {
-        'name': 'East London Mosque',
-        'address': '82-92 Whitechapel Rd, London E1 1JQ',
-        'distance': '1.2 mi',
-        'capacity': '7,000 worshippers',
-      },
-      {
-        'name': 'London Central Mosque (Regent\'s Park)',
-        'address': '146 Park Rd, London NW8 7RG',
-        'distance': '3.5 mi',
-        'capacity': '5,000 worshippers',
-      },
-      {
-        'name': 'Baitul Futuh Mosque',
-        'address': '181 London Rd, Morden SM4 5PT',
-        'distance': '5.8 mi',
-        'capacity': '10,000 worshippers',
-      },
-    ];
+    final role =
+        Get.isRegistered<AuthService>() ? Get.find<AuthService>().userRole : 'male';
+    final roleColor = AppColors.getRoleColor(role);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,14 +40,24 @@ class MosquesView extends StatelessWidget {
                     size: 16.sp,
                   ),
                   SizedBox(width: 4.w),
-                  Text(
-                    loc,
-                    style: GoogleFonts.inter(
-                      fontSize: 12.sp,
-                      color: AppColors.titleColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  Obx(() {
+                    String loc = 'Unknown';
+                    try {
+                      if (Get.isRegistered<HomeController>()) {
+                        loc = Get.find<HomeController>()
+                            .currentLocation
+                            .value;
+                      }
+                    } catch (_) {}
+                    return Text(
+                      loc,
+                      style: GoogleFonts.inter(
+                        fontSize: 12.sp,
+                        color: AppColors.titleColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    );
+                  }),
                 ],
               ),
               SizedBox(height: 15.h),
@@ -105,79 +100,176 @@ class MosquesView extends StatelessWidget {
 
         // --- MOSQUE LIST ---
         Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            itemCount: dummyMosques.length,
-            itemBuilder: (context, index) {
-              final mosque = dummyMosques[index];
-              return Container(
-                margin: EdgeInsets.only(bottom: 16.h),
-                padding: EdgeInsets.all(16.w),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.03),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 50.w,
-                      height: 50.w,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF81C784).withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(15.r),
-                      ),
-                      child: Icon(Icons.mosque_rounded,
-                          color: const Color(0xFF81C784), size: 24.sp),
-                    ),
-                    SizedBox(width: 16.w),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            mosque['name']!,
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.titleColor,
-                            ),
-                          ),
-                          SizedBox(height: 4.h),
-                          Text(
-                            mosque['address']!,
-                            style: GoogleFonts.inter(
-                              fontSize: 12.sp,
-                              color: AppColors.bodyColor,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(height: 4.h),
-                          Text(
-                            '${mosque['distance']} • ${mosque['capacity']}',
-                            style: GoogleFonts.inter(
-                              fontSize: 11.sp,
-                              color: const Color(0xFF81C784),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+          child: Obx(() {
+            if (controller.isLoading.value && controller.mosques.isEmpty) {
+              return Center(
+                child: CircularProgressIndicator(color: roleColor),
+              );
+            }
+
+            if (controller.mosques.isEmpty) {
+              return Center(
+                child: Text(
+                  'No nearby mosques found.',
+                  style: GoogleFonts.inter(
+                    fontSize: 14.sp,
+                    color: AppColors.bodyColor,
+                  ),
                 ),
               );
-            },
-          ),
+            }
+
+            return RefreshIndicator(
+              onRefresh: () async {
+                await controller.fetchMosques();
+              },
+              color: roleColor,
+              child: ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                itemCount: controller.mosques.length,
+                itemBuilder: (context, index) {
+                  final mosque = controller.mosques[index];
+                  return _buildMosqueCard(
+                    context,
+                    mosque,
+                    roleColor,
+                  );
+                },
+              ),
+            );
+          }),
         ),
       ],
+    );
+  }
+
+  Widget _buildMosqueCard(
+    BuildContext context,
+    MosqueModel mosque,
+    Color roleColor,
+  ) {
+    return GestureDetector(
+      onTap: () => Get.to(
+        () => MosqueDetailsView(mosque: mosque),
+        arguments: {
+          'name': mosque.name,
+          'address': mosque.address,
+          'description': mosque.description,
+          'imagePath': mosque.image,
+          'fajr': mosque.fajr,
+          'dhuhr': mosque.dhuhr,
+          'asr': mosque.asr,
+          'maghrib': mosque.maghrib,
+          'isha': mosque.isha,
+          'jummah': mosque.jummah,
+          'mapLink': mosque.mapLink,
+          'website': mosque.website,
+        },
+      ),
+      child: Container(
+        margin: EdgeInsets.only(bottom: 20.h),
+        padding: EdgeInsets.all(12.w),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.02),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15.r),
+              child: mosque.image.startsWith('assets/')
+                  ? Image.asset(
+                      mosque.image,
+                      width: 80.w,
+                      height: 80.w,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.network(
+                      mosque.image,
+                      width: 80.w,
+                      height: 80.w,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Image.asset(
+                        'assets/image/mosque01.png',
+                        width: 80.w,
+                        height: 80.w,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+            ),
+            SizedBox(width: 15.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    mosque.name,
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.titleColor,
+                    ),
+                  ),
+                  SizedBox(height: 4.h),
+                  Text(
+                    mosque.address,
+                    style: GoogleFonts.inter(
+                      fontSize: 11.sp,
+                      color: AppColors.bodyColor,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 8.h),
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 4.h,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFBF0F0),
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
+                        child: Text(
+                          mosque.nextPrayer,
+                          style: GoogleFonts.inter(
+                            fontSize: 10.sp,
+                            color: const Color(0xFFE57373),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.near_me_outlined,
+                        size: 12.sp,
+                        color: AppColors.bodyColor,
+                      ),
+                      SizedBox(width: 4.w),
+                      Text(
+                        mosque.distance,
+                        style: GoogleFonts.inter(
+                          fontSize: 11.sp,
+                          color: AppColors.bodyColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

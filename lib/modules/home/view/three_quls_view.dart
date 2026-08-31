@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:muslim_community/config/themes/app_colors.dart';
-import 'package:muslim_community/core/widgets/custom_app_bar.dart';
 
 class VerseModel {
   final int number;
@@ -51,9 +51,13 @@ class _ThreeQulsViewState extends State<ThreeQulsView>
   late final TabController _tabController;
   final AudioPlayer _audioPlayer = AudioPlayer();
 
+  int _activeSurahIndex = 0;
   int? _activeVerseIndex;
   bool _isPlaying = false;
+  bool _isFullSurahPlaying = false;
   String _currentlyPlayingUrl = '';
+
+  Color get activeColor => widget.themeColor ?? AppColors.maleColor;
 
   final List<SurahModel> _surahs = const [
     SurahModel(
@@ -98,40 +102,41 @@ class _ThreeQulsViewState extends State<ThreeQulsView>
       arabicName: "سورة الفلق",
       description: "The Daybreak (Surah 113)",
       benefits:
-          "The Prophet ﷺ used to seek refuge against evil eye and witchcraft by reciting Al-Mu'awwidhatayn (Surah Al-Falaq and Surah An-Nas). (Sahih Al-Bukhari)",
+          "Recited for protection from evil creations, darkness, witchcraft, and the jealousy of enviers. The Prophet ﷺ used to recite the 3 Quls every night before sleeping.",
       verses: [
         VerseModel(
           number: 1,
           arabic: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ",
-          transliteration: "Qul a'ūdhu bi-rabbi l-falaq",
-          english: "Say, \"I seek refuge in the Lord of daybreak\"",
+          transliteration: "Qul a‘ūdhu birabbil-falaq",
+          english: "Say, \"I seek refuge in the Lord of daybreak,\"",
           audioUrl: "https://verses.quran.foundation/Alafasy/mp3/113001.mp3",
         ),
         VerseModel(
           number: 2,
           arabic: "مِن شَرِّ مَا خَلَقَ",
           transliteration: "Min sharri mā khalaq",
-          english: "\"From the evil of that which He created\"",
+          english: "\"From the evil of what He created,\"",
           audioUrl: "https://verses.quran.foundation/Alafasy/mp3/113002.mp3",
         ),
         VerseModel(
           number: 3,
           arabic: "وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ",
-          transliteration: "Wa-min sharri ghāsiqin idhā waqab",
-          english: "\"And from the evil of darkness when it settles\"",
+          transliteration: "Wa min sharri ghāsiqin idhā waqab",
+          english: "\"And from the evil of darkness when it spreads,\"",
           audioUrl: "https://verses.quran.foundation/Alafasy/mp3/113003.mp3",
         ),
         VerseModel(
           number: 4,
           arabic: "وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ",
-          transliteration: "Wa-min sharri n-naffāthāti fī l-'uqad",
-          english: "\"And from the evil of the blowers in knots\"",
+          transliteration: "Wa min sharrin-naffāthāti fil-‘uqad",
+          english:
+              "\"And from the evil of those who blow on knots (practicing witchcraft),\"",
           audioUrl: "https://verses.quran.foundation/Alafasy/mp3/113004.mp3",
         ),
         VerseModel(
           number: 5,
           arabic: "وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ",
-          transliteration: "Wa-min sharri ḥāsidin idhā ḥasad",
+          transliteration: "Wa min sharri ḥāsidin idhā ḥasad",
           english: "\"And from the evil of an envier when he envies.\"",
           audioUrl: "https://verses.quran.foundation/Alafasy/mp3/113005.mp3",
         ),
@@ -142,48 +147,48 @@ class _ThreeQulsViewState extends State<ThreeQulsView>
       arabicName: "سورة الناس",
       description: "Mankind (Surah 114)",
       benefits:
-          "Recite Surah Al-Ikhlas, Surah Al-Falaq, and Surah An-Nas three times in the morning and evening, and they will suffice you against everything. (Sunan Abu Dawood)",
+          "Recited to seek shelter from the internal whispers of Shaytan and all evil whisperers among both jinn and mankind. Completes the set of protective surahs.",
       verses: [
         VerseModel(
           number: 1,
           arabic: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ",
-          transliteration: "Qul a'ūdhu bi-rabbi n-nās",
+          transliteration: "Qul a‘ūdhu birabbin-nās",
           english: "Say, \"I seek refuge in the Lord of mankind,\"",
           audioUrl: "https://verses.quran.foundation/Alafasy/mp3/114001.mp3",
         ),
         VerseModel(
           number: 2,
           arabic: "مَلِكِ النَّاسِ",
-          transliteration: "Maliki n-nās",
-          english: "\"The Sovereign of mankind,\"",
+          transliteration: "Malikin-nās",
+          english: "\"The King of mankind,\"",
           audioUrl: "https://verses.quran.foundation/Alafasy/mp3/114002.mp3",
         ),
         VerseModel(
           number: 3,
           arabic: "إِلَٰهِ النَّاسِ",
-          transliteration: "Ilāhi n-nās",
+          transliteration: "Ilāhin-nās",
           english: "\"The God of mankind,\"",
           audioUrl: "https://verses.quran.foundation/Alafasy/mp3/114003.mp3",
         ),
         VerseModel(
           number: 4,
           arabic: "مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ",
-          transliteration: "Min sharri l-waswāsi l-khannās",
-          english: "\"From the evil of the retreating whisperer -\"",
+          transliteration: "Min sharril-waswāsil-khannās",
+          english: "\"From the evil of the whisperer who withdraws,\"",
           audioUrl: "https://verses.quran.foundation/Alafasy/mp3/114004.mp3",
         ),
         VerseModel(
           number: 5,
           arabic: "الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ",
-          transliteration: "Alladhī yuwaswisu fī ṣudūri n-nās",
-          english: "\"Who whispers [evil] into the breasts of mankind -\"",
+          transliteration: "Alladhī yuwaswisu fī ṣudūrin-nās",
+          english: "\"Who whispers into the hearts of mankind,\"",
           audioUrl: "https://verses.quran.foundation/Alafasy/mp3/114005.mp3",
         ),
         VerseModel(
           number: 6,
           arabic: "مِنَ الْجِنَّةِ وَالنَّاسِ",
-          transliteration: "Mina l-jinnati wa-n-nās",
-          english: "\"From among the jinn and mankind.\"",
+          transliteration: "Minal-jinnati wan-nās",
+          english: "\"From among jinn and mankind.\"",
           audioUrl: "https://verses.quran.foundation/Alafasy/mp3/114006.mp3",
         ),
       ],
@@ -197,15 +202,27 @@ class _ThreeQulsViewState extends State<ThreeQulsView>
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         _stopAudio();
+        setState(() {
+          _activeSurahIndex = _tabController.index;
+        });
       }
     });
 
     _audioPlayer.playerStateStream.listen((state) {
-      if (state.processingState == ProcessingState.completed) {
+      if (mounted) {
         setState(() {
-          _isPlaying = false;
-          _activeVerseIndex = null;
-          _currentlyPlayingUrl = '';
+          _isPlaying = state.playing;
+        });
+        if (state.processingState == ProcessingState.completed) {
+          _stopAudio();
+        }
+      }
+    });
+
+    _audioPlayer.currentIndexStream.listen((index) {
+      if (mounted && _isFullSurahPlaying) {
+        setState(() {
+          _activeVerseIndex = index;
         });
       }
     });
@@ -218,83 +235,227 @@ class _ThreeQulsViewState extends State<ThreeQulsView>
     super.dispose();
   }
 
-  Future<void> _playVerse(int verseIndex, String url) async {
-    try {
-      if (_isPlaying && _currentlyPlayingUrl == url) {
-        await _audioPlayer.pause();
-        setState(() {
-          _isPlaying = false;
-        });
-        return;
-      }
-
-      setState(() {
-        _activeVerseIndex = verseIndex;
-        _currentlyPlayingUrl = url;
-        _isPlaying = true;
-      });
-
-      await _audioPlayer.setUrl(url);
-      await _audioPlayer.play();
-    } catch (e) {
+  Future<void> _stopAudio() async {
+    await _audioPlayer.stop();
+    if (mounted) {
       setState(() {
         _isPlaying = false;
+        _isFullSurahPlaying = false;
         _activeVerseIndex = null;
+        _currentlyPlayingUrl = '';
       });
     }
   }
 
-  Future<void> _stopAudio() async {
-    await _audioPlayer.stop();
-    setState(() {
-      _isPlaying = false;
-      _activeVerseIndex = null;
-      _currentlyPlayingUrl = '';
-    });
+  Future<void> _playVerse(String url, int index) async {
+    try {
+      if (_currentlyPlayingUrl == url && _isPlaying) {
+        await _audioPlayer.pause();
+        return;
+      }
+
+      await _stopAudio();
+
+      setState(() {
+        _currentlyPlayingUrl = url;
+        _activeVerseIndex = index;
+        _isPlaying = true;
+      });
+
+      await _audioPlayer.setUrl(
+        url,
+        headers: {
+          'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        },
+      );
+      await _audioPlayer.play();
+    } catch (e) {
+      debugPrint("Error playing verse audio: $e");
+      _stopAudio();
+    }
+  }
+
+  Future<void> _playFullSurah() async {
+    try {
+      if (_isFullSurahPlaying && _isPlaying) {
+        await _audioPlayer.pause();
+        return;
+      } else if (_isFullSurahPlaying && !_isPlaying) {
+        await _audioPlayer.play();
+        return;
+      }
+
+      await _stopAudio();
+
+      setState(() {
+        _isFullSurahPlaying = true;
+        _isPlaying = true;
+        _activeVerseIndex = 0;
+      });
+
+      final playlist = _surahs[_activeSurahIndex].verses
+          .map(
+            (v) => AudioSource.uri(
+              Uri.parse(v.audioUrl),
+              headers: {
+                'User-Agent':
+                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+              },
+            ),
+          )
+          .toList();
+
+      await _audioPlayer.setAudioSources(playlist);
+      await _audioPlayer.play();
+    } catch (e) {
+      debugPrint("Error playing full Surah: $e");
+      _stopAudio();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final activeColor = widget.themeColor ?? AppColors.maleColor;
-
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: CustomAppBar(
-        title: "The Three Quls",
-        actions: [
-          if (_isPlaying)
-            IconButton(
-              icon: const Icon(Icons.stop_circle_outlined, color: Colors.red),
-              onPressed: _stopAudio,
-            ),
+      backgroundColor: const Color(0xFFFAF8F5),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: activeColor,
+            size: 20.sp,
+          ),
+          onPressed: () => Get.back(),
+        ),
+        title: Text(
+          "The 3 Quls",
+          style: GoogleFonts.playfairDisplay(
+            fontSize: 22.sp,
+            fontWeight: FontWeight.bold,
+            color: AppColors.titleColor,
+          ),
+        ),
+        centerTitle: true,
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: activeColor,
+          labelColor: activeColor,
+          unselectedLabelColor: Colors.grey,
+          labelStyle: GoogleFonts.inter(
+            fontSize: 13.sp,
+            fontWeight: FontWeight.bold,
+          ),
+          tabs: const [
+            Tab(text: "Al-Ikhlas"),
+            Tab(text: "Al-Falaq"),
+            Tab(text: "An-Nas"),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: _surahs.map((surah) => _buildSurahView(surah)).toList(),
+      ),
+    );
+  }
+
+  Widget _buildSurahView(SurahModel surah) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSurahHeaderCard(surah),
+          SizedBox(height: 15.h),
+          _buildBenefitsCard(surah),
+          SizedBox(height: 20.h),
+          _buildPlaybackControlBar(surah),
+          SizedBox(height: 20.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "VERSES",
+                style: GoogleFonts.inter(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.bodyColor.withValues(alpha: 0.8),
+                  letterSpacing: 1.2,
+                ),
+              ),
+              Text(
+                "${surah.verses.length} Verses",
+                style: GoogleFonts.inter(
+                  fontSize: 12.sp,
+                  color: AppColors.bodyColor.withValues(alpha: 0.6),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10.h),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: surah.verses.length,
+            itemBuilder: (context, index) {
+              final verse = surah.verses[index];
+              final isVerseActive = _activeVerseIndex == index;
+              return _buildVerseCard(verse, index, isVerseActive);
+            },
+          ),
+          SizedBox(height: 30.h),
         ],
       ),
-      body: Column(
+    );
+  }
+
+  Widget _buildSurahHeaderCard(SurahModel surah) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(20.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24.r),
+        border: Border.all(
+          color: activeColor.withValues(alpha: 0.12),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: activeColor.withValues(alpha: 0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
         children: [
-          Container(
-            color: Colors.white,
-            child: TabBar(
-              controller: _tabController,
-              indicatorColor: activeColor,
-              labelColor: activeColor,
-              unselectedLabelColor: AppColors.bodyColor,
-              labelStyle: GoogleFonts.inter(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-              ),
-              tabs: const [
-                Tab(text: "Al-Ikhlas"),
-                Tab(text: "Al-Falaq"),
-                Tab(text: "An-Nas"),
-              ],
+          Text(
+            surah.arabicName,
+            style: GoogleFonts.amiri(
+              fontSize: 34.sp,
+              fontWeight: FontWeight.bold,
+              color: activeColor,
             ),
           ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: _surahs
-                  .map((surah) => _buildSurahContent(surah, activeColor))
-                  .toList(),
+          SizedBox(height: 6.h),
+          Text(
+            surah.name,
+            style: GoogleFonts.playfairDisplay(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
+              color: AppColors.titleColor,
+            ),
+          ),
+          SizedBox(height: 4.h),
+          Text(
+            surah.description,
+            style: GoogleFonts.inter(
+              fontSize: 12.sp,
+              color: AppColors.bodyColor,
             ),
           ),
         ],
@@ -302,159 +463,232 @@ class _ThreeQulsViewState extends State<ThreeQulsView>
     );
   }
 
-  Widget _buildSurahContent(SurahModel surah, Color activeColor) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-      child: Column(
+  Widget _buildBenefitsCard(SurahModel surah) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF0FDFB).withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(
+          color: const Color(0xFF26A69A).withValues(alpha: 0.15),
+        ),
+      ),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header Card
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(18.w),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16.r),
-              border: Border.all(color: activeColor.withValues(alpha: 0.2)),
-            ),
+          Icon(
+            Icons.info_outline_rounded,
+            color: const Color(0xFF26A69A),
+            size: 20.sp,
+          ),
+          SizedBox(width: 12.w),
+          Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  surah.arabicName,
-                  style: GoogleFonts.amiri(
-                    fontSize: 28.sp,
+                  "Benefits & Virtue",
+                  style: GoogleFonts.inter(
+                    fontSize: 13.sp,
                     fontWeight: FontWeight.bold,
-                    color: activeColor,
-                  ),
-                ),
-                SizedBox(height: 6.h),
-                Text(
-                  surah.name,
-                  style: GoogleFonts.playfairDisplay(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.titleColor,
+                    color: const Color(0xFF0F766E),
                   ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  surah.description,
+                  surah.benefits,
                   style: GoogleFonts.inter(
                     fontSize: 12.sp,
                     color: AppColors.bodyColor,
-                  ),
-                ),
-                SizedBox(height: 12.h),
-                Container(
-                  padding: EdgeInsets.all(12.w),
-                  decoration: BoxDecoration(
-                    color: activeColor.withValues(alpha: 0.08),
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  child: Text(
-                    surah.benefits,
-                    style: GoogleFonts.inter(
-                      fontSize: 12.sp,
-                      fontStyle: FontStyle.italic,
-                      color: activeColor,
-                      height: 1.4,
-                    ),
+                    height: 1.5,
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 20.h),
+        ],
+      ),
+    );
+  }
 
-          // Verses
-          ...surah.verses.asMap().entries.map((entry) {
-            final idx = entry.key;
-            final verse = entry.value;
-            final isVersePlaying = _isPlaying && _activeVerseIndex == idx;
+  Widget _buildPlaybackControlBar(SurahModel surah) {
+    final isPlayingFull = _isFullSurahPlaying;
 
-            return Container(
-              margin: EdgeInsets.only(bottom: 14.h),
-              padding: EdgeInsets.all(16.w),
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+      decoration: BoxDecoration(
+        color: activeColor.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(color: activeColor.withValues(alpha: 0.2)),
+      ),
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: _playFullSurah,
+            child: Container(
+              padding: EdgeInsets.all(10.w),
               decoration: BoxDecoration(
-                color: isVersePlaying
-                    ? activeColor.withValues(alpha: 0.08)
-                    : Colors.white,
-                borderRadius: BorderRadius.circular(14.r),
-                border: Border.all(
-                  color: isVersePlaying
-                      ? activeColor
-                      : AppColors.borderGrey,
+                color: activeColor,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                isPlayingFull && _isPlaying
+                    ? Icons.pause_rounded
+                    : Icons.play_arrow_rounded,
+                color: Colors.white,
+                size: 24.sp,
+              ),
+            ),
+          ),
+          SizedBox(width: 14.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  isPlayingFull && _isPlaying
+                      ? "Playing Full Surah..."
+                      : "Listen to Full Recitation",
+                  style: GoogleFonts.inter(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.titleColor,
+                  ),
+                ),
+                Text(
+                  "Reciter: Mishary Rashid Alafasy",
+                  style: GoogleFonts.inter(
+                    fontSize: 11.sp,
+                    color: AppColors.bodyColor.withValues(alpha: 0.8),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (isPlayingFull)
+            IconButton(
+              icon: const Icon(
+                Icons.stop_circle_rounded,
+                color: Colors.redAccent,
+              ),
+              onPressed: _stopAudio,
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVerseCard(VerseModel verse, int index, bool isActive) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 12.h),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: isActive
+            ? activeColor.withValues(alpha: 0.03)
+            : Colors.white,
+        borderRadius: BorderRadius.circular(20.r),
+        border: Border.all(
+          color: isActive
+              ? activeColor.withValues(alpha: 0.5)
+              : Colors.black.withValues(alpha: 0.04),
+          width: isActive ? 1.5 : 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.02),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(16.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 4.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isActive
+                        ? activeColor.withValues(alpha: 0.1)
+                        : const Color(0xFFF3F3F5),
+                    borderRadius: BorderRadius.circular(30.r),
+                  ),
+                  child: Text(
+                    "Verse ${verse.number}",
+                    style: GoogleFonts.inter(
+                      fontSize: 11.sp,
+                      fontWeight: FontWeight.bold,
+                      color: isActive ? activeColor : AppColors.bodyColor,
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _playVerse(verse.audioUrl, index),
+                  child: Container(
+                    padding: EdgeInsets.all(6.w),
+                    decoration: BoxDecoration(
+                      color: isActive &&
+                              _currentlyPlayingUrl == verse.audioUrl &&
+                              _isPlaying
+                          ? activeColor.withValues(alpha: 0.1)
+                          : Colors.transparent,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      _currentlyPlayingUrl == verse.audioUrl && _isPlaying
+                          ? Icons.pause_circle_filled_rounded
+                          : Icons.play_circle_fill_rounded,
+                      color: activeColor,
+                      size: 28.sp,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 12.h),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                verse.arabic,
+                textDirection: TextDirection.rtl,
+                style: GoogleFonts.amiri(
+                  fontSize: 22.sp,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.titleColor,
+                  height: 1.8,
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: 28.w,
-                        height: 28.w,
-                        decoration: BoxDecoration(
-                          color: activeColor.withValues(alpha: 0.15),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            "${verse.number}",
-                            style: GoogleFonts.inter(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.bold,
-                              color: activeColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          isVersePlaying
-                              ? Icons.pause_circle_filled
-                              : Icons.play_circle_fill,
-                          color: activeColor,
-                          size: 28.sp,
-                        ),
-                        onPressed: () => _playVerse(idx, verse.audioUrl),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    verse.arabic,
-                    textAlign: TextAlign.right,
-                    style: GoogleFonts.amiri(
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.titleColor,
-                      height: 1.8,
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    verse.transliteration,
-                    style: GoogleFonts.inter(
-                      fontSize: 13.sp,
-                      fontStyle: FontStyle.italic,
-                      color: AppColors.goldColor,
-                    ),
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    verse.english,
-                    style: GoogleFonts.inter(
-                      fontSize: 13.sp,
-                      color: AppColors.bodyColor,
-                    ),
-                  ),
-                ],
+            ),
+            SizedBox(height: 12.h),
+            Text(
+              verse.transliteration,
+              style: GoogleFonts.inter(
+                fontSize: 12.sp,
+                color: activeColor,
+                fontWeight: FontWeight.w500,
+                fontStyle: FontStyle.italic,
               ),
-            );
-          }),
-        ],
+            ),
+            SizedBox(height: 6.h),
+            Text(
+              verse.english,
+              style: GoogleFonts.inter(
+                fontSize: 12.sp,
+                color: AppColors.bodyColor,
+                height: 1.4,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

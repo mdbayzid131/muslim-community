@@ -13,6 +13,7 @@ import 'package:muslim_community/data/repositories/connection_repository.dart';
 import 'package:muslim_community/data/repositories/dua_repository.dart';
 import 'package:muslim_community/data/repositories/group_repository.dart';
 import 'package:muslim_community/data/repositories/learning_repository.dart';
+import 'package:muslim_community/data/repositories/mosque_repository.dart';
 import 'package:muslim_community/data/repositories/notification_repository.dart';
 import 'package:muslim_community/data/repositories/prayer_repository.dart';
 import 'package:muslim_community/data/repositories/user_repository.dart';
@@ -42,5 +43,6 @@ class InitialBinding extends Bindings {
     Get.lazyPut(() => DuaRepository(apiClient: apiClient), fenix: true);
     Get.lazyPut(() => NotificationRepository(apiClient: apiClient), fenix: true);
     Get.lazyPut(() => AskImamRepository(apiClient: apiClient), fenix: true);
+    Get.lazyPut(() => MosqueRepository(apiClient: apiClient), fenix: true);
   }
 }
