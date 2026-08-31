@@ -73,7 +73,11 @@ class PrayerGuideController extends GetxController {
   }
 
   Future<void> playAudio(String url) async {
-    if (url.isEmpty) return;
+    if (url.isEmpty) {
+      Helpers.showError("Audio not available for this step");
+      return;
+    }
+
     try {
       if (activeAudioUrl.value == url) {
         if (_audioPlayer.playing) {
@@ -86,6 +90,24 @@ class PrayerGuideController extends GetxController {
         return;
       }
 
+      // Check if URL is from dummy/unregistered domain
+      String targetUrl = url;
+      if (url.contains('cdn.syaapp.com')) {
+        // Handle known fallbacks if available
+        if (url.contains('fatiha') || url.contains('al-fatihah')) {
+          targetUrl = 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3';
+        } else if (url.contains('ikhlas')) {
+          targetUrl = 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/112.mp3';
+        } else if (url.contains('falaq')) {
+          targetUrl = 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/113.mp3';
+        } else if (url.contains('nas') || url.contains('naas')) {
+          targetUrl = 'https://cdn.islamic.network/quran/audio/128/ar.alafasy/114.mp3';
+        } else {
+          Helpers.showError("Audio file is not yet uploaded to the server");
+          return;
+        }
+      }
+
       activeAudioUrl.value = url;
       isPlaying.value = true;
 
@@ -94,7 +116,7 @@ class PrayerGuideController extends GetxController {
       }
 
       await _audioPlayer.setUrl(
-        url,
+        targetUrl,
         headers: {
           'User-Agent':
               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
@@ -104,6 +126,7 @@ class PrayerGuideController extends GetxController {
       isPlaying.value = true;
     } catch (e) {
       Helpers.error("Play audio error: $e");
+      Helpers.showError("Unable to play audio from server");
       activeAudioUrl.value = "";
       isPlaying.value = false;
     }

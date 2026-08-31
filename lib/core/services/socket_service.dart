@@ -26,58 +26,106 @@ class SocketService extends GetxService {
     _isConnecting = true;
     _connectionCompleter = Completer<void>();
 
-    final token = await StorageService.getString(StorageConstants.bearerToken);
-    final serverUrl = ApiConstants.serverUrl;
+    try {
+      final token = await StorageService.getString(StorageConstants.bearerToken);
+      if (token.isEmpty) {
+        Helpers.debug('Socket connect skipped: Bearer token is empty');
+        _isConnecting = false;
+        return;
+      }
 
-    Helpers.debug('Attempting to connect to socket at: $serverUrl');
+      final serverUrl = ApiConstants.serverUrl;
+      final cleanToken = token.startsWith('Bearer ') ? token.substring(7) : token;
+      final bearerToken = 'Bearer $cleanToken';
 
-    _socket = io.io(
-      serverUrl,
-      io.OptionBuilder()
-          .setTransports(['websocket', 'polling'])
-          .setAuth({'token': token})
-          .setQuery({'token': token})
-          .setExtraHeaders({'Authorization': 'Bearer $token', 'token': token})
-          .enableAutoConnect()
-          .enableReconnection()
-          .setReconnectionAttempts(10)
-          .setReconnectionDelay(2000)
-          .build(),
-    );
+      Helpers.debug('Attempting to connect to socket at: $serverUrl');
 
-    _socket!.onConnect((_) {
-      Helpers.debug('Socket connected with id: ${_socket!.id}');
+      // Dispose any prior disconnected socket instance
+      if (_socket != null) {
+        try {
+          _socket!.clearListeners();
+          _socket!.disconnect();
+          _socket!.dispose();
+        } catch (_) {}
+        _socket = null;
+      }
+
+      _socket = io.io(
+        serverUrl,
+        io.OptionBuilder()
+            .setTransports(['websocket'])
+            .setAuth({
+              'token': cleanToken,
+              'accessToken': cleanToken,
+              'authorization': bearerToken,
+              'Authorization': bearerToken,
+            })
+            .setQuery({
+              'token': cleanToken,
+            })
+            .setExtraHeaders({
+              'Authorization': bearerToken,
+              'authorization': bearerToken,
+              'token': cleanToken,
+            })
+            .disableAutoConnect()
+            .enableReconnection()
+            .setReconnectionAttempts(3)
+            .setReconnectionDelay(5000)
+            .build(),
+      );
+
+      _socket!.onConnect((_) {
+        Helpers.debug('Socket connected with id: ${_socket?.id}');
+        _isConnecting = false;
+        if (_connectionCompleter != null && !_connectionCompleter!.isCompleted) {
+          _connectionCompleter!.complete();
+        }
+      });
+
+      _socket!.onDisconnect((reason) {
+        Helpers.debug('Socket disconnected: $reason');
+        _isConnecting = false;
+        if (reason == 'io server disconnect') {
+          // Server rejected / closed connection. Don't spam immediate reconnect.
+          _socket?.disconnect();
+        }
+      });
+
+      _socket!.onConnectError((data) {
+        Helpers.debug('Socket Connect Error: $data');
+        _isConnecting = false;
+        if (_connectionCompleter != null && !_connectionCompleter!.isCompleted) {
+          _connectionCompleter!.completeError(data);
+        }
+      });
+
+      _socket!.onError((data) {
+        Helpers.debug('Socket Error: $data');
+        _isConnecting = false;
+      });
+
+      _socket!.connect();
+
+      return await _connectionCompleter!.future;
+    } catch (e) {
       _isConnecting = false;
       if (_connectionCompleter != null && !_connectionCompleter!.isCompleted) {
-        _connectionCompleter!.complete();
+        _connectionCompleter!.completeError(e);
       }
-    });
-
-    _socket!.onDisconnect((_) {
-      Helpers.debug('Socket disconnected');
-      _isConnecting = false;
-    });
-
-    _socket!.onConnectError((data) {
-      Helpers.debug('Socket Connect Error: $data');
-      _isConnecting = false;
-      if (_connectionCompleter != null && !_connectionCompleter!.isCompleted) {
-        _connectionCompleter!.completeError(data);
-      }
-    });
-
-    _socket!.onError((data) {
-      Helpers.debug('Socket Error: $data');
-      _isConnecting = false;
-    });
-
-    return _connectionCompleter!.future;
+      Helpers.error('Socket initialization error: $e');
+    }
   }
 
   void disconnect() {
     if (_socket != null) {
-      _socket!.clearListeners();
-      _socket!.disconnect();
+      try {
+        _socket!.clearListeners();
+        _socket!.disconnect();
+        _socket!.dispose();
+      } catch (e) {
+        Helpers.debug('Error disconnecting socket: $e');
+      }
       _socket = null;
       _isConnecting = false;
     }
@@ -85,22 +133,38 @@ class SocketService extends GetxService {
 
   void emit(String event, dynamic data) {
     if (isConnected) {
-      _socket?.emit(event, data);
+      try {
+        _socket?.emit(event, data);
+      } catch (e) {
+        Helpers.debug('Error emitting event "$event": $e');
+      }
     } else {
       Helpers.debug('Cannot emit event "$event". Socket not connected.');
     }
   }
 
   void on(String event, Function(dynamic) handler) {
-    _socket?.on(event, handler);
+    try {
+      _socket?.on(event, handler);
+    } catch (e) {
+      Helpers.debug('Error listening to event "$event": $e');
+    }
   }
 
   void off(String event) {
-    _socket?.off(event);
+    try {
+      _socket?.off(event);
+    } catch (e) {
+      Helpers.debug('Error removing listener for event "$event": $e');
+    }
   }
 
   void clearListeners() {
-    _socket?.clearListeners();
+    try {
+      _socket?.clearListeners();
+    } catch (e) {
+      Helpers.debug('Error clearing listeners: $e');
+    }
   }
 
   @override

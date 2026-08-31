@@ -1,109 +1,216 @@
-[GETX] CLOSE TO ROUTE /groupDetails
-D/WindowOnBackDispatcher(23101): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@175d42b
-D/WindowOnBackDispatcher(23101): setOnBackInvokedCallbackInfo: android.app.Activity$$ExternalSyntheticLambda0@175d42b
-[GETX] GOING TO ROUTE /groupDetails
-I/flutter (23101):
-I/flutter (23101): ┌ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
-I/flutter (23101): │ GET https://nayem5002.binarybards.online/api/v1/groups/6a953f750f773eaed31b94f9/posts
-I/flutter (23101): │ Headers: {Content-Type: application/json, Authorization: Bearer ***}
-I/flutter (23101): └ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
-I/flutter (23101):
-D/WindowOnBackDispatcher(23101): setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@17701fa
-D/WindowOnBackDispatcher(23101): setOnBackInvokedCallbackInfo: io.flutter.embedding.android.FlutterActivity$1@17701fa
-I/flutter (23101):
-I/flutter (23101): ┌ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
-I/flutter (23101): │ GET https://nayem5002.binarybards.online/api/v1/groups/6a953f750f773eaed31b94f9/posts
-I/flutter (23101): │ Headers: {Content-Type: application/json, Authorization: Bearer ***}
-I/flutter (23101): └ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
-I/flutter (23101):
-D/HWUI    (23101): --- Failed to create image decoder with message 'unimplemented'
-E/FlutterImageDecoderImplDefault(23101): Failed to decode image
-E/FlutterImageDecoderImplDefault(23101): android.graphics.ImageDecoder$DecodeException: Failed to create image decoder with message 'unimplemented'Input contained an error.
-E/FlutterImageDecoderImplDefault(23101): 	at android.graphics.ImageDecoder.nCreate(Native Method)
-E/FlutterImageDecoderImplDefault(23101): 	at android.graphics.ImageDecoder.-$$Nest$smnCreate(ImageDecoder.java:0)
-E/FlutterImageDecoderImplDefault(23101): 	at android.graphics.ImageDecoder$ByteBufferSource.createImageDecoder(ImageDecoder.java:260)
-E/FlutterImageDecoderImplDefault(23101): 	at android.graphics.ImageDecoder.decodeBitmapImpl(ImageDecoder.java:2014)
-E/FlutterImageDecoderImplDefault(23101): 	at android.graphics.ImageDecoder.decodeBitmap(ImageDecoder.java:2006)
-E/FlutterImageDecoderImplDefault(23101): 	at io.flutter.embedding.engine.image.ImageDecoderDefaultImpl.decodeImage(ImageDecoderDefaultImpl.java:44)
-E/FlutterImageDecoderImplDefault(23101): 	at io.flutter.embedding.engine.image.FlutterImageDecoder.decodeImage(FlutterImageDecoder.java:60)
-E/FlutterImageDecoderImplDefault(23101): 	at io.flutter.embedding.engine.FlutterJNI.decodeImage(FlutterJNI.java:577)
+Launching lib\main.dart on sdk gphone16k x86 64 in debug mode...
+Warning: Flutter support for your project's Gradle version (8.14.0) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
 
-════════ Exception caught by image resource service ════════════════════════════
-Exception: Invalid image data
-════════════════════════════════════════════════════════════════════════════════
-I/flutter (23101):
-I/flutter (23101): ┌ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
-I/flutter (23101): │ [ GET 200 ] https://nayem5002.binarybards.online/api/v1/groups/6a953f750f773eaed31b94f9/posts
-I/flutter (23101): │ Data:
-I/flutter (23101): │ {
-I/flutter (23101): │   "success": true,
-I/flutter (23101): │   "statusCode": 200,
-I/flutter (23101): │   "message": "Group feed fetched successfully",
-I/flutter (23101): │   "meta": {
-I/flutter (23101): │     "total": 1,
-I/flutter (23101): │     "limit": 10,
-I/flutter (23101): │     "page": 1,
-I/flutter (23101): │     "totalPages": 1,
-I/flutter (23101): │     "hasNext": false,
-I/flutter (23101): │     "hasPrev": false
-I/flutter (23101): │   },
-I/flutter (23101): │   "data": [
-I/flutter (23101): │     {
-I/flutter (23101): │       "id": "6a9540480f773eaed31b9591",
-I/flutter (23101): │       "groupId": "6a953f750f773eaed31b94f9",
-I/flutter (23101): │       "userId": {
-I/flutter (23101): │         "id": "6a94f2102f39fe90ee967bf4",
-I/flutter (23101): │         "name": "Bayzid",
-I/flutter (23101): │         "profileImage": "/default-avatar.svg"
-I/flutter (23101): │       },
-I/flutter (23101): │       "content": "hiiii",
-I/flutter (23101): │       "attachments": [],
-I/flutter (23101): │       "likesCount": 1,
-I/flutter (23101): │       "commentsCount": 0,
-I/flutter (23101): │       "isPinned": false,
-I/flutter (23101): │       "createdAt": "2026-08-31T08:50:16.072Z",
-I/flutter (23101): │       "updatedAt": "2026-08-31T09:01:08.016Z",
-I/flutter (23101): │       "isLiked": true
-I/flutter (23101): │     }
-I/flutter (23101): │   ]
-I/flutter (23101): │ }
-I/flutter (23101): └ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
-I/flutter (23101): 
-I/flutter (23101):
-I/flutter (23101): ┌ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
-I/flutter (23101): │ [ GET 200 ] https://nayem5002.binarybards.online/api/v1/groups/6a953f750f773eaed31b94f9/posts
-I/flutter (23101): │ Data:
-I/flutter (23101): │ {
-I/flutter (23101): │   "success": true,
-I/flutter (23101): │   "statusCode": 200,
-I/flutter (23101): │   "message": "Group feed fetched successfully",
-I/flutter (23101): │   "meta": {
-I/flutter (23101): │     "total": 1,
-I/flutter (23101): │     "limit": 10,
-I/flutter (23101): │     "page": 1,
-I/flutter (23101): │     "totalPages": 1,
-I/flutter (23101): │     "hasNext": false,
-I/flutter (23101): │     "hasPrev": false
-I/flutter (23101): │   },
-I/flutter (23101): │   "data": [
-I/flutter (23101): │     {
-I/flutter (23101): │       "id": "6a9540480f773eaed31b9591",
-I/flutter (23101): │       "groupId": "6a953f750f773eaed31b94f9",
-I/flutter (23101): │       "userId": {
-I/flutter (23101): │         "id": "6a94f2102f39fe90ee967bf4",
-I/flutter (23101): │         "name": "Bayzid",
-I/flutter (23101): │         "profileImage": "/default-avatar.svg"
-I/flutter (23101): │       },
-I/flutter (23101): │       "content": "hiiii",
-I/flutter (23101): │       "attachments": [],
-I/flutter (23101): │       "likesCount": 1,
-I/flutter (23101): │       "commentsCount": 0,
-I/flutter (23101): │       "isPinned": false,
-I/flutter (23101): │       "createdAt": "2026-08-31T08:50:16.072Z",
-I/flutter (23101): │       "updatedAt": "2026-08-31T09:01:08.016Z",
-I/flutter (23101): │       "isLiked": true
-I/flutter (23101): │     }
-I/flutter (23101): │   ]
-I/flutter (23101): │ }
-I/flutter (23101): └ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
-I/flutter (23101):
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at C:\Users\mdbay\StudioProjects\muslim-community\android/gradle/wrapper/gradle-wrapper.properties.
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.11.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (C:\Users\mdbay\StudioProjects\muslim-community\android/settings.gradle), by a plugin with the id of com.android.application.
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (C:\Users\mdbay\StudioProjects\muslim-community\android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Warning: Flutter support for your project's Kotlin version (2.2.20) will soon be dropped. Please upgrade your Kotlin version to a version of at least 2.3.20 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's KGP version is typically defined in the plugins block of the `settings.gradle` file (C:\Users\mdbay\StudioProjects\muslim-community\android/settings.gradle), by a plugin with the id of org.jetbrains.kotlin.android.
+If you don't see a plugins block, your project was likely created with an older template version, in which case it is most likely defined in the top-level build.gradle file (C:\Users\mdbay\StudioProjects\muslim-community\android/build.gradle) by the ext.kotlin_version property.
+
+Warning: SDK processing. This version only understands SDK XML versions up to 3 but an SDK XML file of version 4 was encountered. This can happen if you use versions of Android Studio and the command-line tools that were released at different times.
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+I/FlutterActivityAndFragmentDelegate( 3221): If you are attempting to set --start-paused via Intent extras to launch a Flutter component outside of using the Flutter CLI, note that support for setting engine flags on Android via Intent will soon be dropped; see https://github.com/flutter/flutter/issues/180686 for more information on this breaking change. To migrate, set --start-paused or any other flags specified via Intent extras on the command line instead or see https://github.com/flutter/flutter/blob/main/docs/engine/Flutter-Android-Engine-Flags.md for alternative methods.
+D/FlutterJNI( 3221): Beginning load of flutter...
+D/FlutterJNI( 3221): flutter (null) was loaded normally!
+I/flutter ( 3221): [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+D/FlutterGeolocator( 3221): Attaching Geolocator to activity
+D/FlutterRenderer( 3221): Width is zero. 0,0
+D/FlutterRenderer( 3221): Width is zero. 0,0
+D/FlutterJNI( 3221): Sending viewport metrics to the engine.
+D/FlutterGeolocator( 3221): Creating service.
+D/FlutterGeolocator( 3221): Binding to location service.
+I/Choreographer( 3221): Skipped 34 frames!  The application may be doing too much work on its main thread.
+D/FlutterGeolocator( 3221): Geolocator foreground service connected
+D/FlutterGeolocator( 3221): Initializing Geolocator services
+D/FlutterGeolocator( 3221): Flutter engine connected. Connected engine count 1
+D/WindowLayoutComponentImpl( 3221): Register WindowLayoutInfoListener on Context=com.syamuslim.app.MainActivity@713dc99, of which baseContext=android.app.ContextImpl@2aa2f6a
+D/FlutterJNI( 3221): Sending viewport metrics to the engine.
+Connecting to VM Service at ws://127.0.0.1:62999/78O7uwtjbgA=/ws
+Connected to the VM Service.
+I/FLTFireBGExecutor( 3221): Creating background FlutterEngine instance, with args: [--start-paused, --enable-dart-profiling]
+W/libc    ( 3221): Access denied finding property "vendor.mesa.virtgpu.kumquat"
+D/FLTFireContextHolder( 3221): received application context.
+I/flutter ( 3221): [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+W/libc    ( 3221): Access denied finding property "vendor.mesa.virtgpu.kumquat"
+[GETX] Instance "StorageService" has been created
+[GETX] Instance "StorageService" has been initialized
+[GETX] Instance "ApiClient" has been created
+[GETX] Instance "ApiClient" has been initialized
+[GETX] Instance "AuthService" has been created
+[GETX] Instance "AuthService" has been initialized
+[GETX] Instance "SocketService" has been created
+[GETX] Instance "SocketService" has been initialized
+[GETX] Instance "NotificationService" has been created
+[GETX] Instance "NotificationService" has been initialized
+[GETX] Instance "AzanService" has been created
+[GETX] Instance "AzanService" has been initialized
+[GETX] Instance "InternetController" has been created
+[GETX] Instance "InternetController" has been initialized
+[GETX] Instance "GetMaterialController" has been created
+[GETX] Instance "GetMaterialController" has been initialized
+[GETX] GOING TO ROUTE /splash
+[GETX] Instance "SplashController" has been created
+[GETX] Instance "SplashController" has been initialized
+I/Choreographer( 3221): Skipped 71 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 3221): 🔍 DEBUG: Attempting to connect to socket at: https://nayem5002.binarybards.online
+D/FlutterGeolocator( 3221): Geolocator foreground service connected
+D/FlutterGeolocator( 3221): Initializing Geolocator services
+D/FlutterGeolocator( 3221): Flutter engine connected. Connected engine count 2
+I/FLTFireMsgService( 3221): FlutterFirebaseMessagingBackgroundService started!
+I/flutter ( 3221): ℹ️ INFO: Notification permission status: AuthorizationStatus.authorized
+D/InsetsController( 3221): hide(ime())
+I/ImeTracker( 3221): com.syamuslim.app:3a23130f: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+I/flutter ( 3221): ℹ️ INFO: FCM Token: c1mpWGHFRjecZdAQq01Ip6:APA91bHw2db97si67-zTHxd6pCukH2UuLd9IUuepHjSx69DTNs1vUhnBWU4dESTjrgUjUpyFVDJpsZgRu_f1lIYagzHxEQkMnfIPLju28pTjXbmKeQzFp9s
+I/flutter ( 3221): 🔍 DEBUG: Socket connected with id: 34imu3oe-qyRb4PqAAAB
+D/ProfileInstaller( 3221): Installing profile for com.syamuslim.app
+I/flutter ( 3221): 🔍 DEBUG: Socket disconnected
+I/flutter ( 3221): 🔍 DEBUG: Attempting to connect to socket at: https://nayem5002.binarybards.online
+[GETX] GOING TO ROUTE /maleNavbar
+[GETX] REMOVING ROUTE /splash
+[GETX] Instance "NavigationController" has been created
+[GETX] Instance "NavigationController" has been initialized
+[GETX] Instance "HomeController" has been created
+[GETX] Instance "UserRepository" has been created
+I/m.syamuslim.app( 3221): Background concurrent mark compact GC freed 3367KB AllocSpace bytes, 13(416KB) LOS objects, 49% free, 3540KB/7080KB, paused 288us,12.395ms total 35.518ms
+[GETX] Instance "HomeController" has been initialized
+[GETX] Instance "PrayerTimeController" has been created
+[GETX] Instance "PrayerRepository" has been created
+[GETX] Instance "PrayerTimeController" has been initialized
+[GETX] Instance "QiblaController" has been created
+[GETX] Instance "QiblaController" has been initialized
+I/flutter ( 3221):
+I/flutter ( 3221): ┌ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
+I/flutter ( 3221): │ GET https://nayem5002.binarybards.online/api/v1/users/me
+I/flutter ( 3221): │ Headers: {Content-Type: application/json, Authorization: Bearer ***}
+I/flutter ( 3221): └ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
+I/flutter ( 3221):
+[GETX] "SplashController" onDelete() called
+[GETX] "SplashController" deleted from memory
+I/flutter ( 3221): 🔍 DEBUG: Socket connected with id: Q-vCvTkqqFWVRl7UAAAD
+I/flutter ( 3221): 🔍 DEBUG: Socket connected with id: Q-vCvTkqqFWVRl7UAAAD
+I/flutter ( 3221):
+I/flutter ( 3221): ┌ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
+I/flutter ( 3221): │ [ GET 200 ] https://nayem5002.binarybards.online/api/v1/users/me
+I/flutter ( 3221): │ Data:
+I/flutter ( 3221): │ {
+I/flutter ( 3221): │   "success": true,
+I/flutter ( 3221): │   "statusCode": 200,
+I/flutter ( 3221): │   "message": "Profile data retrieved successfully",
+I/flutter ( 3221): │   "data": {
+I/flutter ( 3221): │     "id": "6a94f2102f39fe90ee967bf4",
+I/flutter ( 3221): │     "name": "Bayzid",
+I/flutter ( 3221): │     "role": "BROTHER",
+I/flutter ( 3221): │     "email": "mdbayazid131@gmail.com",
+I/flutter ( 3221): │     "revertDate": "2013-08-30T18:00:00.000Z",
+I/flutter ( 3221): │     "dateOfBirth": "2004-09-03T18:00:00.000Z",
+I/flutter ( 3221): │     "profileImage": "https://nayem5002.binarybards.online/uploads/users/profiles/1788169435714-iziaan.jpg",
+I/flutter ( 3221): │     "verificationImage": "https://nayem5002.binarybards.online/uploads/users/verifications/1788146192646-dfdw4h.jpg",
+I/flutter ( 3221): │     "interests": [],
+I/flutter ( 3221): │     "status": "ACTIVE",
+I/flutter ( 3221): │     "isVerified": true,
+I/flutter ( 3221): │     "subscriptionTier": "FREE",
+I/flutter ( 3221): │     "subscriptionStatus": "NONE",
+I/flutter ( 3221): │     "createdAt": "2026-08-31T03:16:32.837Z",
+I/flutter ( 3221): │     "updatedAt": "2026-08-31T09:43:55.981Z",
+I/flutter ( 3221): │     "_v": 0,
+I/flutter ( 3221): │     "aboutMe": "",
+I/flutter ( 3221): │     "revertStory": "",
+I/flutter ( 3221): │     "latitude": 0,
+I/flutter ( 3221): │     "longitude": 0
+I/flutter ( 3221): │   }
+I/flutter ( 3221): │ }
+I/flutter ( 3221): └ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
+I/flutter ( 3221):
+E/FlutterGeolocator( 3221): Geolocator position updates started
+I/flutter ( 3221): 🔍 DEBUG: Socket disconnected
+I/flutter ( 3221): 🔍 DEBUG: Socket disconnected
+E/flutter ( 3221): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: WebSocketConnectionClosed: Connection Closed
+E/flutter ( 3221): #0      IOWebSocket.close (package:web_socket/src/io_web_socket.dart:105:7)
+E/flutter ( 3221): #1      WebSocketTransport.doClose (package:socket_io_client/src/engine/transport/websocket_transport.dart:132:10)
+E/flutter ( 3221): #2      Transport.close (package:socket_io_client/src/engine/transport.dart:53:7)
+E/flutter ( 3221): #3      Socket.onClose (package:socket_io_client/src/engine/socket.dart:645:18)
+E/flutter ( 3221): #4      Socket.close.close (package:socket_io_client/src/engine/socket.dart:575:7)
+E/flutter ( 3221): #5      Socket.close (package:socket_io_client/src/engine/socket.dart:610:9)
+E/flutter ( 3221): #6      Manager.disconnect (package:socket_io_client/src/manager.dart:398:13)
+E/flutter ( 3221): #7      Manager.close (package:socket_io_client/src/manager.dart:391:19)
+E/flutter ( 3221): #8      Manager.destroy (package:socket_io_client/src/manager.dart:350:5)
+E/flutter ( 3221): #9      Socket.destroy (package:socket_io_client/src/socket.dart:583:8)
+E/flutter ( 3221): #10     Socket.ondisconnect (package:socket_io_client/src/socket.dart:561:5)
+E/flutter ( 3221): #11     Socket.onpacket (package:socket_io_client/src/socket.dart:423:9)
+E/flutter ( 3221): #12     EventEmitter._emit.<anonymous closure> (package:socket_io_common/src/util/event_emitter.dart:44:14)
+E/flutter ( 3221): #13     List.forEach (dart:core-patch/growable_array.dart:428:8)
+E/flutter ( 3221): #14     EventEmitter._emit (package:socket_io_common/src/util/event_emitter.dart:43:11)
+E/flutter ( 3221): #15     EventEmitter.emitReserved (package:socket_io_common/src/util/event_emitter.dart:57:47)
+E/flutter ( 3221): #16     Manager.ondecoded.<anonymous closure> (package:socket_io_client/src/manager.dart:300:7)
+E/flutter ( 3221): #17     new Future.microtask.<anonymous closure> (dart:async/future.dart:287:40)
+E/flutter ( 3221): #18     _microtaskLoop (dart:async/schedule_microtask.dart:40:35)
+E/flutter ( 3221): #19     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
+E/flutter ( 3221):
+
+
+
+
+Restarted application in 1,656ms.
+I/FLTFireMsgService( 3221): FlutterFirebaseMessagingBackgroundService started!
+W/FLTFireMsgService( 3221): Attempted to start a duplicate background isolate. Returning...
+[GETX] Instance "StorageService" has been created
+[GETX] Instance "StorageService" has been initialized
+[GETX] Instance "ApiClient" has been created
+[GETX] Instance "ApiClient" has been initialized
+[GETX] Instance "AuthService" has been created
+[GETX] Instance "AuthService" has been initialized
+[GETX] Instance "SocketService" has been created
+[GETX] Instance "SocketService" has been initialized
+[GETX] Instance "NotificationService" has been created
+[GETX] Instance "NotificationService" has been initialized
+[GETX] Instance "AzanService" has been created
+[GETX] Instance "AzanService" has been initialized
+[GETX] Instance "InternetController" has been created
+[GETX] Instance "InternetController" has been initialized
+[GETX] Instance "GetMaterialController" has been created
+[GETX] Instance "GetMaterialController" has been initialized
+[GETX] GOING TO ROUTE /splash
+[GETX] Instance "SplashController" has been created
+[GETX] Instance "SplashController" has been initialized
+I/flutter ( 3221): 🔍 DEBUG: Attempting to connect to socket at: https://nayem5002.binarybards.online
+I/flutter ( 3221): ℹ️ INFO: Notification permission status: AuthorizationStatus.authorized
+I/flutter ( 3221): ℹ️ INFO: FCM Token: c1mpWGHFRjecZdAQq01Ip6:APA91bHw2db97si67-zTHxd6pCukH2UuLd9IUuepHjSx69DTNs1vUhnBWU4dESTjrgUjUpyFVDJpsZgRu_f1lIYagzHxEQkMnfIPLju28pTjXbmKeQzFp9s
+I/flutter ( 3221): 🔍 DEBUG: Socket connected with id: BGTHhAg8FgMvROG1AAAN
+I/flutter ( 3221): 🔍 DEBUG: Socket disconnected: io server disconnect
+I/flutter ( 3221): 🔍 DEBUG: Attempting to connect to socket at: https://nayem5002.binarybards.online
+[GETX] GOING TO ROUTE /maleNavbar
+[GETX] REMOVING ROUTE /splash
+[GETX] Instance "NavigationController" has been created
+[GETX] Instance "NavigationController" has been initialized
+[GETX] Instance "HomeController" has been created
+[GETX] Instance "UserRepository" has been created
+[GETX] Instance "HomeController" has been initialized
+[GETX] Instance "PrayerTimeController" has been created
+[GETX] Instance "PrayerRepository" has been created
+[GETX] Instance "PrayerTimeController" has been initialized
+[GETX] Instance "QiblaController" has been created
+[GETX] Instance "QiblaController" has been initialized
+I/flutter ( 3221):
+I/flutter ( 3221): ┌ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
+I/flutter ( 3221): │ GET https://nayem5002.binarybards.online/api/v1/users/me
+I/flutter ( 3221): │ Headers: {Content-Type: application/json, Authorization: Bearer ***}
+I/flutter ( 3221): └ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
+I/flutter ( 3221):
+E/FlutterGeolocator( 3221): Geolocator position updates stopped
+E/FlutterGeolocator( 3221): There is still another flutter engine connected, not stopping location service
+E/FlutterGeolocator( 3221): Geolocator position updates started
+[GETX] "SplashController" onDelete() called
+[GETX] "SplashController" deleted from memory
+I/flutter ( 3221): 🔍 DEBUG: Socket connected with id: yP1WbW_J-gTWgWViAAAP
+I/flutter ( 3221): 🔍 DEBUG: Socket disconnected: io server disconnect
+I/flutter ( 3221): Global Async Error: WebSocketConnectionClosed: Connection Closed

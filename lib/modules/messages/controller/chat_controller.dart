@@ -50,6 +50,14 @@ class ChatController extends GetxController {
     isOtherUserOnline.value = initialOnline;
     final socket = Get.find<SocketService>();
 
+    // Clear any previous listeners
+    socket.off('MESSAGE_SENT');
+    socket.off('NEW_MESSAGE');
+    socket.off('USER_ONLINE');
+    socket.off('USER_OFFLINE');
+    socket.off('user_online');
+    socket.off('user_offline');
+
     void joinRoom() {
       socket.emit('JOIN_CHAT', {'chatId': chatId});
       socket.emit('join', {'chatId': chatId});
@@ -269,6 +277,15 @@ class ChatController extends GetxController {
 
   @override
   void onClose() {
+    if (Get.isRegistered<SocketService>()) {
+      final socket = Get.find<SocketService>();
+      socket.off('MESSAGE_SENT');
+      socket.off('NEW_MESSAGE');
+      socket.off('USER_ONLINE');
+      socket.off('USER_OFFLINE');
+      socket.off('user_online');
+      socket.off('user_offline');
+    }
     messageController.dispose();
     scrollController.dispose();
     super.onClose();
