@@ -39,14 +39,16 @@ class QiblaController extends GetxController {
   }
 
   void initCompass() {
+    _compassSub?.cancel();
     _compassSub = FlutterCompass.events?.listen((CompassEvent event) {
-      if (event.heading == null) {
+      final headingVal = event.heading ?? event.headingForCameraMode;
+      if (headingVal == null) {
         isSensorAvailable.value = false;
         return;
       }
 
       isSensorAvailable.value = true;
-      double rawHeading = event.heading!;
+      double rawHeading = headingVal;
       if (rawHeading < 0) rawHeading += 360;
 
       if (!_hasInitialHeading) {
@@ -61,8 +63,8 @@ class QiblaController extends GetxController {
           diff -= 360;
         }
 
-        if (diff.abs() > 0.2) {
-          _smoothedHeading = (_smoothedHeading + diff * 0.25) % 360;
+        if (diff.abs() > 0.1) {
+          _smoothedHeading = (_smoothedHeading + diff * 0.4) % 360;
           if (_smoothedHeading < 0) _smoothedHeading += 360;
         }
       }
@@ -74,14 +76,16 @@ class QiblaController extends GetxController {
       if (accuracy != null) {
         bool isLowAccuracy = false;
         if (Platform.isAndroid) {
-          if (accuracy == 0 || accuracy == 1) isLowAccuracy = true;
+          // 0 = SENSOR_STATUS_UNRELIABLE. 1, 2, 3 are acceptable accuracy levels
+          if (accuracy == 0) isLowAccuracy = true;
         } else {
-          if (accuracy < 0 || accuracy > 30) isLowAccuracy = true;
+          // iOS: negative value means uncalibrated/unreliable
+          if (accuracy < 0) isLowAccuracy = true;
         }
 
         if (isLowAccuracy) {
           _lowAccuracyCount++;
-          if (_lowAccuracyCount > 5) {
+          if (_lowAccuracyCount > 25) {
             accuracyStatus.value =
                 "Low Accuracy: Move phone in 8-shape to calibrate";
           }
@@ -89,6 +93,9 @@ class QiblaController extends GetxController {
           _lowAccuracyCount = 0;
           accuracyStatus.value = "";
         }
+      } else {
+        _lowAccuracyCount = 0;
+        accuracyStatus.value = "";
       }
     });
   }
@@ -138,6 +145,9 @@ class QiblaController extends GetxController {
         isLoading(false);
         return;
       }
+
+      // Re-init compass after permission is granted
+      initCompass();
 
       Position? lastPosition = await Geolocator.getLastKnownPosition();
       if (lastPosition != null) {

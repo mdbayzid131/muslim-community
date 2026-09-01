@@ -23,46 +23,53 @@ class QiblaCompassWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final turnsDial = dialRotation != null
-        ? dialRotation!.value
-        : (dialAngleTurns ?? 0.0);
+    Widget buildStack() {
+      final turnsDial = dialRotation != null
+          ? dialRotation!.value
+          : (dialAngleTurns ?? 0.0);
 
-    final turnsNeedle = needleRotation != null
-        ? needleRotation!.value
-        : ((qiblaBearingDeg ?? 0.0) / 360.0);
+      final turnsNeedle = needleRotation != null
+          ? needleRotation!.value
+          : ((qiblaBearingDeg ?? 0.0) / 360.0);
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        // 1. Dynamic Outer Compass Face
-        AnimatedRotation(
-          turns: turnsDial,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOutCubic,
-          child: SizedBox(
-            width: 250,
-            height: 250,
-            child: CustomPaint(
-              painter: CompassDialPainter(primaryColor: primaryColor),
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          // 1. Dynamic Outer Compass Face
+          AnimatedRotation(
+            turns: turnsDial,
+            duration: const Duration(milliseconds: 250),
+            curve: Curves.easeOutCubic,
+            child: SizedBox(
+              width: 250,
+              height: 250,
+              child: CustomPaint(
+                painter: CompassDialPainter(primaryColor: primaryColor),
+              ),
             ),
           ),
-        ),
 
-        // 2. The Dynamic Qibla Pointer
-        AnimatedRotation(
-          turns: turnsNeedle,
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeOutCubic,
-          child: SizedBox(
-            width: 200,
-            height: 200,
-            child: CustomPaint(
-              painter: CompassNeedlePainter(color: primaryColor),
+          // 2. The Dynamic Qibla Pointer
+          AnimatedRotation(
+            turns: turnsNeedle,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeOutCubic,
+            child: SizedBox(
+              width: 200,
+              height: 200,
+              child: CustomPaint(
+                painter: CompassNeedlePainter(color: primaryColor),
+              ),
             ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    }
+
+    if (dialRotation != null || needleRotation != null) {
+      return Obx(() => buildStack());
+    }
+    return buildStack();
   }
 }
 
