@@ -82,46 +82,96 @@ class ChatMessageModel {
     String currentUserId, {
     String? otherParticipantId,
   }) {
-    String sId = (json['senderId'] ??
-            json['userId'] ??
-            json['creatorId'] ??
-            json['from'] ??
-            json['sender_id'] ??
-            '')
-        .toString();
-    String sName = (json['senderName'] ?? json['userName'] ?? '').toString();
-
-    final senderData =
-        json['sender'] ?? json['creator'] ?? json['user'] ?? json['author'];
-
-    if (senderData is Map) {
-      final idValue =
-          senderData['id'] ?? senderData['_id'] ?? senderData['userId'];
-      if (idValue != null) sId = idValue.toString();
-
-      final nameValue = senderData['name'] ??
-          senderData['fullName'] ??
-          senderData['userName'];
-      if (nameValue != null) sName = nameValue.toString();
-    } else if (senderData is String && senderData.isNotEmpty) {
-      sId = senderData;
+    bool? isMeFlag;
+    if (json['isMe'] is bool) {
+      isMeFlag = json['isMe'];
+    } else if (json['is_me'] is bool) {
+      isMeFlag = json['is_me'];
+    } else if (json['isMine'] is bool) {
+      isMeFlag = json['isMine'];
+    } else if (json['is_mine'] is bool) {
+      isMeFlag = json['is_mine'];
+    } else if (json['isSender'] is bool) {
+      isMeFlag = json['isSender'];
+    } else if (json['is_sender'] is bool) {
+      isMeFlag = json['is_sender'];
     }
 
-    sId = sId.trim();
-    if (sId == 'null' || sId.isEmpty) sId = '';
+    String extractId(dynamic val) {
+      if (val == null) return '';
+      if (val is Map) {
+        final id = val['_id'] ??
+            val['id'] ??
+            val['userId'] ??
+            val['senderId'] ??
+            val['user_id'] ??
+            val['sender_id'];
+        return id?.toString() ?? '';
+      }
+      return val.toString();
+    }
+
+    String extractName(dynamic val) {
+      if (val == null) return '';
+      if (val is Map) {
+        final name = val['name'] ??
+            val['fullName'] ??
+            val['userName'] ??
+            val['displayName'];
+        return name?.toString() ?? '';
+      }
+      return val.toString();
+    }
+
+    final senderCandidate = json['sender'] ??
+        json['creator'] ??
+        json['user'] ??
+        json['author'] ??
+        json['from'] ??
+        json['senderId'] ??
+        json['sender_id'] ??
+        json['userId'] ??
+        json['user_id'];
+
+    String sId = extractId(senderCandidate).trim();
+    if (sId == 'null') sId = '';
+
+    String sName = '';
+    if (senderCandidate is Map) {
+      sName = extractName(senderCandidate).trim();
+    } else {
+      sName = (json['senderName'] ?? json['userName'] ?? json['name'] ?? '')
+          .toString()
+          .trim();
+    }
     if (sName.isEmpty || sName == 'null') sName = 'User';
 
     bool isMe = false;
-    if (sId.isNotEmpty && currentUserId.isNotEmpty) {
+    if (isMeFlag != null) {
+      isMe = isMeFlag;
+    } else if (sId.isNotEmpty && currentUserId.trim().isNotEmpty) {
       isMe = sId.toLowerCase() == currentUserId.trim().toLowerCase();
-    } else if (otherParticipantId != null && otherParticipantId.isNotEmpty) {
-      if (sId.isNotEmpty) {
-        isMe = sId.toLowerCase() != otherParticipantId.trim().toLowerCase();
-      } else {
+    } else if (sId.isNotEmpty &&
+        otherParticipantId != null &&
+        otherParticipantId.trim().isNotEmpty) {
+      isMe = sId.toLowerCase() != otherParticipantId.trim().toLowerCase();
+    } else {
+      // Smart Fallback when 'sender' field is omitted from backend JSON:
+      final List readByList = (json['readBy'] is List) ? json['readBy'] : [];
+      final String curId = currentUserId.trim().toLowerCase();
+      final String othId = (otherParticipantId ?? '').trim().toLowerCase();
+
+      if (othId.isNotEmpty &&
+          readByList.any((e) => e.toString().trim().toLowerCase() == othId)) {
+        // Recipient read this message -> Sent by ME!
         isMe = true;
+      } else if (curId.isNotEmpty &&
+          readByList.any((e) => e.toString().trim().toLowerCase() == curId)) {
+        // I read this message -> Sent by OTHER participant!
+        isMe = false;
+      } else {
+        isMe = false;
       }
-    } else if (sId.isEmpty) {
-      isMe = true;
     }
 
     MessageStatus msgStatus = MessageStatus.sent;

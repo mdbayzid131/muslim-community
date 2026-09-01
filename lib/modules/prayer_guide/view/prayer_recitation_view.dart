@@ -253,7 +253,6 @@ class _PrayerRecitationViewState extends State<PrayerRecitationView> {
               ],
             ),
           ),
-          const Divider(height: 1),
 
           // Salat Position Image
           if (imagePath != null) ...[
@@ -287,7 +286,6 @@ class _PrayerRecitationViewState extends State<PrayerRecitationView> {
                 ),
               ),
             ),
-            const Divider(height: 1),
           ],
 
           if (step.isPlaceholder == true &&

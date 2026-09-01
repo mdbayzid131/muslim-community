@@ -1,0 +1,179 @@
+Searched for "socket"
+Viewed message.service.ts:1-100
+Viewed message.service.ts:101-200
+Viewed socketManager.ts:1-38
+Viewed socketHelper.ts:1-100
+Viewed socketHelper.ts:101-250
+Viewed socketHelper.ts:251-400
+Viewed server.ts:1-100
+Viewed server.ts:101-175
+Viewed server.ts:176-260
+Viewed corsLogger.ts:1-60
+Viewed app.ts:1-60
+Viewed app.ts:61-110
+Viewed FLUTTER_REALTIME_MESSAGE_GUIDE.md:1-42
+Viewed message.route.ts:1-60
+Viewed message.route.ts:61-91
+Viewed message.controller.ts:1-60
+Ran command: `npx vitest run src/app/modules/message/ src/helpers/__tests__/socketManager.spec.ts`
+Used tool: manage_task
+Viewed index.ts:1-60
+Viewed index.ts:61-100
+Viewed index.ts:100-110
+Searched for "/message"
+Searched for "socket.on("
+Searched for "socket\.on\s*\("
+Searched for "socket"
+Viewed socketHelper.ts:115-140
+Ran command: `Get-ChildItem -Path "c:\Users\Khaled\Khaled Dask" -Recurse -Filter "*.dart" -ErrorAction SilentlyContinue | Select-String -Pattern "MESSAGE_SENT" | Select-Object -First 10`
+Used tool: manage_task
+Used tool: manage_task
+Viewed message.e2e.spec.ts:350-430
+Ran command: `node -e "
+const http = require('http');
+
+const req = http.get('http://localhost:5002/', res => {
+  console.log('Server is running on 5002! Status:', res.statusCode);
+});
+req.on('error', err => {
+  console.log('Not running on 5002:', err.message);
+});
+"`
+Used tool: manage_task
+Ran command: `node -e "
+try {
+  const io = require('socket.io-client');
+  console.log('socket.io-client is installed!');
+} catch(e) {
+  console.log('socket.io-client NOT installed:', e.message);
+}
+"`
+Viewed package.json:1-60
+Viewed package.json:61-120
+Ran command: `npm i -D socket.io-client`
+Used tool: manage_task
+Viewed task-665.log
+Used tool: manage_task
+Viewed socketManager.spec.ts:1-60
+Viewed socketManager.spec.ts:61-150
+Viewed presenceHelper.ts:1-60
+Ran command: `node -e "
+const { redisClient } = require('./dist/shared/redisClient.js');
+
+async function testRedis() {
+  try {
+    const pong = await redisClient.ping();
+    console.log('Redis ping response:', pong);
+    process.exit(0);
+  } catch(e) {
+    console.log('Redis error:', e.message);
+    process.exit(1);
+  }
+}
+testRedis();
+"`
+Viewed redisClient.ts:1-28
+Ran command: `Get-ChildItem -Path "c:\Users\Khaled\Khaled Dask\app\joeysass25-app" -Recurse -Filter "*socket*" -ErrorAction SilentlyContinue | Select-Object FullName`
+Ran command: `Get-ChildItem "c:\Users\Khaled\Khaled Dask\Frontend"`
+Ran command: `Get-ChildItem "C:\Users\Khaled" -Directory -Filter "*app*" -ErrorAction SilentlyContinue | Select-Object FullName`
+Viewed message.model.ts:1-60
+Viewed message.model.ts:61-95
+Searched for "virtuals: true"
+Searched for "transform"
+Viewed sendResponse.ts:1-60
+Ran command: `node -e "
+const mongoose = require('mongoose');
+
+const schema = new mongoose.Schema({
+  chatId: { type: mongoose.Schema.Types.ObjectId },
+  text: String
+}, { timestamps: true });
+
+const Model = mongoose.model('TestMsg', schema);
+const doc = new Model({ chatId: new mongoose.Types.ObjectId(), text: 'hello' });
+
+console.log('JSON.stringify:', JSON.stringify(doc));
+console.log('doc.toJSON():', doc.toJSON());
+console.log('Has id?', 'id' in doc.toJSON(), 'Has _id?', '_id' in doc.toJSON());
+"`
+Viewed message.service.ts:220-270
+Viewed message.service.ts:271-330
+Viewed message.service.ts:331-365
+Viewed jwtHelper.ts:1-60
+Viewed jwtHelper.ts:61-125
+Viewed message.service.spec.ts:60-120
+Viewed message.service.spec.ts:121-230
+Edited message.service.ts
+Viewed socketHelper.ts:70-95
+Edited socketHelper.ts
+Viewed index.ts:85-108
+Edited index.ts
+Viewed corsLogger.ts:1-40
+Edited corsLogger.ts
+Ran command: `npx vitest run src/app/modules/message/`
+Used tool: manage_task
+Ran command: `npx vitest run src/tests/namaz src/helpers/__tests__/socketManager.spec.ts`
+Used tool: manage_task
+
+হ্যাঁ, মেসেজ সেন্ড করার সময় সকেটের সম্পূর্ণ ওয়ার্কফ্লো পুঙ্খানুপুঙ্খভাবে চেক করা হয়েছে। মেসেজ সেভ হওয়ার পর ব্যাকএন্ড সফলভাবে **Socket.IO**-র মাধ্যমে রিয়েলটাইম ইভেন্ট ব্রডকাস্ট করে।
+
+আমরা আর্কিটেকচারটি টেস্ট করেছি এবং মোবাইল/ফ্রন্টএন্ডে রিয়েলটাইম মেসেজ পাওয়ার জন্য কিছু প্রয়োজনীয় বিষয় ফিক্স করেছি:
+
+---
+
+### 🔄 ১. মেসেজ সেন্ডের সময় সকেট কীভাবে কাজ করে? (Flow Architecture)
+
+1. **মেসেজ সেন্ড (HTTP API):** 
+   - ইউজার মেসেজ পাঠায়: `POST /api/v1/messages` (আমরা `/api/v1/message` সিঙ্গুলার পাথও অ্যালিয়াস করে দিয়েছি যাতে ভুল URL-এ 404 না আসে)।
+2. **ডাটাবেজে সেভ ও পপুলেশন:**
+   - মেসেজটি MongoDB-তে সেভ হয় এবং সেন্ডারের তথ্য (`_id, name, profilePicture`) পপুলেট হয়।
+3. **সকেট ইমিশন (`MESSAGE_SENT`):**
+   - ব্যাকএন্ড সরাসরি `SocketManager.getIO().to('chat::' + chatId).emit('MESSAGE_SENT', { message: formattedMessage })` রুমে ব্রডকাস্ট করে।
+   - যারা ওই চ্যাট রুমে রয়েছে, তারা তৎক্ষণাৎ সকেটের মাধ্যমে সম্পূর্ণ মেসেজ অবজেক্ট পেয়ে যায়।
+
+---
+
+### ⚠️ ২. মোবাইল/ফ্রন্টএন্ডে কাজ করার জন্য যা নিশ্চিত করতে হবে:
+
+আপনার অ্যাপে সকেট মেসেজ ঠিকমতো রিসিভ করার জন্য নিচের ৩টি বিষয় অবশ্যই ঠিক থাকতে হবে:
+
+#### ক) চ্যাট রুমে জয়েন করা (`JOIN_CHAT` emit করা):
+মোবাইল অ্যাপে যখন ব্যবহারকারী চ্যাট স্ক্রিন ওপেন করবে, তখন সকেটে অবশ্যই `JOIN_CHAT` পাঠাতে হবে:
+```dart
+// Flutter / Client Side:
+socket.emit('JOIN_CHAT', {'chatId': currentChatId});
+```
+> **নোট:** যদি অ্যাপ চ্যাট স্ক্রিনে ঢোকার পর `JOIN_CHAT` emit না করে, তবে সকেট সার্ভার ওই ইউজারকে `chat::${chatId}` রুমে যুক্ত করতে পারে না। ফলে মেসেজ সেন্ড হলেও ওই ক্লায়েন্ট ইভেন্ট পাবে না।
+
+#### খ) সঠিক ইভেন্ট নাম শোনা (`MESSAGE_SENT`):
+ফ্রন্টএন্ডকে `MESSAGE_SENT` ইভেন্টটি লিসেন করতে হবে:
+```dart
+socket.on('MESSAGE_SENT', (data) {
+  final message = data['message'];
+  print('New message received: ${message['text']}');
+  // চ্যাট লিস্টে মেসেজ যোগ করুন
+});
+```
+
+---
+
+### 🛠️ ৩. আমরা যে ফিক্স ও ইমপ্রুভমেন্টগুলো করেছি:
+
+1. **`id` এবং `_id` অবজেক্ট ফরম্যাটিং:**
+   - পূর্বে সকেটে র' মঙ্গুজ ডকুমেন্ট পাঠানো হচ্ছিল, ফলে ক্লায়েন্ট শুধু `_id` পেত কিন্তু `id` পেত না। Flutter মডেল সাধারণত `message['id']` খোঁজে।
+   - **ফিক্স:** এখন সকেট পেলোডে `id` এবং `_id` উভয়টিই স্ট্রিং আকারে পাঠানো হচ্ছে।
+2. **Bearer Token স্যানিটাইজেশন:**
+   - মোবাইল অ্যাপ থেকে যদি `auth: {'token': 'Bearer eyJ...'}` পাঠানো হতো, তবে JWT ভেরিফিকেশন ফেইল করে সকেট ডিসকানেক্ট হয়ে যেত।
+   - **ফিক্স:** এখন `Bearer ` প্রিফিক্স থাকলেও সার্ভার স্বয়ংক্রিয়ভাবে ট্রিম করে অথেনটিকেশন সফল করে।
+3. **রাউট সিঙ্গুলার অ্যালিয়াস:**
+   - `/api/v1/messages` এর পাশাপাশি `/api/v1/message` রাউট যোগ করা হয়েছে।
+4. **CORS হোয়াইটলিস্ট:**
+   - সকেট CORS-এ `https://nayem5002.binarybards.online` ডোমেইন যুক্ত করা হয়েছে।
+
+---
+
+### ✅ টেস্ট ফলাফল:
+সবগুলো মেসেজ ও সকেট টেস্ট চালানো হয়েছে:
+- `Message E2E Tests > Real-time Full Interaction: Typing -> Send -> Read`: **PASSED**
+- `Message E2E Tests > Real-time Socket Logic (Client -> Server Events)`: **PASSED**
+- মোট **২৪/২৪ টি মেসেজ টেস্ট** এবং **৪৮/৪৮ টি কমপ্লিট টেস্ট সফলভাবে পাস** করেছে।

@@ -11,6 +11,9 @@ class SocketService extends GetxService {
   bool _isConnecting = false;
   Completer<void>? _connectionCompleter;
 
+  // Registered event handlers mapped by event name
+  final Map<String, List<Function(dynamic)>> _listenersMap = {};
+
   bool get isConnected => _socket != null && _socket!.connected;
   io.Socket? get socket => _socket;
 
@@ -29,7 +32,7 @@ class SocketService extends GetxService {
     try {
       final token = await StorageService.getString(StorageConstants.bearerToken);
       if (token.isEmpty) {
-        Helpers.debug('Socket connect skipped: Bearer token is empty');
+        Helpers.debug('🔌 [SOCKET] Connect skipped: Bearer token is empty');
         _isConnecting = false;
         return;
       }
@@ -38,87 +41,40 @@ class SocketService extends GetxService {
       final cleanToken = token.startsWith('Bearer ') ? token.substring(7) : token;
       final bearerToken = 'Bearer $cleanToken';
 
-      Helpers.debug('Attempting to connect to socket at: $serverUrl');
+      if (_socket == null) {
+        Helpers.debug('🔌 [SOCKET CONNECTING] Creating socket connection to: $serverUrl');
 
-      // Dispose any prior disconnected socket instance
-      if (_socket != null) {
-        try {
-          _socket!.clearListeners();
-          _socket!.disconnect();
-          _socket!.dispose();
-        } catch (_) {}
-        _socket = null;
+        _socket = io.io(
+          serverUrl,
+          io.OptionBuilder()
+              .setTransports(['websocket'])
+              .setAuth({
+                'token': cleanToken,
+                'accessToken': cleanToken,
+                'authorization': bearerToken,
+                'Authorization': bearerToken,
+              })
+              .setQuery({
+                'token': cleanToken,
+              })
+              .setExtraHeaders({
+                'Authorization': bearerToken,
+                'authorization': bearerToken,
+                'token': cleanToken,
+              })
+              .disableAutoConnect()
+              .enableReconnection()
+              .setReconnectionAttempts(10)
+              .setReconnectionDelay(3000)
+              .build(),
+        );
+
+        _setupSocketInternalListeners();
       }
 
-      _socket = io.io(
-        serverUrl,
-        io.OptionBuilder()
-            .setTransports(['websocket'])
-            .setAuth({
-              'token': cleanToken,
-              'accessToken': cleanToken,
-              'authorization': bearerToken,
-              'Authorization': bearerToken,
-            })
-            .setQuery({
-              'token': cleanToken,
-            })
-            .setExtraHeaders({
-              'Authorization': bearerToken,
-              'authorization': bearerToken,
-              'token': cleanToken,
-            })
-            .disableAutoConnect()
-            .enableReconnection()
-            .setReconnectionAttempts(3)
-            .setReconnectionDelay(5000)
-            .build(),
-      );
-
-      final storedUserId = await StorageService.getString(StorageConstants.userId);
-
-      _socket!.onConnect((_) {
-        Helpers.debug('Socket connected with id: ${_socket?.id}');
-        _isConnecting = false;
-
-        // Automatically register user presence on socket
-        if (storedUserId.isNotEmpty) {
-          try {
-            _socket?.emit('setup', storedUserId);
-            _socket?.emit('addUser', storedUserId);
-            _socket?.emit('join_user', storedUserId);
-            _socket?.emit('user_connected', storedUserId);
-          } catch (_) {}
-        }
-
-        if (_connectionCompleter != null && !_connectionCompleter!.isCompleted) {
-          _connectionCompleter!.complete();
-        }
-      });
-
-      _socket!.onDisconnect((reason) {
-        Helpers.debug('Socket disconnected: $reason');
-        _isConnecting = false;
-        if (reason == 'io server disconnect') {
-          // Server rejected / closed connection. Don't spam immediate reconnect.
-          _socket?.disconnect();
-        }
-      });
-
-      _socket!.onConnectError((data) {
-        Helpers.debug('Socket Connect Error: $data');
-        _isConnecting = false;
-        if (_connectionCompleter != null && !_connectionCompleter!.isCompleted) {
-          _connectionCompleter!.completeError(data);
-        }
-      });
-
-      _socket!.onError((data) {
-        Helpers.debug('Socket Error: $data');
-        _isConnecting = false;
-      });
-
-      _socket!.connect();
+      if (!_socket!.connected) {
+        _socket!.connect();
+      }
 
       return await _connectionCompleter!.future;
     } catch (e) {
@@ -126,20 +82,76 @@ class SocketService extends GetxService {
       if (_connectionCompleter != null && !_connectionCompleter!.isCompleted) {
         _connectionCompleter!.completeError(e);
       }
-      Helpers.error('Socket initialization error: $e');
+      Helpers.error('❌ [SOCKET INIT ERROR] $e');
     }
+  }
+
+  void _setupSocketInternalListeners() {
+    if (_socket == null) return;
+
+    _socket!.onConnect((_) async {
+      Helpers.debug('✅ [SOCKET CONNECTED] Connected successfully! Socket ID: ${_socket?.id}');
+      _isConnecting = false;
+
+      final storedUserId = await StorageService.getString(StorageConstants.userId);
+      if (storedUserId.isNotEmpty) {
+        try {
+          Helpers.debug('📤 [SOCKET EMIT] Setup user presence for: $storedUserId');
+          _socket?.emit('setup', storedUserId);
+          _socket?.emit('addUser', storedUserId);
+          _socket?.emit('join_user', storedUserId);
+          _socket?.emit('user_connected', storedUserId);
+        } catch (_) {}
+      }
+
+      // Re-attach all listeners that were registered
+      _reattachListeners();
+
+      if (_connectionCompleter != null && !_connectionCompleter!.isCompleted) {
+        _connectionCompleter!.complete();
+      }
+    });
+
+    _socket!.onDisconnect((reason) {
+      Helpers.debug('❌ [SOCKET DISCONNECTED] Reason: $reason');
+      _isConnecting = false;
+    });
+
+    _socket!.onConnectError((data) {
+      Helpers.debug('⚠️ [SOCKET CONNECT ERROR] Error: $data');
+      _isConnecting = false;
+      if (_connectionCompleter != null && !_connectionCompleter!.isCompleted) {
+        _connectionCompleter!.completeError(data);
+      }
+    });
+
+    _socket!.onError((data) {
+      Helpers.debug('⚠️ [SOCKET ERROR] Error: $data');
+      _isConnecting = false;
+    });
+  }
+
+  void _reattachListeners() {
+    if (_socket == null) return;
+    _listenersMap.forEach((event, handlers) {
+      _socket!.off(event);
+      for (var handler in handlers) {
+        _socket!.on(event, (data) {
+          Helpers.debug('📥 [SOCKET RECEIVED] Event: "$event" | Payload: $data');
+          handler(data);
+        });
+      }
+    });
   }
 
   void disconnect() {
     if (_socket != null) {
       try {
-        _socket!.clearListeners();
+        Helpers.debug('🔌 [SOCKET DISCONNECTING] Disconnecting socket...');
         _socket!.disconnect();
-        _socket!.dispose();
       } catch (e) {
         Helpers.debug('Error disconnecting socket: $e');
       }
-      _socket = null;
       _isConnecting = false;
     }
   }
@@ -147,37 +159,43 @@ class SocketService extends GetxService {
   void emit(String event, dynamic data) {
     if (isConnected) {
       try {
+        Helpers.debug('📤 [SOCKET EMIT] Event: "$event" | Payload: $data');
         _socket?.emit(event, data);
       } catch (e) {
-        Helpers.debug('Error emitting event "$event": $e');
+        Helpers.debug('❌ [SOCKET EMIT ERROR] Event "$event": $e');
       }
     } else {
-      Helpers.debug('Cannot emit event "$event". Socket not connected.');
+      Helpers.debug('⚠️ [SOCKET EMIT PENDING] Socket not connected. Connecting & emitting "$event"...');
+      connect().then((_) {
+        try {
+          Helpers.debug('📤 [SOCKET EMIT RETRY] Event: "$event" | Payload: $data');
+          _socket?.emit(event, data);
+        } catch (_) {}
+      });
     }
   }
 
   void on(String event, Function(dynamic) handler) {
-    try {
-      _socket?.on(event, handler);
-    } catch (e) {
-      Helpers.debug('Error listening to event "$event": $e');
+    _listenersMap.putIfAbsent(event, () => []).add(handler);
+    Helpers.debug('👂 [SOCKET LISTEN] Subscribed to event: "$event"');
+
+    if (_socket != null) {
+      _socket!.on(event, (data) {
+        Helpers.debug('📥 [SOCKET RECEIVED] Event: "$event" | Payload: $data');
+        handler(data);
+      });
     }
   }
 
   void off(String event) {
-    try {
-      _socket?.off(event);
-    } catch (e) {
-      Helpers.debug('Error removing listener for event "$event": $e');
-    }
+    _listenersMap.remove(event);
+    _socket?.off(event);
+    Helpers.debug('🔇 [SOCKET UNLISTEN] Unsubscribed event: "$event"');
   }
 
   void clearListeners() {
-    try {
-      _socket?.clearListeners();
-    } catch (e) {
-      Helpers.debug('Error clearing listeners: $e');
-    }
+    _listenersMap.clear();
+    _socket?.clearListeners();
   }
 
   @override

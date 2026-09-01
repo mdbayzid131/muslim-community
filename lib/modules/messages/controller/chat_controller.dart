@@ -55,13 +55,11 @@ class ChatController extends GetxController {
 
     void joinRoom() {
       try {
+        // Primary: most common Socket.io chat room formats
         socket.emit('JOIN_CHAT', {'chatId': chatId});
-        socket.emit('join', {'chatId': chatId});
-        socket.emit('join_chat', chatId);
-        socket.emit('join-chat', chatId);
-        socket.emit('joinRoom', chatId);
         socket.emit('join_room', chatId);
-        socket.emit('join_room', {'chatId': chatId, 'roomId': chatId});
+        socket.emit('join_chat', chatId);
+        socket.emit('joinRoom', chatId);
       } catch (e) {
         Helpers.debug('Error joining room: $e');
       }
@@ -80,6 +78,7 @@ class ChatController extends GetxController {
     void handleIncomingMessage(dynamic data) {
       if (data == null) return;
       try {
+        Helpers.debug('💬 [CHAT RECEIVED] Raw socket data: $data');
         dynamic msgData = data;
         if (data is Map) {
           if (data['data'] is Map) {
@@ -95,6 +94,9 @@ class ChatController extends GetxController {
           currentUserId,
           otherParticipantId: otherParticipantId,
         );
+
+        Helpers.debug(
+            '💬 [CHAT PARSED] Message Parsed: id=${newMsg.id}, text="${newMsg.text}", isMe=${newMsg.isMe}, senderId=${newMsg.senderId}');
 
         final idx = messages.indexWhere((m) =>
             m.id == newMsg.id ||

@@ -3,7 +3,7 @@ class ApiConstants {
 
   // Google Places API Key
   static const String googlePlacesApiKey =
-      "AIzaSyD031Mt4uIQ6pwbiP6dIMsH111vvLPG1MM";
+      "AIzaSyC7S3exASnh1QKC7pPo0-Xr_fUKknHp35o";
 
   // Base URLs
   static const String baseUrl = "https://nayem5002.binarybards.online/api/v1";

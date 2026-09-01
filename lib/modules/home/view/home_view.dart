@@ -434,16 +434,28 @@ class HomeView extends GetView<HomeController> {
                         color: roleColor,
                       ),
                     ),
+                  ] else ...[
+                    SizedBox(height: 2.h),
+                    Text(
+                      "Prohibited",
+                      style: GoogleFonts.inter(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFFD97706),
+                      ),
+                    ),
                   ],
                   const Spacer(),
                   Container(
                     padding: EdgeInsets.all(4.w),
-                    decoration: const BoxDecoration(
-                      color: AppColors.goldColor,
+                    decoration: BoxDecoration(
+                      color: roleColor,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
-                      Icons.play_arrow,
+                      name == "Sunrise"
+                          ? Icons.info_outline_rounded
+                          : Icons.play_arrow,
                       color: Colors.white,
                       size: 12.sp,
                     ),

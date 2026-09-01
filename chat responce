@@ -1,137 +1,17 @@
-Restarted application in 958ms.
-[GETX] Instance "StorageService" has been created
-[GETX] Instance "StorageService" has been initialized
-[GETX] Instance "ApiClient" has been created
-[GETX] Instance "ApiClient" has been initialized
-[GETX] Instance "AuthService" has been created
-[GETX] Instance "AuthService" has been initialized
-[GETX] Instance "SocketService" has been created
-[GETX] Instance "SocketService" has been initialized
-[GETX] Instance "NotificationService" has been created
-[GETX] Instance "NotificationService" has been initialized
-[GETX] Instance "AzanService" has been created
-[GETX] Instance "AzanService" has been initialized
-[GETX] Instance "InternetController" has been created
-[GETX] Instance "InternetController" has been initialized
-[GETX] Instance "GetMaterialController" has been created
-[GETX] Instance "GetMaterialController" has been initialized
-[GETX] GOING TO ROUTE /splash
-[GETX] Instance "SplashController" has been created
-[GETX] Instance "SplashController" has been initialized
-flutter: 🔍 DEBUG: 🔌 [SOCKET CONNECTING] Attempting connection to: https://nayem5002.binarybards.online
-flutter: ℹ️ INFO: Notification permission status: AuthorizationStatus.authorized
-flutter: 🔍 DEBUG: ✅ [SOCKET CONNECTED] Connected successfully! Socket ID: JnCQX9RbS-RR4Ra8AAAZ
-flutter: ℹ️ INFO: FCM Token: dpi3vK9pnU74jItGTt1iFz:APA91bFZIGgJ0qgvlLreFfSBU617Z0Q8myRa_7HtbyGKz-5toyQ2FZgip_sPhPLjv67ekc9H7ukMNAHwJg7yAWrV5HudIqJ6KqRd3GiYEfSULy66h7ucMho
-flutter: 🔍 DEBUG: ❌ [SOCKET DISCONNECTED] Reason: io server disconnect
-flutter: 🔍 DEBUG: 🔌 [SOCKET CONNECTING] Attempting connection to: https://nayem5002.binarybards.online
-[GETX] GOING TO ROUTE /maleNavbar
-[GETX] REMOVING ROUTE /splash
-[GETX] Instance "NavigationController" has been created
-[GETX] Instance "NavigationController" has been initialized
-[GETX] Instance "HomeController" has been created
-[GETX] Instance "UserRepository" has been created
-[GETX] Instance "HomeController" has been initialized
-[GETX] Instance "PrayerTimeController" has been created
-[GETX] Instance "PrayerRepository" has been created
-[GETX] Instance "PrayerTimeController" has been initialized
-[GETX] Instance "QiblaController" has been created
-[GETX] Instance "QiblaController" has been initialized
-flutter:
-flutter: ┌ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
-flutter: │ GET https://nayem5002.binarybards.online/api/v1/users/me
-flutter: │ Headers: {Content-Type: application/json, Authorization: Bearer ***}
-flutter: └ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
-flutter:
-flutter: 🔍 DEBUG: ✅ [SOCKET CONNECTED] Connected successfully! Socket ID: ywtEVbKDOUr0MQ55AAAb
-[GETX] "SplashController" onDelete() called
-[GETX] "SplashController" deleted from memory
-flutter:
-flutter: ┌ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
-flutter: │ [ GET 200 ] https://nayem5002.binarybards.online/api/v1/users/me
-flutter: │ Data:
-flutter: │ {
-flutter: │   "success": true,
-flutter: │   "statusCode": 200,
-flutter: │   "message": "Profile data retrieved successfully",
-flutter: │   "data": {
-flutter: │     "id": "6a94f2102f39fe90ee967bf4",
-flutter: │     "name": "Bayzid",
-flutter: │     "role": "BROTHER",
-flutter: │     "email": "mdbayazid131@gmail.com",
-flutter: │     "revertDate": "2013-08-30T18:00:00.000Z",
-flutter: │     "dateOfBirth": "2004-09-03T18:00:00.000Z",
-flutter: │     "profileImage": "https://nayem5002.binarybards.online/uploads/users/profiles/1788169435714-iziaan.jpg",
-flutter: │     "verificationImage": "https://nayem5002.binarybards.online/uploads/users/verifications/1788146192646-dfdw4h.jpg",
-flutter: │     "interests": [],
-flutter: │     "status": "ACTIVE",
-flutter: │     "isVerified": true,
-flutter: │     "subscriptionTier": "FREE",
-flutter: │     "subscriptionStatus": "NONE",
-flutter: │     "createdAt": "2026-08-31T03:16:32.837Z",
-flutter: │     "updatedAt": "2026-09-01T11:06:24.408Z",
-flutter: │     "_v": 0,
-flutter: │     "aboutMe": "",
-flutter: │     "revertStory": "",
-flutter: │     "country": "United States",
-flutter: │     "city": "San Francisco",
-flutter: │     "latitude": 37.785834,
-flutter: │     "longitude": -122.406417
-flutter: │   }
-flutter: │ }
-flutter: └ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
-flutter:
-flutter: 🔍 DEBUG: ❌ [SOCKET DISCONNECTED] Reason: io server disconnect
-flutter: Global Async Error: WebSocketConnectionClosed: Connection Closed
-[GETX] Instance "MessagesController" has been created
-[GETX] Instance "ChatRepository" has been created
-[GETX] Instance "MessagesController" has been initialized
-flutter: 🔍 DEBUG: 👂 [SOCKET LISTEN] Subscribed to event: "NEW_MESSAGE"
-flutter: 🔍 DEBUG: 👂 [SOCKET LISTEN] Subscribed to event: "new_message"
-flutter: 🔍 DEBUG: 👂 [SOCKET LISTEN] Subscribed to event: "MESSAGE_SENT"
-flutter: 🔍 DEBUG: 👂 [SOCKET LISTEN] Subscribed to event: "message_sent"
-flutter: 🔍 DEBUG: 👂 [SOCKET LISTEN] Subscribed to event: "receive_message"
-flutter:
-flutter: ┌ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
-flutter: │ GET https://nayem5002.binarybards.online/api/v1/chats
-flutter: │ Headers: {Content-Type: application/json, Authorization: Bearer ***}
-flutter: └ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
-flutter:
-flutter:
-flutter: ┌ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
-flutter: │ [ GET 200 ] https://nayem5002.binarybards.online/api/v1/chats
-flutter: │ Data:
-flutter: │ {
-flutter: │   "success": true,
-flutter: │   "statusCode": 200,
-flutter: │   "message": "Chat list retrieved successfully",
-flutter: │   "data": [
-flutter: │     {
-flutter: │       "id": "6a95434e0f773eaed31b976e",
-flutter: │       "participants": [
-flutter: │         {
-flutter: │           "id": "6a94f3a10d61932cdb3466ae",
-flutter: │           "name": "Pronoy",
-flutter: │           "role": "BROTHER",
-flutter: │           "profileImage": "/default-avatar.svg"
-flutter: │         }
-flutter: │       ],
-flutter: │       "lastMessage": {
-flutter: │         "text": "cash",
-flutter: │         "sender": "6a94f3a10d61932cdb3466ae",
-flutter: │         "createdAt": "2026-09-01T12:22:58.361Z"
-flutter: │       },
-flutter: │       "createdAt": "2026-08-31T09:03:10.182Z",
-flutter: │       "updatedAt": "2026-09-01T12:22:58.370Z",
-flutter: │       "_v": 0,
-flutter: │       "unreadCount": 0
-flutter: │     }
-flutter: │   ]
-flutter: │ }
-flutter: └ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
-flutter:
 [GETX] GOING TO ROUTE /chat
 [GETX] Instance "ChatController" has been created
 [GETX] Instance "ChatController" has been initialized
+flutter: 🔍 DEBUG: 🔇 [SOCKET UNLISTEN] Unsubscribed event: "MESSAGE_SENT"
+flutter: 🔍 DEBUG: 🔇 [SOCKET UNLISTEN] Unsubscribed event: "message_sent"
+flutter: 🔍 DEBUG: 🔇 [SOCKET UNLISTEN] Unsubscribed event: "NEW_MESSAGE"
+flutter: 🔍 DEBUG: 🔇 [SOCKET UNLISTEN] Unsubscribed event: "new_message"
+flutter: 🔍 DEBUG: 🔇 [SOCKET UNLISTEN] Unsubscribed event: "new-message"
+flutter: 🔍 DEBUG: 🔇 [SOCKET UNLISTEN] Unsubscribed event: "message"
+flutter: 🔍 DEBUG: 🔇 [SOCKET UNLISTEN] Unsubscribed event: "receive_message"
+flutter: 🔍 DEBUG: 🔇 [SOCKET UNLISTEN] Unsubscribed event: "USER_ONLINE"
+flutter: 🔍 DEBUG: 🔇 [SOCKET UNLISTEN] Unsubscribed event: "user_online"
+flutter: 🔍 DEBUG: 🔇 [SOCKET UNLISTEN] Unsubscribed event: "USER_OFFLINE"
+flutter: 🔍 DEBUG: 🔇 [SOCKET UNLISTEN] Unsubscribed event: "user_offline"
 flutter: 🔍 DEBUG: 👂 [SOCKET LISTEN] Subscribed to event: "MESSAGE_SENT"
 flutter: 🔍 DEBUG: 👂 [SOCKET LISTEN] Subscribed to event: "message_sent"
 flutter: 🔍 DEBUG: 👂 [SOCKET LISTEN] Subscribed to event: "NEW_MESSAGE"
@@ -143,7 +23,6 @@ flutter: 🔍 DEBUG: 👂 [SOCKET LISTEN] Subscribed to event: "USER_ONLINE"
 flutter: 🔍 DEBUG: 👂 [SOCKET LISTEN] Subscribed to event: "user_online"
 flutter: 🔍 DEBUG: 👂 [SOCKET LISTEN] Subscribed to event: "USER_OFFLINE"
 flutter: 🔍 DEBUG: 👂 [SOCKET LISTEN] Subscribed to event: "user_offline"
-flutter: 🔍 DEBUG: 🔌 [SOCKET CONNECTING] Attempting connection to: https://nayem5002.binarybards.online
 flutter:
 flutter: ┌ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
 flutter: │ GET https://nayem5002.binarybards.online/api/v1/messages/chat/6a95434e0f773eaed31b976e?page=1&limit=50
@@ -160,7 +39,7 @@ flutter: │   "success": true,
 flutter: │   "statusCode": 200,
 flutter: │   "message": "Chat messages retrieved successfully",
 flutter: │   "meta": {
-flutter: │     "total": 25,
+flutter: │     "total": 42,
 flutter: │     "limit": 50,
 flutter: │     "hasNextPage": false,
 flutter: │     "nextCursor": null
@@ -171,7 +50,8 @@ flutter: │       "id": "6a9543d70f773eaed31b97f8",
 flutter: │       "chatId": "6a95434e0f773eaed31b976e",
 flutter: │       "sender": {
 flutter: │         "id": "6a94f2102f39fe90ee967bf4",
-flutter: │         "name": "Bayzid"
+flutter: │         "name": "Bayzid",
+flutter: │         "profileImage": "https://nayem5002.binarybards.online/uploads/users/profiles/1788169435714-iziaan.jpg"
 flutter: │       },
 flutter: │       "text": "hii",
 flutter: │       "type": "text",
@@ -188,7 +68,8 @@ flutter: │       "id": "6a9543e40f773eaed31b981a",
 flutter: │       "chatId": "6a95434e0f773eaed31b976e",
 flutter: │       "sender": {
 flutter: │         "id": "6a94f3a10d61932cdb3466ae",
-flutter: │         "name": "Pronoy"
+flutter: │         "name": "Pronoy",
+flutter: │         "profileImage": "/default-avatar.svg"
 flutter: │       },
 flutter: │       "text": "hello",
 flutter: │       "type": "text",
@@ -458,57 +339,203 @@ flutter: │       "readBy": [],
 flutter: │       "createdAt": "2026-09-01T12:22:58.361Z",
 flutter: │       "updatedAt": "2026-09-01T12:22:58.361Z",
 flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96c3ddbabca6f67f90d5b0",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "hiii",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T12:23:57.207Z",
+flutter: │       "updatedAt": "2026-09-01T12:23:57.207Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96c47fbabca6f67f90d5e4",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "stuck",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T12:26:39.721Z",
+flutter: │       "updatedAt": "2026-09-01T12:26:39.721Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96c495babca6f67f90d5f8",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "father",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T12:27:01.469Z",
+flutter: │       "updatedAt": "2026-09-01T12:27:01.469Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96c515babca6f67f90d614",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "send bayzid",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T12:29:09.855Z",
+flutter: │       "updatedAt": "2026-09-01T12:29:09.855Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96c5d6babca6f67f90d64c",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "hiii",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T12:32:22.297Z",
+flutter: │       "updatedAt": "2026-09-01T12:32:22.297Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96c5dbbabca6f67f90d656",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "tuition",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T12:32:27.090Z",
+flutter: │       "updatedAt": "2026-09-01T12:32:27.090Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96d11a4d26cb49500c0103",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "hiii",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T13:20:26.696Z",
+flutter: │       "updatedAt": "2026-09-01T13:20:26.696Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96d3b7f6be05c6cb7e74b1",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "hello",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T13:31:35.035Z",
+flutter: │       "updatedAt": "2026-09-01T13:31:35.035Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96d3c3f6be05c6cb7e74c5",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "yess",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T13:31:47.451Z",
+flutter: │       "updatedAt": "2026-09-01T13:31:47.451Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96d3def6be05c6cb7e74d9",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "yogurt",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T13:32:14.097Z",
+flutter: │       "updatedAt": "2026-09-01T13:32:14.097Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96d41d35c419bab9c1e906",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "hello",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T13:33:17.369Z",
+flutter: │       "updatedAt": "2026-09-01T13:33:17.369Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96d42135c419bab9c1e910",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "cheery",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T13:33:21.700Z",
+flutter: │       "updatedAt": "2026-09-01T13:33:21.700Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96d42635c419bab9c1e91a",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "set",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T13:33:26.328Z",
+flutter: │       "updatedAt": "2026-09-01T13:33:26.328Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96d6c235c419bab9c1e9a8",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "hello",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T13:44:34.829Z",
+flutter: │       "updatedAt": "2026-09-01T13:44:34.829Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96d6e535c419bab9c1e9c2",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "my message",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T13:45:09.441Z",
+flutter: │       "updatedAt": "2026-09-01T13:45:09.441Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96d747b54031272e115e5a",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "cfghjyrsu",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T13:46:47.516Z",
+flutter: │       "updatedAt": "2026-09-01T13:46:47.516Z",
+flutter: │       "_v": 0
+flutter: │     },
+flutter: │     {
+flutter: │       "id": "6a96d74bb54031272e115e64",
+flutter: │       "chatId": "6a95434e0f773eaed31b976e",
+flutter: │       "text": "ethyl",
+flutter: │       "type": "text",
+flutter: │       "attachments": [],
+flutter: │       "readBy": [],
+flutter: │       "createdAt": "2026-09-01T13:46:51.531Z",
+flutter: │       "updatedAt": "2026-09-01T13:46:51.531Z",
+flutter: │       "_v": 0
 flutter: │     }
 flutter: │   ]
 flutter: │ }
 flutter: └ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
 flutter:
-flutter: 🔍 DEBUG: ✅ [SOCKET CONNECTED] Connected successfully! Socket ID: J648ruVCynOofJX2AAAd
+flutter: 🔍 DEBUG: ✅ [SOCKET CONNECTED] Connected successfully! Socket ID: iTKAxH8UuRrvIRyqAAAH
+flutter: 🔍 DEBUG: 📤 [SOCKET EMIT] Setup user presence for: 6a94f2102f39fe90ee967bf4
 flutter: 🔍 DEBUG: 📤 [SOCKET EMIT] Event: "JOIN_CHAT" | Payload: {chatId: 6a95434e0f773eaed31b976e}
-flutter: 🔍 DEBUG: 📤 [SOCKET EMIT] Event: "JOIN_CHAT" | Payload: 6a95434e0f773eaed31b976e
-flutter: 🔍 DEBUG: 📤 [SOCKET EMIT] Event: "join" | Payload: {chatId: 6a95434e0f773eaed31b976e}
-flutter: 🔍 DEBUG: 📤 [SOCKET EMIT] Event: "join_chat" | Payload: 6a95434e0f773eaed31b976e
-flutter: 🔍 DEBUG: 📤 [SOCKET EMIT] Event: "join-chat" | Payload: 6a95434e0f773eaed31b976e
-flutter: 🔍 DEBUG: 📤 [SOCKET EMIT] Event: "joinRoom" | Payload: 6a95434e0f773eaed31b976e
 flutter: 🔍 DEBUG: 📤 [SOCKET EMIT] Event: "join_room" | Payload: 6a95434e0f773eaed31b976e
-flutter: 🔍 DEBUG: 📤 [SOCKET EMIT] Event: "join_room" | Payload: chat::6a95434e0f773eaed31b976e
-flutter: 🔍 DEBUG: 📤 [SOCKET EMIT] Event: "join_room" | Payload: {chatId: 6a95434e0f773eaed31b976e, roomId: 6a95434e0f773eaed31b976e}
+flutter: 🔍 DEBUG: 📤 [SOCKET EMIT] Event: "join_chat" | Payload: 6a95434e0f773eaed31b976e
+flutter: 🔍 DEBUG: 📤 [SOCKET EMIT] Event: "joinRoom" | Payload: 6a95434e0f773eaed31b976e
 flutter: 🔍 DEBUG: ❌ [SOCKET DISCONNECTED] Reason: io server disconnect
-flutter:
-flutter: ┌ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
-flutter: │ POST https://nayem5002.binarybards.online/api/v1/messages
-flutter: │ Headers: {Content-Type: application/json, Authorization: Bearer ***}
-flutter: │ Body:
-flutter: │ {
-flutter: │   "chatId": "6a95434e0f773eaed31b976e",
-flutter: │   "text": "hiii",
-flutter: │   "content": "hiii"
-flutter: │ }
-flutter: └ ➡️➡️➡️➡️ REQUEST ════════════════════════════════════════════════════════
-flutter:
-flutter:
-flutter: ┌ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
-flutter: │ [ POST 201 ] https://nayem5002.binarybards.online/api/v1/messages
-flutter: │ Data:
-flutter: │ {
-flutter: │   "success": true,
-flutter: │   "statusCode": 201,
-flutter: │   "message": "Message sent successfully",
-flutter: │   "data": {
-flutter: │     "chatId": "6a95434e0f773eaed31b976e",
-flutter: │     "sender": {
-flutter: │       "id": "6a94f2102f39fe90ee967bf4",
-flutter: │       "name": "Bayzid"
-flutter: │     },
-flutter: │     "text": "hiii",
-flutter: │     "type": "text",
-flutter: │     "attachments": [],
-flutter: │     "readBy": [],
-flutter: │     "id": "6a96c3ddbabca6f67f90d5b0",
-flutter: │     "createdAt": "2026-09-01T12:23:57.207Z",
-flutter: │     "updatedAt": "2026-09-01T12:23:57.207Z",
-flutter: │     "_v": 0
-flutter: │   }
-flutter: │ }
-flutter: └ ✅✅✅✅ RESPONSE ════════════════════════════════════════════════════════
-flutter:
+flutter: Global Async Error: WebSocketConnectionClosed: Connection Closed

@@ -26,7 +26,11 @@ class AuthService extends GetxService {
     final token = await StorageService.getString(StorageConstants.bearerToken);
     if (token.isNotEmpty) {
       _isLoggedIn.value = true;
-      _userId.value = getUserIdFromToken(token) ?? '';
+      final storedId = await StorageService.getString(StorageConstants.userId);
+      final tokenUserId = getUserIdFromToken(token);
+      _userId.value = (tokenUserId != null && tokenUserId.isNotEmpty)
+          ? tokenUserId
+          : storedId;
       _userRole.value = await getRole();
       currentUser.value = UserModel(
         id: _userId.value,
