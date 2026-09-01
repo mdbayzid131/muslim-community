@@ -79,8 +79,9 @@ class MosquesView extends StatelessWidget {
                     SizedBox(width: 10.w),
                     Expanded(
                       child: TextField(
+                        onChanged: controller.searchMosques,
                         decoration: InputDecoration(
-                          hintText: 'Search nearby mosques...',
+                          hintText: 'Search nearby mosques or city...',
                           hintStyle: GoogleFonts.inter(
                             fontSize: 13.sp,
                             color: AppColors.bodyColor.withValues(alpha: 0.5),

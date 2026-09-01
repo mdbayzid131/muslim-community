@@ -75,9 +75,22 @@ class SocketService extends GetxService {
             .build(),
       );
 
+      final storedUserId = await StorageService.getString(StorageConstants.userId);
+
       _socket!.onConnect((_) {
         Helpers.debug('Socket connected with id: ${_socket?.id}');
         _isConnecting = false;
+
+        // Automatically register user presence on socket
+        if (storedUserId.isNotEmpty) {
+          try {
+            _socket?.emit('setup', storedUserId);
+            _socket?.emit('addUser', storedUserId);
+            _socket?.emit('join_user', storedUserId);
+            _socket?.emit('user_connected', storedUserId);
+          } catch (_) {}
+        }
+
         if (_connectionCompleter != null && !_connectionCompleter!.isCompleted) {
           _connectionCompleter!.complete();
         }

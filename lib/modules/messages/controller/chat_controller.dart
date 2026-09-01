@@ -51,17 +51,20 @@ class ChatController extends GetxController {
     final socket = Get.find<SocketService>();
 
     // Clear any previous listeners
-    socket.off('MESSAGE_SENT');
-    socket.off('NEW_MESSAGE');
-    socket.off('USER_ONLINE');
-    socket.off('USER_OFFLINE');
-    socket.off('user_online');
-    socket.off('user_offline');
+    _cleanupSocketListeners(socket);
 
     void joinRoom() {
-      socket.emit('JOIN_CHAT', {'chatId': chatId});
-      socket.emit('join', {'chatId': chatId});
-      socket.emit('join_chat', chatId);
+      try {
+        socket.emit('JOIN_CHAT', {'chatId': chatId});
+        socket.emit('join', {'chatId': chatId});
+        socket.emit('join_chat', chatId);
+        socket.emit('join-chat', chatId);
+        socket.emit('joinRoom', chatId);
+        socket.emit('join_room', chatId);
+        socket.emit('join_room', {'chatId': chatId, 'roomId': chatId});
+      } catch (e) {
+        Helpers.debug('Error joining room: $e');
+      }
     }
 
     if (!socket.isConnected) {
@@ -74,11 +77,21 @@ class ChatController extends GetxController {
       joinRoom();
     }
 
-    socket.on('MESSAGE_SENT', (data) {
-      if (data != null) {
+    void handleIncomingMessage(dynamic data) {
+      if (data == null) return;
+      try {
+        dynamic msgData = data;
+        if (data is Map) {
+          if (data['data'] is Map) {
+            msgData = data['data'];
+          } else if (data['message'] is Map) {
+            msgData = data['message'];
+          }
+        }
+
         final currentUserId = Get.find<AuthService>().userId;
         final newMsg = ChatMessageModel.fromJson(
-          data,
+          Map<String, dynamic>.from(msgData is Map ? msgData : {}),
           currentUserId,
           otherParticipantId: otherParticipantId,
         );
@@ -91,44 +104,44 @@ class ChatController extends GetxController {
           messages[idx] = newMsg;
           messages.refresh();
         } else {
-          final msgChatId = (data['chatId'] ?? data['chatid'] ?? '').toString();
+          final msgChatId = (msgData['chatId'] ?? msgData['chatid'] ?? msgData['conversationId'] ?? '').toString();
           if (msgChatId.isEmpty || msgChatId == currentChatId) {
             messages.insert(0, newMsg);
           }
         }
+      } catch (e) {
+        Helpers.debug('Error handling incoming socket message: $e');
       }
-    });
+    }
 
-    socket.on('NEW_MESSAGE', (data) {
-      if (data != null) {
-        final currentUserId = Get.find<AuthService>().userId;
-        final newMsg = ChatMessageModel.fromJson(
-          data,
-          currentUserId,
-          otherParticipantId: otherParticipantId,
-        );
-        final idx = messages.indexWhere((m) => m.id == newMsg.id);
-        if (idx == -1) {
-          messages.insert(0, newMsg);
-        }
-      }
-    });
+    // Register all standard real-time message events
+    socket.on('MESSAGE_SENT', handleIncomingMessage);
+    socket.on('message_sent', handleIncomingMessage);
+    socket.on('NEW_MESSAGE', handleIncomingMessage);
+    socket.on('new_message', handleIncomingMessage);
+    socket.on('new-message', handleIncomingMessage);
+    socket.on('message', handleIncomingMessage);
+    socket.on('receive_message', handleIncomingMessage);
 
-    socket.on('USER_ONLINE', (data) {
-      isOtherUserOnline.value = true;
-    });
+    // Online / Offline Status
+    socket.on('USER_ONLINE', (data) => isOtherUserOnline.value = true);
+    socket.on('user_online', (data) => isOtherUserOnline.value = true);
+    socket.on('USER_OFFLINE', (data) => isOtherUserOnline.value = false);
+    socket.on('user_offline', (data) => isOtherUserOnline.value = false);
+  }
 
-    socket.on('USER_OFFLINE', (data) {
-      isOtherUserOnline.value = false;
-    });
-
-    socket.on('user_online', (data) {
-      isOtherUserOnline.value = true;
-    });
-
-    socket.on('user_offline', (data) {
-      isOtherUserOnline.value = false;
-    });
+  void _cleanupSocketListeners(SocketService socket) {
+    socket.off('MESSAGE_SENT');
+    socket.off('message_sent');
+    socket.off('NEW_MESSAGE');
+    socket.off('new_message');
+    socket.off('new-message');
+    socket.off('message');
+    socket.off('receive_message');
+    socket.off('USER_ONLINE');
+    socket.off('user_online');
+    socket.off('USER_OFFLINE');
+    socket.off('user_offline');
   }
 
   Future<void> fetchMessages(String chatId, {String? participantId}) async {
@@ -278,13 +291,7 @@ class ChatController extends GetxController {
   @override
   void onClose() {
     if (Get.isRegistered<SocketService>()) {
-      final socket = Get.find<SocketService>();
-      socket.off('MESSAGE_SENT');
-      socket.off('NEW_MESSAGE');
-      socket.off('USER_ONLINE');
-      socket.off('USER_OFFLINE');
-      socket.off('user_online');
-      socket.off('user_offline');
+      _cleanupSocketListeners(Get.find<SocketService>());
     }
     messageController.dispose();
     scrollController.dispose();

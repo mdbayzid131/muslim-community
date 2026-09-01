@@ -18,37 +18,60 @@ class MessagesView extends GetView<MessagesController> {
         backgroundColor: AppColors.backgroundColor,
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 18.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10.h),
+                SizedBox(height: 12.h),
 
                 // --- TITLE ---
-                Text(
-                  'Messages',
-                  style: GoogleFonts.playfairDisplay(
-                    fontSize: 32.sp,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.titleColor,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Messages',
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 28.sp,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.titleColor,
+                      ),
+                    ),
+                    Obx(() {
+                      final unreadTotal = controller.conversations
+                          .fold<int>(0, (sum, item) => sum + item.unreadCount);
+                      if (unreadTotal > 0) {
+                        return Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.w, vertical: 4.h),
+                          decoration: BoxDecoration(
+                            color: roleColor.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(20.r),
+                            border: Border.all(
+                              color: roleColor.withValues(alpha: 0.3),
+                              width: 1,
+                            ),
+                          ),
+                          child: Text(
+                            '$unreadTotal new',
+                            style: GoogleFonts.inter(
+                              color: roleColor,
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    }),
+                  ],
                 ),
 
-                SizedBox(height: 20.h),
+                SizedBox(height: 16.h),
 
                 // --- SEARCH BAR ---
                 _buildSearchBar(roleColor),
 
-                SizedBox(height: 20.h),
-
-                // --- DIVIDER ---
-                Divider(
-                  color: AppColors.goldColor.withValues(alpha: 0.15),
-                  thickness: 1,
-                  height: 1,
-                ),
-
-                SizedBox(height: 20.h),
+                SizedBox(height: 16.h),
 
                 // --- MESSAGES LIST ---
                 Expanded(
@@ -74,14 +97,45 @@ class MessagesView extends GetView<MessagesController> {
                         return ListView(
                           physics: const AlwaysScrollableScrollPhysics(),
                           children: [
-                            SizedBox(height: 100.h),
+                            SizedBox(height: 80.h),
                             Center(
-                              child: Text(
-                                controller.searchQuery.value.isEmpty
-                                    ? 'No chats found'
-                                    : 'No matches found',
-                                style: GoogleFonts.inter(
-                                    color: AppColors.bodyColor),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(18.w),
+                                    decoration: BoxDecoration(
+                                      color: roleColor.withValues(alpha: 0.08),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      Icons.chat_bubble_outline_rounded,
+                                      size: 40.sp,
+                                      color: roleColor.withValues(alpha: 0.6),
+                                    ),
+                                  ),
+                                  SizedBox(height: 14.h),
+                                  Text(
+                                    controller.searchQuery.value.isEmpty
+                                        ? 'No conversations yet'
+                                        : 'No matching chats found',
+                                    style: GoogleFonts.playfairDisplay(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.titleColor,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6.h),
+                                  Text(
+                                    controller.searchQuery.value.isEmpty
+                                        ? 'Connect with members to start messaging'
+                                        : 'Try searching with a different name',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 12.sp,
+                                      color: AppColors.bodyColor,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -90,6 +144,7 @@ class MessagesView extends GetView<MessagesController> {
 
                       return ListView.builder(
                         physics: const AlwaysScrollableScrollPhysics(),
+                        padding: EdgeInsets.only(top: 4.h, bottom: 20.h),
                         itemCount: controller.filteredConversations.length,
                         itemBuilder: (context, index) {
                           return MessageTile(
@@ -111,29 +166,37 @@ class MessagesView extends GetView<MessagesController> {
 
   Widget _buildSearchBar(Color roleColor) {
     return Container(
-      height: 45.h,
+      height: 44.h,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20.r), // Pill shape
+        borderRadius: BorderRadius.circular(14.r),
+        border: Border.all(
+          color: const Color(0xFFE5E7EB),
+          width: 1,
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 5,
+            blurRadius: 6,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: TextField(
         onChanged: controller.searchMessages,
+        style: GoogleFonts.inter(
+          fontSize: 13.sp,
+          color: AppColors.titleColor,
+        ),
         decoration: InputDecoration(
-          hintText: 'Search messages...',
+          hintText: 'Search messages or people...',
           hintStyle: GoogleFonts.inter(
-            color: Colors.grey.withValues(alpha: 0.5),
+            color: Colors.grey.withValues(alpha: 0.6),
             fontSize: 13.sp,
           ),
           prefixIcon: Icon(
             Icons.search,
-            color: roleColor.withValues(alpha: 0.5),
+            color: roleColor.withValues(alpha: 0.7),
             size: 20.sp,
           ),
           border: InputBorder.none,

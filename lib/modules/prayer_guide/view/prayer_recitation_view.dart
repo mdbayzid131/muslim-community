@@ -408,16 +408,37 @@ class _PrayerRecitationViewState extends State<PrayerRecitationView> {
                   Padding(
                     padding: EdgeInsets.only(top: 15.h),
                     child: Obx(() {
-                      bool isPlaying =
-                          _controller.activeAudioUrl.value == audioUrl &&
-                              _controller.isPlaying.value;
+                      final bool isThisActive =
+                          _controller.activeAudioUrl.value == audioUrl;
+                      final bool isBuffering =
+                          isThisActive && _controller.isAudioBuffering.value;
+                      final bool isPlaying =
+                          isThisActive && _controller.isPlaying.value;
+
+                      if (isBuffering) {
+                        return SizedBox(
+                          width: 44.sp,
+                          height: 44.sp,
+                          child: Center(
+                            child: SizedBox(
+                              width: 24.sp,
+                              height: 24.sp,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.5,
+                                color: roleColor,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+
                       return IconButton(
                         icon: Icon(
                           isPlaying
                               ? Icons.pause_circle_filled
                               : Icons.play_circle_fill,
                         ),
-                        iconSize: 40.sp,
+                        iconSize: 42.sp,
                         color: roleColor,
                         onPressed: () => _controller.playAudio(audioUrl),
                       );
