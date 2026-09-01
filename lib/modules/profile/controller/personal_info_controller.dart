@@ -8,6 +8,7 @@ import 'package:muslim_community/core/services/auth_service.dart';
 import 'package:muslim_community/core/utils/helpers.dart';
 import 'package:muslim_community/data/repositories/user_repository.dart';
 import 'package:muslim_community/modules/home/controller/home_controller.dart';
+import 'package:muslim_community/modules/profile/controller/profile_controller.dart';
 
 class PersonalInfoController extends GetxController {
   final UserRepository userRepository;
@@ -191,18 +192,24 @@ class PersonalInfoController extends GetxController {
         'name': nameCtrl.text.trim(),
         'aboutMe': aboutCtrl.text.trim(),
         'revertStory': storyCtrl.text.trim(),
+        'interests': interestsList.toList(),
       };
 
       if (_revertDate != null && _revertDate!.isNotEmpty) {
         body['revertDate'] = _revertDate;
       }
-      if (interestsList.isNotEmpty) {
-        body['interests'] = interestsList.toList();
+      if (_currentCity != null && _currentCity!.isNotEmpty) {
+        body['city'] = _currentCity;
       }
-      if (_currentCity != null) body['city'] = _currentCity;
-      if (_currentCountry != null) body['country'] = _currentCountry;
-      if (_currentLat != null) body['latitude'] = _currentLat;
-      if (_currentLng != null) body['longitude'] = _currentLng;
+      if (_currentCountry != null && _currentCountry!.isNotEmpty) {
+        body['country'] = _currentCountry;
+      }
+      if (_currentLat != null && _currentLat!.isNotEmpty) {
+        body['latitude'] = _currentLat;
+      }
+      if (_currentLng != null && _currentLng!.isNotEmpty) {
+        body['longitude'] = _currentLng;
+      }
 
       final response = await userRepository.updateProfile(
         body: body,
@@ -219,6 +226,9 @@ class PersonalInfoController extends GetxController {
 
         if (Get.isRegistered<HomeController>()) {
           Get.find<HomeController>().fetchHomeData();
+        }
+        if (Get.isRegistered<ProfileController>()) {
+          Get.find<ProfileController>().fetchProfile();
         }
         await loadProfileData();
       } else {

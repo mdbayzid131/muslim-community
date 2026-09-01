@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:muslim_community/config/constants/api_constants.dart';
 import 'package:muslim_community/core/services/api_client.dart';
@@ -43,6 +44,21 @@ class ChatRepository {
     if (recipientId != null) body['recipientId'] = recipientId;
 
     return await apiClient.postData(ApiConstants.messages, body);
+  }
+
+  Future<Response> sendImageMessage({
+    required String chatId,
+    required String filePath,
+    String? recipientId,
+  }) async {
+    final body = <String, dynamic>{'chatId': chatId, 'type': 'image'};
+    if (recipientId != null) body['recipientId'] = recipientId;
+
+    return await apiClient.postMultipartData(
+      ApiConstants.messages,
+      body,
+      multipartBody: [MultipartBody('image', File(filePath))],
+    );
   }
 
   Future<Response> markChatAsRead(String chatId) async {

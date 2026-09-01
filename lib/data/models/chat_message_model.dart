@@ -1,3 +1,4 @@
+import 'package:muslim_community/config/constants/api_constants.dart';
 import 'package:muslim_community/core/utils/date_formatter.dart';
 
 enum MessageStatus { sent, delivered, read }
@@ -54,6 +55,7 @@ class ChatMessageModel {
   final bool isMe;
   final String? senderId;
   final String? senderName;
+  final String? imageUrl;
   final DateTime? timestamp;
   MessageStatus status;
 
@@ -64,6 +66,7 @@ class ChatMessageModel {
     required this.isMe,
     this.senderId,
     this.senderName,
+    this.imageUrl,
     this.timestamp,
     dynamic status = MessageStatus.sent,
   })  : time = time ??
@@ -190,6 +193,27 @@ class ChatMessageModel {
       createdTime = DateTime.tryParse(json['createdAt'].toString());
     }
 
+    // Extract image URL from attachments array
+    String? imageUrl;
+    final attachments = json['attachments'];
+    if (attachments is List && attachments.isNotEmpty) {
+      final first = attachments.first;
+      if (first is Map) {
+        imageUrl = (first['url'] ?? first['path'] ?? first['fileUrl'] ?? first['src'])?.toString();
+      } else if (first is String) {
+        imageUrl = first;
+      }
+    }
+    // Also check top-level imageUrl / fileUrl
+    imageUrl ??= (json['imageUrl'] ?? json['fileUrl'] ?? json['image'])?.toString();
+
+    // Normalize relative server paths → full https:// URL
+    // e.g. "/image/picker_xxx.jpg" → "https://nayem5002.../image/picker_xxx.jpg"
+    if (imageUrl != null && imageUrl.isNotEmpty && !imageUrl.startsWith('http')) {
+      imageUrl = ApiConstants.getImageUrl(imageUrl);
+    }
+    if (imageUrl != null && imageUrl.isEmpty) imageUrl = null;
+
     return ChatMessageModel(
       id: (json['id'] ??
               json['_id'] ??
@@ -204,6 +228,7 @@ class ChatMessageModel {
       isMe: isMe,
       senderId: sId,
       senderName: sName,
+      imageUrl: imageUrl,
       timestamp: createdTime ?? DateTime.now(),
       status: msgStatus,
     );

@@ -376,7 +376,7 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
                     // About Me Card
                     _buildExpandableTextSection(
                       title: "About Me",
-                      controller: controller.aboutCtrl,
+                      textController: controller.aboutCtrl,
                       isEditing: controller.isEditingAboutMe.value,
                       onToggleEdit: () => controller.isEditingAboutMe.value =
                           !controller.isEditingAboutMe.value,
@@ -387,7 +387,7 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
                     // My Revert Story Card
                     _buildExpandableTextSection(
                       title: "My Revert Story",
-                      controller: controller.storyCtrl,
+                      textController: controller.storyCtrl,
                       isEditing: controller.isEditingStory.value,
                       onToggleEdit: () => controller.isEditingStory.value =
                           !controller.isEditingStory.value,
@@ -432,7 +432,7 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
               ),
               if (isEditing)
                 GestureDetector(
-                  onTap: () => controller.isEditingPersonalDetails.value = false,
+                  onTap: () => controller.saveProfile(),
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 12.w,
@@ -556,7 +556,7 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
 
   Widget _buildExpandableTextSection({
     required String title,
-    required TextEditingController controller,
+    required TextEditingController textController,
     required bool isEditing,
     required VoidCallback onToggleEdit,
     required Color themeColor,
@@ -583,7 +583,7 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
               ),
               if (isEditing)
                 GestureDetector(
-                  onTap: onToggleEdit,
+                  onTap: () => controller.saveProfile(),
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 12.w,
@@ -617,7 +617,7 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
           SizedBox(height: 12.h),
           isEditing
               ? TextField(
-                  controller: controller,
+                  controller: textController,
                   maxLines: 4,
                   style: GoogleFonts.inter(
                     fontSize: 13.sp,
@@ -638,8 +638,8 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
                   ),
                 )
               : Text(
-                  controller.text.isNotEmpty
-                      ? controller.text
+                  textController.text.isNotEmpty
+                      ? textController.text
                       : "No details added yet.",
                   style: GoogleFonts.inter(
                     fontSize: 13.sp,
@@ -682,7 +682,7 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
                   if (isEditing) ...[
                     SizedBox(width: 10.w),
                     GestureDetector(
-                      onTap: () => controller.isEditingInterests.value = false,
+                      onTap: () => controller.saveProfile(),
                       child: Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: 12.w,

@@ -5,7 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:muslim_community/config/themes/app_colors.dart';
 import 'package:muslim_community/core/services/auth_service.dart';
 import 'package:muslim_community/data/models/user_model.dart';
+import 'package:muslim_community/data/repositories/user_repository.dart';
 import 'package:muslim_community/modules/discover/controller/discover_controller.dart';
+import 'package:muslim_community/modules/profile/controller/profile_details_controller.dart';
 
 class ProfileDetailsView extends StatelessWidget {
   final UserModel user;
@@ -18,47 +20,62 @@ class ProfileDetailsView extends StatelessWidget {
         Get.isRegistered<AuthService>() ? Get.find<AuthService>().userRole : 'male';
     final roleColor = AppColors.getRoleColor(role);
 
+    // Get or put ProfileDetailsController
+    final controller = Get.put(
+      ProfileDetailsController(userRepository: Get.find<UserRepository>()),
+      tag: user.id,
+    );
+    controller.setUser(user);
+
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      body: CustomScrollView(
-        slivers: [
-          _buildSliverAppBar(roleColor),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildHeaderInfo(roleColor),
-                  SizedBox(height: 30.h),
-                  _buildSectionTitle("About Me"),
-                  SizedBox(height: 10.h),
-                  _buildSectionContent(user.bio.isNotEmpty
-                      ? user.bio
-                      : "Peace be upon you! I am learning and growing in faith."),
-                  SizedBox(height: 25.h),
-                  _buildSectionTitle("My Revert Story / Journey"),
-                  SizedBox(height: 10.h),
-                  _buildSectionContent(user.revertStory.isNotEmpty
-                      ? user.revertStory
-                      : "Alhamdulillah for the blessing of Islam. Happy to connect with brothers in faith."),
-                  SizedBox(height: 25.h),
-                  _buildSectionTitle("Interests"),
-                  SizedBox(height: 10.h),
-                  _buildInterests(roleColor),
-                  SizedBox(height: 40.h),
-                  _buildActionButtons(roleColor),
-                  SizedBox(height: 40.h),
-                ],
+      body: Obx(() {
+        final currentUser = controller.user.value ?? user;
+
+        return CustomScrollView(
+          slivers: [
+            _buildSliverAppBar(currentUser, roleColor),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildHeaderInfo(currentUser, roleColor),
+                    SizedBox(height: 30.h),
+                    _buildSectionTitle("About Me"),
+                    SizedBox(height: 10.h),
+                    _buildSectionContent(currentUser.bio.isNotEmpty
+                        ? currentUser.bio
+                        : "No about me details provided."),
+                    SizedBox(height: 25.h),
+                    _buildSectionTitle("My Revert Story / Journey"),
+                    SizedBox(height: 10.h),
+                    _buildSectionContent(currentUser.revertStory.isNotEmpty
+                        ? currentUser.revertStory
+                        : "No revert story provided."),
+                    SizedBox(height: 25.h),
+                    _buildSectionTitle("Interests"),
+                    SizedBox(height: 10.h),
+                    _buildInterests(currentUser, roleColor),
+                    SizedBox(height: 40.h),
+                    _buildActionButtons(currentUser, roleColor),
+                    SizedBox(height: 40.h),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      }),
     );
   }
 
-  Widget _buildSliverAppBar(Color roleColor) {
+  Widget _buildSliverAppBar(UserModel currentUser, Color roleColor) {
+    final bool hasValidImage = currentUser.profileImage.isNotEmpty &&
+        currentUser.profileImage.startsWith('http') &&
+        !currentUser.profileImage.endsWith('.svg');
+
     return SliverAppBar(
       expandedHeight: 350.h,
       pinned: true,
@@ -85,16 +102,14 @@ class ProfileDetailsView extends StatelessWidget {
         background: Stack(
           fit: StackFit.expand,
           children: [
-            user.profileImage.isNotEmpty &&
-                    user.profileImage.startsWith('http') &&
-                    !user.profileImage.endsWith('.svg')
+            hasValidImage
                 ? Image.network(
-                    user.profileImage,
+                    currentUser.profileImage,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) =>
-                        Image.asset('assets/image/male.png', fit: BoxFit.cover),
+                        _buildPersonFallback(roleColor),
                   )
-                : Image.asset('assets/image/male.png', fit: BoxFit.cover),
+                : _buildPersonFallback(roleColor),
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -107,7 +122,7 @@ class ProfileDetailsView extends StatelessWidget {
                 ),
               ),
             ),
-            if (user.isOnline)
+            if (currentUser.isOnline)
               Positioned(
                 bottom: 20.h,
                 right: 20.w,
@@ -149,11 +164,25 @@ class ProfileDetailsView extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaderInfo(Color roleColor) {
+  Widget _buildPersonFallback(Color roleColor) {
+    return Container(
+      color: roleColor.withValues(alpha: 0.12),
+      child: Center(
+        child: Icon(
+          Icons.person,
+          size: 120.sp,
+          color: roleColor.withValues(alpha: 0.5),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeaderInfo(UserModel currentUser, Color roleColor) {
     final displayName =
-        user.fullName.isNotEmpty ? user.fullName : user.name;
-    final displayAge = user.age > 0 ? user.age : 25;
-    final distanceText = user.distance.isNotEmpty ? "${user.distance} mi" : "1.0 mi";
+        currentUser.fullName.isNotEmpty ? currentUser.fullName : currentUser.name;
+    final displayAge = currentUser.age > 0 ? currentUser.age : 25;
+    final distanceText =
+        currentUser.distance.isNotEmpty ? "${currentUser.distance} mi" : "1.0 mi";
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +209,7 @@ class ProfileDetailsView extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      if (user.isVerified) ...[
+                      if (currentUser.isVerified) ...[
                         SizedBox(width: 8.w),
                         Icon(
                           Icons.verified,
@@ -192,7 +221,9 @@ class ProfileDetailsView extends StatelessWidget {
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    "Member",
+                    currentUser.country.isNotEmpty
+                        ? "${currentUser.city.isNotEmpty ? '${currentUser.city}, ' : ''}${currentUser.country}"
+                        : "Member",
                     style: GoogleFonts.inter(
                       fontSize: 14.sp,
                       color: AppColors.bodyColor,
@@ -228,7 +259,7 @@ class ProfileDetailsView extends StatelessWidget {
             ),
           ],
         ),
-        if (user.isRevert) ...[
+        if (currentUser.isRevert) ...[
           SizedBox(height: 15.h),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
@@ -290,15 +321,15 @@ class ProfileDetailsView extends StatelessWidget {
     );
   }
 
-  Widget _buildInterests(Color roleColor) {
-    if (user.interests.isEmpty) {
+  Widget _buildInterests(UserModel currentUser, Color roleColor) {
+    if (currentUser.interests.isEmpty) {
       return _buildSectionContent("No interests provided yet.");
     }
 
     return Wrap(
       spacing: 10.w,
       runSpacing: 10.h,
-      children: user.interests.map((interest) {
+      children: currentUser.interests.map((interest) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           decoration: BoxDecoration(
@@ -321,8 +352,8 @@ class ProfileDetailsView extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons(Color roleColor) {
-    final status = user.connectionStatus;
+  Widget _buildActionButtons(UserModel currentUser, Color roleColor) {
+    final status = currentUser.connectionStatus;
     final bool isConnected = status == 'connected' || status == 'Connected';
     final bool isRequested = status == 'pending' || status == 'Requested';
     final bool isConnect = !isConnected && !isRequested;
@@ -335,9 +366,9 @@ class ProfileDetailsView extends StatelessWidget {
           if (Get.isRegistered<DiscoverController>()) {
             final dc = Get.find<DiscoverController>();
             if (isConnect) {
-              dc.sendConnectionRequest(user.id);
+              dc.sendConnectionRequest(currentUser.id);
             } else if (isRequested) {
-              dc.cancelConnectionRequest(user.id);
+              dc.cancelConnectionRequest(currentUser.id);
             }
           }
         },

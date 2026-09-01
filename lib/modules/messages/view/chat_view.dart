@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:muslim_community/config/themes/app_colors.dart';
 import 'package:muslim_community/data/models/chat_message_model.dart';
 import 'package:muslim_community/modules/messages/controller/chat_controller.dart';
@@ -106,6 +108,22 @@ class ChatView extends GetView<ChatController> {
                   }),
                 ),
               ),
+
+              // Image sending indicator
+              Obx(() => controller.isSendingImage.value
+                  ? Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 6.h),
+                      color: roleColor.withValues(alpha: 0.08),
+                      child: Row(
+                        children: [
+                          SizedBox(width: 12.w, height: 12.h,
+                            child: CircularProgressIndicator(strokeWidth: 2, color: roleColor)),
+                          SizedBox(width: 10.w),
+                          Text('Sending image...', style: GoogleFonts.inter(fontSize: 12.sp, color: roleColor)),
+                        ],
+                      ),
+                    )
+                  : const SizedBox.shrink()),
 
               // --- MESSAGE INPUT ---
               _buildMessageInput(roleColor, chatId),
@@ -269,6 +287,7 @@ class ChatView extends GetView<ChatController> {
 
   Widget _buildChatBubble(ChatMessageModel message, Color roleColor) {
     bool isMe = message.isMe;
+    final hasImage = message.imageUrl != null && message.imageUrl!.isNotEmpty;
 
     return Padding(
       padding: EdgeInsets.only(bottom: 20.h),
@@ -282,10 +301,6 @@ class ChatView extends GetView<ChatController> {
                   isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 12.h,
-                  ),
                   constraints: BoxConstraints(maxWidth: Get.width * 0.75),
                   decoration: BoxDecoration(
                     color: isMe ? roleColor : Colors.white,
@@ -313,14 +328,34 @@ class ChatView extends GetView<ChatController> {
                         ),
                     ],
                   ),
-                  child: Text(
-                    message.text,
-                    style: GoogleFonts.inter(
-                      fontSize: 14.sp,
-                      color: isMe ? Colors.white : AppColors.titleColor,
-                      height: 1.4,
-                    ),
-                  ),
+                  child: hasImage
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.r),
+                            topRight: Radius.circular(20.r),
+                            bottomLeft: isMe
+                                ? Radius.circular(20.r)
+                                : const Radius.circular(0),
+                            bottomRight: isMe
+                                ? const Radius.circular(0)
+                                : Radius.circular(20.r),
+                          ),
+                          child: _buildImageContent(message.imageUrl!, isMe),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 12.h,
+                          ),
+                          child: Text(
+                            message.text,
+                            style: GoogleFonts.inter(
+                              fontSize: 14.sp,
+                              color: isMe ? Colors.white : AppColors.titleColor,
+                              height: 1.4,
+                            ),
+                          ),
+                        ),
                 ),
                 SizedBox(height: 6.h),
                 Padding(
@@ -349,6 +384,70 @@ class ChatView extends GetView<ChatController> {
       ),
     );
   }
+
+  Widget _buildImageContent(String imageUrl, bool isMe) {
+    // If starts with 'http' → network image
+    // If it's a valid local path AND file exists → local file
+    // Otherwise → treat as network (ApiConstants.getImageUrl handles relative paths in model)
+    final isLocalPath = !imageUrl.startsWith('http');
+    final localFileExists = isLocalPath && File(imageUrl).existsSync();
+
+    if (isLocalPath && localFileExists) {
+      return Image.file(
+        File(imageUrl),
+        width: Get.width * 0.65,
+        height: 200.h,
+        fit: BoxFit.cover,
+        errorBuilder: (ctx, e, st) => _imagePlaceholder(isMe),
+      );
+    }
+
+    // Network image (full https:// URL or converted relative URL)
+    final networkUrl = isLocalPath
+        ? 'https://nayem5002.binarybards.online$imageUrl'
+        : imageUrl;
+
+    return Image.network(
+      networkUrl,
+      width: Get.width * 0.65,
+      height: 200.h,
+      fit: BoxFit.cover,
+      loadingBuilder: (ctx, child, progress) {
+        if (progress == null) return child;
+        return SizedBox(
+          width: Get.width * 0.65,
+          height: 200.h,
+          child: Center(
+            child: CircularProgressIndicator(
+              value: progress.expectedTotalBytes != null
+                  ? progress.cumulativeBytesLoaded /
+                      progress.expectedTotalBytes!
+                  : null,
+              color: isMe ? Colors.white : AppColors.goldColor,
+              strokeWidth: 2,
+            ),
+          ),
+        );
+      },
+      errorBuilder: (ctx, e, st) => _imagePlaceholder(isMe),
+    );
+  }
+
+  Widget _imagePlaceholder(bool isMe) {
+    return Container(
+      width: Get.width * 0.65,
+      height: 120.h,
+      color: isMe
+          ? Colors.white.withValues(alpha: 0.15)
+          : Colors.grey.shade200,
+      child: Icon(
+        Icons.broken_image_outlined,
+        color: isMe ? Colors.white54 : Colors.grey.shade400,
+        size: 40.sp,
+      ),
+    );
+  }
+
 
   Widget _buildStatusIndicator(MessageStatus status, Color roleColor) {
     IconData icon;
@@ -383,7 +482,11 @@ class ChatView extends GetView<ChatController> {
       ),
       child: Row(
         children: [
-          Icon(Icons.add, color: roleColor, size: 24.sp),
+          // Plus / Attachment button
+          GestureDetector(
+            onTap: () => _showAttachmentSheet(roleColor, chatId),
+            child: Icon(Icons.add, color: roleColor, size: 24.sp),
+          ),
           SizedBox(width: 15.w),
           Expanded(
             child: Container(
@@ -423,6 +526,101 @@ class ChatView extends GetView<ChatController> {
                 shape: BoxShape.circle,
               ),
               child: Icon(Icons.send, color: Colors.white, size: 18.sp),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showAttachmentSheet(Color roleColor, String chatId) {
+    Get.bottomSheet(
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+        decoration: BoxDecoration(
+          color: AppColors.backgroundColor,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Handle bar
+            Container(
+              width: 40.w,
+              height: 4.h,
+              margin: EdgeInsets.only(bottom: 20.h),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(2.r),
+              ),
+            ),
+            Text(
+              'Send Attachment',
+              style: GoogleFonts.playfairDisplay(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
+                color: AppColors.titleColor,
+              ),
+            ),
+            SizedBox(height: 24.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _attachmentOption(
+                  icon: Icons.photo_library_rounded,
+                  label: 'Gallery',
+                  color: roleColor,
+                  onTap: () {
+                    Get.back();
+                    controller.pickAndSendImage(chatId, ImageSource.gallery);
+                  },
+                ),
+                _attachmentOption(
+                  icon: Icons.camera_alt_rounded,
+                  label: 'Camera',
+                  color: roleColor,
+                  onTap: () {
+                    Get.back();
+                    controller.pickAndSendImage(chatId, ImageSource.camera);
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 20.h),
+          ],
+        ),
+      ),
+      isScrollControlled: true,
+    );
+  }
+
+  Widget _attachmentOption({
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            width: 64.w,
+            height: 64.w,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(16.r),
+              border: Border.all(color: color.withValues(alpha: 0.25)),
+            ),
+            child: Icon(icon, color: color, size: 30.sp),
+          ),
+          SizedBox(height: 8.h),
+          Text(
+            label,
+            style: GoogleFonts.inter(
+              fontSize: 13.sp,
+              color: AppColors.titleColor,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],

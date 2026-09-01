@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:muslim_community/config/themes/app_colors.dart';
 import 'package:muslim_community/core/services/auth_service.dart';
 import 'package:muslim_community/core/services/socket_service.dart';
@@ -20,10 +21,13 @@ class ChatController extends GetxController {
   final isOtherUserOnline = false.obs;
   final hasNextPage = false.obs;
   final isMoreLoading = false.obs;
+  final isSendingImage = false.obs;
 
   String? currentChatId;
   String? otherParticipantId;
   String? nextCursor;
+
+  final _imagePicker = ImagePicker();
 
   String get userRole => Get.find<AuthService>().userRole;
   Color get roleColor => AppColors.getRoleColor(userRole);
@@ -100,7 +104,10 @@ class ChatController extends GetxController {
 
         final idx = messages.indexWhere((m) =>
             m.id == newMsg.id ||
-            (m.id.startsWith('temp_') && m.text == newMsg.text && m.isMe));
+            // Text message temp match
+            (m.id.startsWith('temp_') && m.text == newMsg.text && m.text.isNotEmpty && m.isMe) ||
+            // Image message temp match: temp_img_ + server msg has imageUrl
+            (m.id.startsWith('temp_img_') && m.isMe && newMsg.imageUrl != null));
 
         if (idx != -1) {
           messages[idx] = newMsg;
@@ -287,6 +294,75 @@ class ChatController extends GetxController {
       }
     } catch (e) {
       Helpers.error("Send message error: $e");
+    }
+  }
+
+  Future<void> pickAndSendImage(String chatId, ImageSource source) async {
+    try {
+      final picked = await _imagePicker.pickImage(
+        source: source,
+        imageQuality: 80,
+        maxWidth: 1200,
+      );
+      if (picked == null) return;
+      await sendImage(chatId, picked.path);
+    } catch (e) {
+      Helpers.error('Image pick error: $e');
+      Helpers.showError('Could not access image. Check permissions.');
+    }
+  }
+
+  Future<void> sendImage(String chatId, String filePath) async {
+    isSendingImage.value = true;
+    // Optimistic image bubble
+    final tempId = 'temp_img_${DateTime.now().millisecondsSinceEpoch}';
+    final tempMsg = ChatMessageModel(
+      id: tempId,
+      text: '📷 Image',
+      isMe: true,
+      timestamp: DateTime.now(),
+      status: 'sending',
+      imageUrl: filePath,
+    );
+    messages.insert(0, tempMsg);
+
+    try {
+      final response = await chatRepository.sendImageMessage(
+        chatId: chatId,
+        filePath: filePath,
+        recipientId: otherParticipantId,
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = response.data['data'] ?? response.data;
+        final currentUserId = Get.find<AuthService>().userId;
+        final serverMsg = ChatMessageModel.fromJson(
+          data,
+          currentUserId,
+          otherParticipantId: otherParticipantId,
+        );
+
+        // Socket may have already replaced temp_img_ with serverMsg — remove duplicate if so
+        messages.removeWhere((m) => m.id == serverMsg.id);
+
+        // Now replace the optimistic temp message
+        final idx = messages.indexWhere((m) => m.id == tempId);
+        if (idx != -1) {
+          messages[idx] = serverMsg;
+          messages.refresh();
+        } else {
+          // Socket already replaced temp — nothing to do
+        }
+      } else {
+        // Remove failed optimistic message
+        messages.removeWhere((m) => m.id == tempId);
+        Helpers.showError('Failed to send image. Try again.');
+      }
+    } catch (e) {
+      messages.removeWhere((m) => m.id == tempId);
+      Helpers.error('Send image error: $e');
+      Helpers.showError('Failed to send image.');
+    } finally {
+      isSendingImage.value = false;
     }
   }
 

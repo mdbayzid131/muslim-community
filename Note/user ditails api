@@ -1,0 +1,101 @@
+Viewed user.route.ts:1-100
+ 
+ইউজার ডিটেইলস দেখার জন্য ব্যাকএন্ডে **২টি প্রধান API** রয়েছে:
+ 
+---
+ 
+### ১. নিজের প্রোফাইল ডিটেইলস (Own Profile Details)
+লগইন করা ইউজারের সম্পূর্ণ প্রোফাইল তথ্য পাওয়ার জন্য:
+ 
+- **Method**: `GET`
+- **Endpoint**: `/api/v1/users/me`
+- **Full URL**: `https://nayem5002.binarybards.online/api/v1/users/me`
+- **Headers**:
+  ```http
+  Authorization: Bearer <your_access_token>
+  Content-Type: application/json
+  ```
+ 
+#### 📥 Response Format:
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "User profile retrieved successfully",
+  "data": {
+    "id": "6a94f2102f39fe90ee967bf4",
+    "name": "Bayzid",
+    "email": "mdbayazid131@gmail.com",
+    "role": "BROTHER",
+    "revertDate": "2013-08-30T18:00:00.000Z",
+    "dateOfBirth": "2004-09-03T18:00:00.000Z",
+    "profileImage": "https://nayem5002.binarybards.online/uploads/users/profiles/1788169435714-iziaan.jpg",
+    "verificationImage": "https://nayem5002.binarybards.online/uploads/users/verifications/1788146192646-dfdw4h.jpg",
+    "aboutMe": "I love learning about Islamic history.",
+    "revertStory": "My journey to Islam started in 2013...",
+    "interests": [
+      "Islamic History",
+      "Reading"
+    ],
+    "location": {
+      "country": "United States",
+      "city": "San Francisco",
+      "type": "Point",
+      "coordinates": [-122.406417, 37.785834]
+    },
+    "status": "ACTIVE",
+    "isVerified": true,
+    "subscriptionTier": "FREE",
+    "subscriptionStatus": "NONE",
+    "createdAt": "2026-08-31T03:16:32.837Z",
+    "updatedAt": "2026-09-01T11:06:24.408Z"
+  }
+}
+```
+ 
+---
+ 
+### ২. অন্য ইউজারের পাবলিক প্রোফাইল (Public User Profile by ID)
+অন্য যেকোনো ইউজারের প্রোফাইল (যেমন চ্যাট থেকে কারো প্রোফাইল ওপেন করতে):
+ 
+- **Method**: `GET`
+- **Endpoint**: `/api/v1/users/:userId/public`
+- **Full URL**: `https://nayem5002.binarybards.online/api/v1/users/6a94f2102f39fe90ee967bf4/public`
+- **Headers**:
+  ```http
+  Authorization: Bearer <your_access_token>
+  Content-Type: application/json
+  ```
+ 
+#### 📥 Response Format:
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "User details retrieved successfully",
+  "data": {
+    "id": "6a94f2102f39fe90ee967bf4",
+    "name": "Bayzid",
+    "role": "BROTHER",
+    "profileImage": "https://nayem5002.binarybards.online/uploads/users/profiles/1788169435714-iziaan.jpg",
+    "aboutMe": "I love learning about Islamic history.",
+    "revertStory": "My journey to Islam started in 2013...",
+    "interests": [
+      "Islamic History"
+    ],
+    "location": {
+      "country": "United States",
+      "city": "San Francisco"
+    },
+    "revertDate": "2013-08-30T18:00:00.000Z",
+    "isVerified": true
+  }
+}
+```
+ 
+---
+ 
+### ৩. কমিউনিটি প্রোফাইল লিস্ট (Community Discovery Profiles)
+- **Method**: `GET`
+- **Endpoint**: `/api/v1/users/profiles`
+- **Full URL**: `https://nayem5002.binarybards.online/api/v1/users/profiles`
