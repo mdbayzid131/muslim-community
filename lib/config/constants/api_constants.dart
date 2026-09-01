@@ -1,6 +1,10 @@
 class ApiConstants {
   ApiConstants._();
 
+  // Google Places API Key
+  static const String googlePlacesApiKey =
+      "AIzaSyD031Mt4uIQ6pwbiP6dIMsH111vvLPG1MM";
+
   // Base URLs
   static const String baseUrl = "https://nayem5002.binarybards.online/api/v1";
   static const String serverUrl = "https://nayem5002.binarybards.online";
@@ -25,7 +29,8 @@ class ApiConstants {
   static const String verifyOtp = "/auth/verify-otp";
   static const String refreshToken = "/auth/refresh-token";
   static const String forgotPassword = "/auth/forgot-password";
-  static const String verifyForgotPasswordOtp = "/auth/verify-forgot-password-otp";
+  static const String verifyForgotPasswordOtp =
+      "/auth/verify-forgot-password-otp";
   static const String resetPassword = "/auth/reset-password";
   static const String changePassword = "/auth/change-password";
 
@@ -51,13 +56,16 @@ class ApiConstants {
   static const String groupPosts = "/groups/posts";
   static String deletePost(String postId) => "/groups/posts/$postId";
   static String postComments(String postId) => "/groups/posts/$postId/comments";
-  static String deleteComment(String commentId) => "/groups/comments/$commentId";
+  static String deleteComment(String commentId) =>
+      "/groups/comments/$commentId";
 
   // Learning Endpoints
   static const String learningContents = "/learning-contents";
   static String likeLearningContent(String id) => "/learning-contents/$id/like";
-  static String learningComments(String id) => "/learning-contents/$id/comments";
-  static String deleteLearningComment(String id) => "/learning-contents/comments/$id";
+  static String learningComments(String id) =>
+      "/learning-contents/$id/comments";
+  static String deleteLearningComment(String id) =>
+      "/learning-contents/comments/$id";
 
   // Ask Question / Ask Imam Endpoints
   static const String askQuestion = "/ask-question";
