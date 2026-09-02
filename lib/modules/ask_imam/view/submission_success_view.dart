@@ -13,6 +13,9 @@ class SubmissionSuccessView extends StatelessWidget {
   Widget build(BuildContext context) {
     final role = Get.find<AuthService>().userRole;
     final themeColor = AppColors.getRoleColor(role);
+    final roleLabel = role == 'female'
+        ? 'Sister'
+        : (role == 'jumma' ? 'Imam' : 'Brother');
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -50,7 +53,7 @@ class SubmissionSuccessView extends StatelessWidget {
               ),
               SizedBox(height: 12.h),
               Text(
-                'JazakAllah Khair for your question. An experienced imam will review it and provide a detailed answer in your questions tab.',
+                'JazakAllah Khair for your question. An experienced ${roleLabel.toLowerCase()} will review it and provide a detailed answer in your questions tab.',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.inter(
                   fontSize: 14.sp,
@@ -61,7 +64,7 @@ class SubmissionSuccessView extends StatelessWidget {
               const Spacer(),
 
               CustomButton(
-                text: 'Back to Ask Imam',
+                text: 'Back to Ask $roleLabel',
                 backgroundColor: themeColor,
                 onPressed: () => Get.back(),
               ),

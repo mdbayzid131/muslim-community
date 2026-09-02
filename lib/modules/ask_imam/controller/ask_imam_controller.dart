@@ -43,9 +43,17 @@ class AskImamController extends GetxController {
     try {
       final response = await askImamRepository.getMyQuestions();
       if (response.statusCode == 200) {
-        final List list = response.data['data'] ?? response.data ?? [];
-        myQuestions.value =
-            list.map((e) => AskQuestionModel.fromJson(e)).toList();
+        dynamic raw = response.data['data'] ?? response.data;
+        List list = [];
+        if (raw is List) {
+          list = raw;
+        } else if (raw is Map && raw['questions'] is List) {
+          list = raw['questions'];
+        }
+        myQuestions.value = list
+            .map((e) => AskQuestionModel.fromJson(
+                Map<String, dynamic>.from(e is Map ? e : {})))
+            .toList();
       }
     } catch (e) {
       Helpers.error("Fetch questions error: $e");
@@ -55,13 +63,17 @@ class AskImamController extends GetxController {
   }
 
   Future<void> submitQuestion() async {
-    final title = subjectCtrl.text.trim();
     final question = questionCtrl.text.trim();
 
-    if (title.isEmpty || question.isEmpty) {
-      Helpers.showError("Please enter subject and your question");
+    if (question.isEmpty) {
+      Helpers.showError("Please enter your question");
       return;
     }
+
+    final rawTitle = subjectCtrl.text.trim();
+    final title = rawTitle.isNotEmpty
+        ? rawTitle
+        : (question.length > 35 ? "${question.substring(0, 35)}..." : question);
 
     isSubmitting.value = true;
     try {
@@ -77,10 +89,12 @@ class AskImamController extends GetxController {
         fetchMyQuestions();
         Get.toNamed(AppRoutes.submissionSuccess);
       } else {
-        Helpers.showError("Failed to submit question");
+        final msg = response.data?['message'] ?? "Failed to submit question";
+        Helpers.showError(msg.toString());
       }
     } catch (e) {
       Helpers.error("Submit question error: $e");
+      Helpers.showError("An error occurred while submitting your question");
     } finally {
       isSubmitting.value = false;
     }

@@ -20,6 +20,9 @@ class NavbarView extends GetView<NavigationController> {
     final role = Get.find<AuthService>().userRole;
     final isJumma = role == 'jumma';
     final roleColor = AppColors.getRoleColor(role);
+    final roleLabel = role == 'female'
+        ? 'Sister'
+        : (role == 'jumma' ? 'Imam' : 'Brother');
 
     // Screen order matching original app:
     // 0: Home, 1: Discover, 2: Message, 3: Group, 4: Profile
@@ -89,7 +92,7 @@ class NavbarView extends GetView<NavigationController> {
                       ),
                       _buildNavbarItem(
                         'assets/icons/Messagesnav.png',
-                        'Ask Imam',
+                        'Ask $roleLabel',
                         1,
                         roleColor,
                       ),
