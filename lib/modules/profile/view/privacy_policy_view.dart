@@ -63,12 +63,15 @@ class PrivacyPolicyView extends StatelessWidget {
             ),
           ),
         ),
-        body: controller.isLoading.value
+        body: controller.isDetailLoading.value
             ? Center(
                 child: CircularProgressIndicator(color: themeColor),
               )
             : RefreshIndicator(
-                onRefresh: () => controller.fetchAllLegalPages(),
+                onRefresh: () => controller.fetchLegalContent(
+                  'privacy-policy',
+                  isPrivacy: true,
+                ),
                 color: themeColor,
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
@@ -82,7 +85,9 @@ class PrivacyPolicyView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20.r),
                     ),
                     child: Text(
-                      controller.privacyPolicyContent.value,
+                      controller.privacyPolicyContent.value.isNotEmpty
+                          ? controller.privacyPolicyContent.value
+                          : "No content available. Admin has not set this information yet.",
                       style: GoogleFonts.inter(
                         fontSize: 14.sp,
                         color: AppColors.bodyColor,

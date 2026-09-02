@@ -79,7 +79,19 @@ class PersonalInfoController extends GetxController {
           aboutCtrl.text = data['aboutMe'] ?? "";
           storyCtrl.text = data['revertStory'] ?? "";
           emailCtrl.text = data['email'] ?? "";
-          ageCtrl.text = (data['age'] ?? "").toString();
+          if (data['age'] != null && data['age'].toString().isNotEmpty) {
+            ageCtrl.text = data['age'].toString();
+          } else if (data['ageGroup'] != null &&
+              data['ageGroup'].toString().isNotEmpty) {
+            ageCtrl.text = data['ageGroup'].toString();
+          } else if (data['dateOfBirth'] != null &&
+              data['dateOfBirth'].toString().isNotEmpty) {
+            try {
+              final dob = DateTime.parse(data['dateOfBirth'].toString());
+              final calculated = DateTime.now().year - dob.year;
+              ageCtrl.text = calculated > 0 ? calculated.toString() : "";
+            } catch (_) {}
+          }
 
           final rawImg = data['profileImage'];
           if (rawImg != null && rawImg.toString().isNotEmpty) {
@@ -144,21 +156,32 @@ class PersonalInfoController extends GetxController {
             durationCtrl.text = "New Revert";
           }
 
+          // Root level location data & fallback to location object
+          _currentCity = data['city']?.toString() ?? "";
+          _currentCountry = data['country']?.toString() ?? "";
+          _currentLat = data['latitude']?.toString();
+          _currentLng = data['longitude']?.toString();
+
           final loc = data['location'];
           if (loc != null && loc is Map) {
-            _currentCity = loc['city']?.toString() ?? "";
-            _currentCountry = loc['country']?.toString() ?? "";
-
-            if (loc['coordinates'] != null && loc['coordinates'] is List) {
+            if (_currentCity!.isEmpty) {
+              _currentCity = loc['city']?.toString() ?? "";
+            }
+            if (_currentCountry!.isEmpty) {
+              _currentCountry = loc['country']?.toString() ?? "";
+            }
+            if (_currentLat == null && loc['coordinates'] is List) {
               _currentLng = loc['coordinates'][0]?.toString();
               _currentLat = loc['coordinates'][1]?.toString();
             }
+          }
 
-            if (_currentCity!.isNotEmpty && _currentCountry!.isNotEmpty) {
-              locationCtrl.text = "$_currentCity, $_currentCountry";
-            } else {
-              locationCtrl.text = "$_currentCity$_currentCountry";
-            }
+          if (_currentCity!.isNotEmpty && _currentCountry!.isNotEmpty) {
+            locationCtrl.text = "$_currentCity, $_currentCountry";
+          } else if (_currentCity!.isNotEmpty || _currentCountry!.isNotEmpty) {
+            locationCtrl.text = "$_currentCity$_currentCountry";
+          } else if (loc is String && loc.isNotEmpty) {
+            locationCtrl.text = loc;
           }
 
           if (data['interests'] != null && data['interests'] is List) {
@@ -194,15 +217,34 @@ class PersonalInfoController extends GetxController {
         'revertStory': storyCtrl.text.trim(),
         'interests': interestsList.toList(),
       };
+      if (ageCtrl.text.trim().isNotEmpty) {
+        body['age'] = ageCtrl.text.trim();
+      }
 
       if (_revertDate != null && _revertDate!.isNotEmpty) {
         body['revertDate'] = _revertDate;
       }
-      if (_currentCity != null && _currentCity!.isNotEmpty) {
-        body['city'] = _currentCity;
-      }
-      if (_currentCountry != null && _currentCountry!.isNotEmpty) {
-        body['country'] = _currentCountry;
+      final locText = locationCtrl.text.trim();
+      if (locText.isNotEmpty) {
+        if (locText.contains(',')) {
+          final parts = locText.split(',');
+          final cCity = parts[0].trim();
+          final cCountry = parts.sublist(1).join(',').trim();
+          if (cCity.isNotEmpty) body['city'] = cCity;
+          if (cCountry.isNotEmpty) body['country'] = cCountry;
+        } else {
+          body['city'] = locText;
+          if (_currentCountry != null && _currentCountry!.isNotEmpty) {
+            body['country'] = _currentCountry;
+          }
+        }
+      } else {
+        if (_currentCity != null && _currentCity!.isNotEmpty) {
+          body['city'] = _currentCity;
+        }
+        if (_currentCountry != null && _currentCountry!.isNotEmpty) {
+          body['country'] = _currentCountry;
+        }
       }
       if (_currentLat != null && _currentLat!.isNotEmpty) {
         body['latitude'] = _currentLat;

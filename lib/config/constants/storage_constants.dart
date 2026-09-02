@@ -16,6 +16,7 @@ class StorageConstants {
   static const String longitude = 'longitude';
 
   // Azan Settings
+  static const String autoDetectLocation = 'auto_detect_location';
   static const String fajrAzan = 'fajr_azan';
   static const String dhuhrAzan = 'dhuhr_azan';
   static const String asrAzan = 'asr_azan';

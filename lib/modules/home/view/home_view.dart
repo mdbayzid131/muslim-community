@@ -8,7 +8,6 @@ import 'package:muslim_community/core/utils/rakat_info.dart';
 import 'package:muslim_community/core/widgets/qibla_compass_widget.dart';
 import 'package:muslim_community/modules/discover/controller/discover_controller.dart';
 import 'package:muslim_community/modules/home/controller/home_controller.dart';
-import 'package:muslim_community/modules/home/view/prayer_settings_view.dart';
 import 'package:muslim_community/modules/home/view/sunrise_details_view.dart';
 import 'package:muslim_community/modules/navigation/controller/navigation_controller.dart';
 import 'package:muslim_community/modules/prayer_guide/view/prayer_recitation_view.dart';
@@ -41,7 +40,7 @@ class HomeView extends GetView<HomeController> {
                     "Prayer & Qibla",
                     "Settings >",
                     roleColor,
-                    onActionTap: () => Get.to(() => const PrayerSettingsView()),
+                    onActionTap: () => Get.toNamed(AppRoutes.prayerSettings),
                   ),
                   SizedBox(height: 20.h),
 

@@ -13,7 +13,9 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
   Widget build(BuildContext context) {
     final role =
         Get.isRegistered<AuthService>() ? Get.find<AuthService>().userRole : 'male';
-    final isSister = role == 'female';
+    final roleLabel = role == 'female'
+        ? 'Sister'
+        : (role == 'jumma' ? 'Imam' : 'Brother');
 
     return Obx(() {
       final themeColor = controller.roleColor;
@@ -221,7 +223,7 @@ class PersonalInfoView extends GetView<PersonalInfoController> {
                                   ),
                                 )
                               : Text(
-                                  "${isSister ? 'Sister' : 'Brother'} ${controller.nameCtrl.text.split(' ').first}",
+                                  "$roleLabel ${controller.nameCtrl.text.trim().isNotEmpty ? controller.nameCtrl.text.trim().split(' ').first : ''}",
                                   style: GoogleFonts.playfairDisplay(
                                     fontSize: 24.sp,
                                     fontWeight: FontWeight.bold,

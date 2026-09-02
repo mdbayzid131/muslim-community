@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:muslim_community/config/constants/storage_constants.dart';
+import 'package:muslim_community/core/services/azan_service.dart';
 import 'package:muslim_community/core/services/storage_service.dart';
 
 class PrayerSettingsController extends GetxController {
@@ -19,6 +20,10 @@ class PrayerSettingsController extends GetxController {
   }
 
   Future<void> _loadSettings() async {
+    final autoDetect =
+        await StorageService.getBool(StorageConstants.autoDetectLocation);
+    if (autoDetect != null) isAutoDetectLocation.value = autoDetect;
+
     final f = await StorageService.getString(StorageConstants.fajrAzan);
     if (f.isNotEmpty) fajrNotification.value = f;
 
@@ -37,14 +42,29 @@ class PrayerSettingsController extends GetxController {
 
   void toggleAutoDetectLocation() {
     isAutoDetectLocation.value = !isAutoDetectLocation.value;
+    StorageService.setBool(
+      StorageConstants.autoDetectLocation,
+      isAutoDetectLocation.value,
+    );
   }
 
-  void toggleNotification(RxString notification, String key) {
-    if (notification.value == "Off" || notification.value == "Silent") {
-      notification.value = "Adhan";
-    } else {
-      notification.value = "Off";
+  void setNotificationState(RxString notification, String key, String state) {
+    notification.value = state;
+    if (state == "Off" && Get.isRegistered<AzanService>()) {
+      Get.find<AzanService>().stopAzan();
     }
-    StorageService.setString(key, notification.value);
+    StorageService.setString(key, state);
+  }
+
+  void toggleAzanPreview(String prayerName, {bool isFajr = false}) {
+    if (Get.isRegistered<AzanService>()) {
+      Get.find<AzanService>().toggleAzanPreview(prayerName, isFajr: isFajr);
+    }
+  }
+
+  void playAzanPreview({bool isFajr = false}) {
+    if (Get.isRegistered<AzanService>()) {
+      Get.find<AzanService>().toggleAzanPreview("Preview", isFajr: isFajr);
+    }
   }
 }
