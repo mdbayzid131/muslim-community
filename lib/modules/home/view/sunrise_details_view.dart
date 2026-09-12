@@ -56,7 +56,7 @@ class SunriseDetailsView extends StatelessWidget {
 
             // --- PROHIBITED TIMES SECTION ---
             Text(
-              "Prohibited Times for Namaz",
+              "Prohibited Times for Prayer (Salah)",
               style: GoogleFonts.playfairDisplay(
                 fontSize: 22.sp,
                 fontWeight: FontWeight.bold,
@@ -65,7 +65,7 @@ class SunriseDetailsView extends StatelessWidget {
             ),
             SizedBox(height: 4.h),
             Text(
-              "In Islam, it is strictly forbidden (Haraam/Makruh Tahrimi) to perform any kind of prayer (Namaz/Salat) during three specific times of the day.",
+              "In Islam, it is strictly forbidden (Haraam/Makruh Tahrimi) to perform prayer (Salah) during three specific times of the day.",
               style: GoogleFonts.inter(
                 fontSize: 13.sp,
                 color: AppColors.bodyColor,
@@ -77,7 +77,7 @@ class SunriseDetailsView extends StatelessWidget {
             _buildTimeDetailCard(
               title: "1. During Sunrise",
               description:
-                  "From the moment the sun begins to rise until it has fully risen and cleared the horizon (approx. 15-20 minutes after sunrise). Praying any kind of Salat (Fard, Wajib, Sunnah, or Nafl) is forbidden during this period.",
+                  "From the moment the sun begins to rise until it has fully risen and cleared the horizon (approx. 15-20 minutes after sunrise). Praying any kind of Salah (Fardh, Wajib, Sunnah, or Nafl) is forbidden during this period.",
               icon: Icons.wb_sunny_rounded,
               iconColor: const Color(0xFFFF9800),
               bgColor: const Color(0xFFFFF8E1),
@@ -99,7 +99,7 @@ class SunriseDetailsView extends StatelessWidget {
             _buildTimeDetailCard(
               title: "3. During Sunset",
               description:
-                  "From the time the sun begins to turn pale/yellowish/red until it has completely set (approx. 15-20 minutes before Maghrib starts).\n\n*Note: If you have not yet prayed the Fard of the current day's Asr prayer, it can still be prayed during this time before the sun sets, though delaying it this long intentionally is highly disliked (Makruh Tahrimi).",
+                  "From the time the sun begins to turn pale/yellowish/red until it has completely set (approx. 15-20 minutes before Maghrib starts).\n\n*Note: If you have not yet prayed the Fardh of the current day's Asr prayer, it can still be prayed during this time before the sun sets, though delaying it this long intentionally is highly disliked (Makruh Tahrimi).",
               icon: Icons.wb_twilight_rounded,
               iconColor: const Color(0xFFF44336),
               bgColor: const Color(0xFFFFEBEE),

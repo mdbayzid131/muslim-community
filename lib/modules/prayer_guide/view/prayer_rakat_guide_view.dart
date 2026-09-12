@@ -185,7 +185,7 @@ class PrayerRakatGuideView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "FARZ",
+                        "FARDH",
                         style: GoogleFonts.inter(
                           fontSize: 9.sp,
                           fontWeight: FontWeight.w700,
@@ -219,12 +219,21 @@ class PrayerRakatGuideView extends StatelessWidget {
                           color: activeColor,
                         ),
                       ),
-                      SizedBox(height: 3.h),
-                      Text(
-                        "Breakdown: ${info.rakatDetailsEn}",
-                        style: GoogleFonts.inter(
-                          fontSize: 10.sp,
-                          color: AppColors.bodyColor.withValues(alpha: 0.7),
+                      SizedBox(height: 4.h),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.w, vertical: 2.h),
+                        decoration: BoxDecoration(
+                          color: activeColor.withValues(alpha: 0.08),
+                          borderRadius: BorderRadius.circular(6.r),
+                        ),
+                        child: Text(
+                          "Breakdown: ${info.rakatDetailsEn}",
+                          style: GoogleFonts.inter(
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w600,
+                            color: activeColor,
+                          ),
                         ),
                       ),
                     ],

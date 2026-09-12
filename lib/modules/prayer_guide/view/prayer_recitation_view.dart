@@ -128,14 +128,14 @@ class _PrayerRecitationViewState extends State<PrayerRecitationView> {
 
   Widget _buildPrayerHeader(Color roleColor) {
     final Map<String, dynamic> rakatMap = {
-      'Fajr': {'farz': 2, 'total': 4, 'desc': '2 Sunnah + 2 Farz'},
-      'Dhuhr': {'farz': 4, 'total': 12, 'desc': '4 Sunnah + 4 Farz + 2 Sunnah + 2 Nafl'},
-      'Asr': {'farz': 4, 'total': 8, 'desc': '4 Sunnah + 4 Farz'},
-      'Maghrib': {'farz': 3, 'total': 7, 'desc': '3 Farz + 2 Sunnah + 2 Nafl'},
-      'Isha': {'farz': 4, 'total': 17, 'desc': '4 Sunnah + 4 Farz + 2 Sunnah + 2 Nafl + 3 Witr + 2 Nafl'},
+      'Fajr': {'farz': 2, 'total': 4, 'desc': '2 Sunnah + 2 Fardh'},
+      'Dhuhr': {'farz': 4, 'total': 12, 'desc': '4 Sunnah + 4 Fardh + 2 Sunnah + 2 Nafl'},
+      'Asr': {'farz': 4, 'total': 8, 'desc': '4 Sunnah + 4 Fardh'},
+      'Maghrib': {'farz': 3, 'total': 7, 'desc': '3 Fardh + 2 Sunnah + 2 Nafl'},
+      'Isha': {'farz': 4, 'total': 17, 'desc': '4 Sunnah + 4 Fardh + 2 Sunnah + 2 Nafl + 3 Witr + 2 Nafl'},
     };
 
-    final info = rakatMap[waqt] ?? {'farz': 4, 'total': 4, 'desc': '4 Farz'};
+    final info = rakatMap[waqt] ?? {'farz': 4, 'total': 4, 'desc': '4 Fardh'};
 
     return Container(
       padding: EdgeInsets.all(16.w),
@@ -179,7 +179,7 @@ class _PrayerRecitationViewState extends State<PrayerRecitationView> {
                     borderRadius: BorderRadius.circular(6.r),
                   ),
                   child: Text(
-                    "$waqt: ${info['farz']} Rakat Farz (Total ${info['total']} Rakats)",
+                    "$waqt: ${info['farz']} Rakat Fardh (Total ${info['total']} Rakats)",
                     style: GoogleFonts.inter(
                       fontSize: 11.sp,
                       fontWeight: FontWeight.bold,
@@ -188,11 +188,19 @@ class _PrayerRecitationViewState extends State<PrayerRecitationView> {
                   ),
                 ),
                 SizedBox(height: 4.h),
-                Text(
-                  "Breakdown: ${info['desc']}",
-                  style: GoogleFonts.inter(
-                    fontSize: 10.sp,
-                    color: AppColors.bodyColor.withValues(alpha: 0.8),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                  decoration: BoxDecoration(
+                    color: roleColor.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(6.r),
+                  ),
+                  child: Text(
+                    "Breakdown: ${info['desc']}",
+                    style: GoogleFonts.inter(
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w600,
+                      color: roleColor,
+                    ),
                   ),
                 ),
               ],

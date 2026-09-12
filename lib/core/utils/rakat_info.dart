@@ -5,9 +5,11 @@ class RakatInfo {
   final String rakatSummaryEn;
   final String rakatDetailsEn;
 
-  // Compatibility getter
+  // Compatibility getters
   String get name => waqt;
   int get farz => farzRakats;
+  int get fardh => farzRakats;
+  int get fardhRakats => farzRakats;
 
   const RakatInfo({
     required this.waqt,
@@ -22,36 +24,36 @@ class RakatInfo {
       waqt: 'Fajr',
       farzRakats: 2,
       totalRakats: 4,
-      rakatSummaryEn: '2 Rakat Farz (Total 4 Rakats)',
-      rakatDetailsEn: '2 Sunnah + 2 Farz',
+      rakatSummaryEn: '2 Rakat Fardh (Total 4 Rakats)',
+      rakatDetailsEn: '2 Sunnah + 2 Fardh',
     ),
     RakatInfo(
       waqt: 'Dhuhr',
       farzRakats: 4,
       totalRakats: 12,
-      rakatSummaryEn: '4 Rakat Farz (Total 12 Rakats)',
-      rakatDetailsEn: '4 Sunnah + 4 Farz + 2 Sunnah + 2 Nafl',
+      rakatSummaryEn: '4 Rakat Fardh (Total 12 Rakats)',
+      rakatDetailsEn: '4 Sunnah + 4 Fardh + 2 Sunnah + 2 Nafl',
     ),
     RakatInfo(
       waqt: 'Asr',
       farzRakats: 4,
       totalRakats: 8,
-      rakatSummaryEn: '4 Rakat Farz (Total 8 Rakats)',
-      rakatDetailsEn: '4 Sunnah + 4 Farz',
+      rakatSummaryEn: '4 Rakat Fardh (Total 8 Rakats)',
+      rakatDetailsEn: '4 Sunnah + 4 Fardh',
     ),
     RakatInfo(
       waqt: 'Maghrib',
       farzRakats: 3,
       totalRakats: 7,
-      rakatSummaryEn: '3 Rakat Farz (Total 7 Rakats)',
-      rakatDetailsEn: '3 Farz + 2 Sunnah + 2 Nafl',
+      rakatSummaryEn: '3 Rakat Fardh (Total 7 Rakats)',
+      rakatDetailsEn: '3 Fardh + 2 Sunnah + 2 Nafl',
     ),
     RakatInfo(
       waqt: 'Isha',
       farzRakats: 4,
       totalRakats: 17,
-      rakatSummaryEn: '4 Rakat Farz (Total 17 Rakats)',
-      rakatDetailsEn: '4 Sunnah + 4 Farz + 2 Sunnah + 2 Nafl + 3 Witr + 2 Nafl',
+      rakatSummaryEn: '4 Rakat Fardh (Total 17 Rakats)',
+      rakatDetailsEn: '4 Sunnah + 4 Fardh + 2 Sunnah + 2 Nafl + 3 Witr + 2 Nafl',
     ),
   ];
 
