@@ -426,7 +426,7 @@ class HomeView extends GetView<HomeController> {
                   if (name != "Sunrise") ...[
                     SizedBox(height: 2.h),
                     Text(
-                      "${RakatInfo.getRakatInfo(name).farzRakats} Rakat",
+                      "${RakatInfo.getRakatInfo(name).fardhRakats} Rakat",
                       style: GoogleFonts.inter(
                         fontSize: 10.sp,
                         fontWeight: FontWeight.bold,

@@ -177,7 +177,7 @@ class PrayerRakatGuideView extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        "${info.farzRakats}",
+                        "${info.fardhRakats}",
                         style: GoogleFonts.inter(
                           fontSize: 22.sp,
                           fontWeight: FontWeight.bold,
