@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:muslim_community/config/constants/api_constants.dart';
+import 'package:muslim_community/config/constants/image_paths.dart';
 import 'package:muslim_community/config/themes/app_colors.dart';
-import 'package:muslim_community/core/widgets/custom_app_bar.dart';
 import 'package:muslim_community/data/models/khutbah_model.dart';
 
 class JummaNowPlayingView extends StatefulWidget {
@@ -21,6 +21,7 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
   bool _isPlaying = false;
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
+  double _currentVolume = 0.7;
 
   @override
   void initState() {
@@ -61,6 +62,7 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
     if (fullUrl.isNotEmpty) {
       try {
         await _player.setUrl(fullUrl);
+        await _player.setVolume(_currentVolume);
         await _player.play();
       } catch (e) {
         debugPrint("Audio play error: $e");
@@ -83,6 +85,7 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
 
   @override
   Widget build(BuildContext context) {
+    const Color themeColor = AppColors.jummaColor;
     final khutbah = _khutbah;
     if (khutbah == null) {
       return const Scaffold(body: Center(child: Text("Khutbah not found")));
@@ -90,166 +93,366 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: const CustomAppBar(title: "Now Playing"),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
-          child: Column(
-            children: [
-              const Spacer(),
-              // Thumbnail
-              Container(
-                width: 260.w,
-                height: 260.w,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: Padding(
+          padding: EdgeInsets.all(8.w),
+          child: CircleAvatar(
+            backgroundColor: Colors.white,
+            child: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                color: themeColor,
+                size: 18.sp,
+              ),
+              onPressed: () => Get.back(),
+            ),
+          ),
+        ),
+        title: Text(
+          'NOW PLAYING',
+          style: GoogleFonts.inter(
+            fontSize: 12.sp,
+            fontWeight: FontWeight.bold,
+            color: themeColor,
+            letterSpacing: 2,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 30.w),
+        child: Column(
+          children: [
+            SizedBox(height: 20.h),
+            // Khutbah Image
+            Center(
+              child: Container(
+                width: 280.w,
+                height: 280.w,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(28.r),
+                  borderRadius: BorderRadius.circular(30.r),
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.jummaColor.withValues(alpha: 0.2),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 30,
-                      offset: const Offset(0, 10),
+                      offset: const Offset(0, 15),
                     ),
                   ],
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(28.r),
-                  child: Image.network(
-                    khutbah.thumbnailUrl,
-                    fit: BoxFit.cover,
-                    errorBuilder: (c, e, s) => Container(
-                      color: AppColors.jummaColor.withValues(alpha: 0.2),
-                      child: Icon(
-                        Icons.mic_none_rounded,
-                        color: AppColors.jummaColor,
-                        size: 70.sp,
+                  borderRadius: BorderRadius.circular(30.r),
+                  child: khutbah.thumbnailUrl.isNotEmpty
+                      ? Image.network(
+                          khutbah.thumbnailUrl,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Image.asset(
+                            ImagePaths.sun,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Image.asset(
+                          ImagePaths.sun,
+                          fit: BoxFit.cover,
+                        ),
+                ),
+              ),
+            ),
+
+            SizedBox(height: 35.h),
+
+            // Title & Speaker
+            Text(
+              khutbah.title,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.playfairDisplay(
+                fontSize: 26.sp,
+                fontWeight: FontWeight.bold,
+                color: AppColors.titleColor,
+              ),
+            ),
+            SizedBox(height: 10.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 12.r,
+                  backgroundImage: const AssetImage(
+                    ImagePaths.abubakr,
+                  ),
+                ),
+                SizedBox(width: 8.w),
+                Flexible(
+                  child: Text(
+                    khutbah.imam,
+                    style: GoogleFonts.inter(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade700,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  child: Icon(
+                    Icons.circle,
+                    size: 4.sp,
+                    color: Colors.grey.shade400,
+                  ),
+                ),
+                Flexible(
+                  child: Text(
+                    khutbah.mosqueName,
+                    style: GoogleFonts.inter(
+                      fontSize: 14.sp,
+                      color: Colors.grey.shade600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 35.h),
+
+            // Player Controls Card
+            Container(
+              padding: EdgeInsets.all(24.w),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.03),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  // Progress Bar
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      trackHeight: 4.h,
+                      thumbShape: RoundSliderThumbShape(
+                        enabledThumbRadius: 6.r,
                       ),
+                      overlayShape: RoundSliderOverlayShape(
+                        overlayRadius: 14.r,
+                      ),
+                      activeTrackColor: themeColor,
+                      inactiveTrackColor: Colors.grey.shade200,
+                      thumbColor: AppColors.goldColor,
+                    ),
+                    child: Slider(
+                      value: _duration.inMilliseconds > 0
+                          ? (_position.inMilliseconds /
+                                  _duration.inMilliseconds)
+                              .clamp(0.0, 1.0)
+                          : 0.0,
+                      onChanged: (val) {
+                        final target = _duration * val;
+                        _player.seek(target);
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          _formatDuration(_position),
+                          style: GoogleFonts.inter(
+                            fontSize: 11.sp,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Text(
+                          _formatDuration(_duration),
+                          style: GoogleFonts.inter(
+                            fontSize: 11.sp,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20.h),
+                  // Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.shuffle,
+                          color: AppColors.goldColor,
+                          size: 20.sp,
+                        ),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.replay_10,
+                          color: AppColors.titleColor,
+                          size: 24.sp,
+                        ),
+                        onPressed: () {
+                          final newPos =
+                              _position - const Duration(seconds: 10);
+                          _player.seek(
+                              newPos < Duration.zero ? Duration.zero : newPos);
+                        },
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          if (_isPlaying) {
+                            _player.pause();
+                          } else {
+                            _player.play();
+                          }
+                        },
+                        child: Container(
+                          width: 65.w,
+                          height: 65.w,
+                          decoration: BoxDecoration(
+                            color: themeColor,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: themeColor.withValues(alpha: 0.3),
+                                blurRadius: 15,
+                                offset: const Offset(0, 8),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            _isPlaying ? Icons.pause : Icons.play_arrow,
+                            color: Colors.white,
+                            size: 30.sp,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.forward_10,
+                          color: AppColors.titleColor,
+                          size: 24.sp,
+                        ),
+                        onPressed: () {
+                          final newPos =
+                              _position + const Duration(seconds: 10);
+                          _player.seek(newPos > _duration ? _duration : newPos);
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.repeat,
+                          color: AppColors.goldColor,
+                          size: 20.sp,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 25.h),
+
+            // Volume Slider
+            Row(
+              children: [
+                Icon(Icons.volume_down, color: Colors.grey, size: 20.sp),
+                Expanded(
+                  child: SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      trackHeight: 2.h,
+                      thumbShape: RoundSliderThumbShape(
+                        enabledThumbRadius: 4.r,
+                      ),
+                      activeTrackColor: themeColor,
+                      inactiveTrackColor: Colors.grey.shade200,
+                      thumbColor: AppColors.goldColor,
+                    ),
+                    child: Slider(
+                      value: _currentVolume,
+                      onChanged: (v) {
+                        setState(() {
+                          _currentVolume = v;
+                          _player.setVolume(v);
+                        });
+                      },
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 36.h),
+                Icon(Icons.volume_up, color: Colors.grey, size: 20.sp),
+              ],
+            ),
 
-              // Title and speaker
-              Text(
-                khutbah.title,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.playfairDisplay(
-                  fontSize: 22.sp,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.titleColor,
+            if (khutbah.description.isNotEmpty) ...[
+              SizedBox(height: 25.h),
+              // About Section
+              Container(
+                padding: EdgeInsets.all(20.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
-              ),
-              SizedBox(height: 8.h),
-              Text(
-                khutbah.speaker,
-                style: GoogleFonts.inter(
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.jummaColor,
-                ),
-              ),
-              SizedBox(height: 30.h),
-
-              // Progress Bar
-              SliderTheme(
-                data: SliderTheme.of(context).copyWith(
-                  activeTrackColor: AppColors.jummaColor,
-                  inactiveTrackColor:
-                      AppColors.jummaColor.withValues(alpha: 0.15),
-                  thumbColor: AppColors.jummaColor,
-                  trackHeight: 4.h,
-                  thumbShape:
-                      RoundSliderThumbShape(enabledThumbRadius: 7.r),
-                ),
-                child: Slider(
-                  value: _duration.inMilliseconds > 0
-                      ? (_position.inMilliseconds /
-                              _duration.inMilliseconds)
-                          .clamp(0.0, 1.0)
-                      : 0.0,
-                  onChanged: (val) {
-                    final target = _duration * val;
-                    _player.seek(target);
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      _formatDuration(_position),
-                      style: GoogleFonts.inter(
-                        fontSize: 12.sp,
-                        color: AppColors.greyColor,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.menu_book,
+                              color: themeColor,
+                              size: 18.sp,
+                            ),
+                            SizedBox(width: 10.w),
+                            Text(
+                              'ABOUT THIS KHUTBAH',
+                              style: GoogleFonts.inter(
+                                fontSize: 11.sp,
+                                fontWeight: FontWeight.bold,
+                                color: themeColor,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.grey,
+                          size: 20.sp,
+                        ),
+                      ],
                     ),
+                    SizedBox(height: 15.h),
                     Text(
-                      _formatDuration(_duration),
+                      khutbah.description,
                       style: GoogleFonts.inter(
-                        fontSize: 12.sp,
-                        color: AppColors.greyColor,
+                        fontSize: 13.sp,
+                        color: Colors.grey.shade700,
+                        height: 1.6,
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 24.h),
-
-              // Play / Pause Controls
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.replay_10_rounded,
-                        size: 32.sp, color: AppColors.titleColor),
-                    onPressed: () {
-                      final newPos = _position - const Duration(seconds: 10);
-                      _player.seek(
-                          newPos < Duration.zero ? Duration.zero : newPos);
-                    },
-                  ),
-                  SizedBox(width: 20.w),
-                  GestureDetector(
-                    onTap: () {
-                      if (_isPlaying) {
-                        _player.pause();
-                      } else {
-                        _player.play();
-                      }
-                    },
-                    child: Container(
-                      width: 68.w,
-                      height: 68.w,
-                      decoration: const BoxDecoration(
-                        color: AppColors.jummaColor,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        _isPlaying
-                            ? Icons.pause_rounded
-                            : Icons.play_arrow_rounded,
-                        color: Colors.white,
-                        size: 36.sp,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 20.w),
-                  IconButton(
-                    icon: Icon(Icons.forward_10_rounded,
-                        size: 32.sp, color: AppColors.titleColor),
-                    onPressed: () {
-                      final newPos = _position + const Duration(seconds: 10);
-                      _player.seek(
-                          newPos > _duration ? _duration : newPos);
-                    },
-                  ),
-                ],
-              ),
-              const Spacer(),
             ],
-          ),
+            SizedBox(height: 40.h),
+          ],
         ),
       ),
     );

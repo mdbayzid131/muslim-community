@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:muslim_community/config/constants/image_paths.dart';
 import 'package:muslim_community/config/routes/app_routes.dart';
 import 'package:muslim_community/config/themes/app_colors.dart';
+import 'package:muslim_community/data/models/khutbah_model.dart';
 import 'package:muslim_community/data/repositories/learning_repository.dart';
 import 'package:muslim_community/modules/home/controller/jumma_home_controller.dart';
 
@@ -14,9 +16,7 @@ class JummaHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(
-      JummaHomeController(
-        learningRepository: Get.find<LearningRepository>(),
-      ),
+      JummaHomeController(learningRepository: Get.find<LearningRepository>()),
     );
 
     return Scaffold(
@@ -30,10 +30,13 @@ class JummaHomeView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header Banner
+                // Header Section
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 24.w,
+                    vertical: 30.h,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.jummaColor,
                     borderRadius: BorderRadius.only(
@@ -43,34 +46,37 @@ class JummaHomeView extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Jumu'ah Mubarak",
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 30.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Jumu'ah Mubarak",
+                              style: GoogleFonts.playfairDisplay(
+                                fontSize: 32.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 10.w),
-                          Image.asset(
-                            ImagePaths.mosqueIcon,
-                            width: 28.w,
-                            height: 28.w,
-                            errorBuilder: (c, e, s) =>
-                                const Icon(Icons.mosque, color: Colors.white),
-                          ),
-                        ],
+                            SizedBox(width: 8.w),
+                            Image.asset(
+                              ImagePaths.mosque,
+                              width: 30.w,
+                              height: 30.w,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Icon(Icons.mosque, color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(height: 6.h),
+                      SizedBox(height: 8.h),
                       Text(
-                        'BLESSED FRIDAY REFLECTION',
+                        'BLESSED FRIDAY',
                         style: GoogleFonts.inter(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white70,
+                          color: Colors.white.withValues(alpha: 0.8),
                           letterSpacing: 2,
                         ),
                       ),
@@ -79,12 +85,12 @@ class JummaHomeView extends StatelessWidget {
                 ),
 
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
                   child: Obx(() {
                     if (controller.isLoading.value &&
                         controller.khutbahs.isEmpty) {
                       return SizedBox(
-                        height: 350.h,
+                        height: 400.h,
                         child: const Center(
                           child: CircularProgressIndicator(
                             color: AppColors.jummaColor,
@@ -95,10 +101,10 @@ class JummaHomeView extends StatelessWidget {
 
                     if (controller.khutbahs.isEmpty) {
                       return SizedBox(
-                        height: 350.h,
+                        height: 400.h,
                         child: Center(
                           child: Text(
-                            "No Khutbahs available currently.",
+                            "No Khutbahs available",
                             style: GoogleFonts.inter(
                               fontSize: 14.sp,
                               color: AppColors.bodyColor,
@@ -108,91 +114,159 @@ class JummaHomeView extends StatelessWidget {
                       );
                     }
 
-                    final featured = controller.khutbahs.first;
-                    final others = controller.khutbahs.skip(1).toList();
+                    final featuredKhutbah = controller.khutbahs.first;
+                    final otherKhutbahs = controller.khutbahs.skip(1).toList();
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 24.h),
+                        SizedBox(height: 30.h),
                         Center(
                           child: Text(
-                            "This Week's Khutbah",
+                            "This Week's Khutbahs",
                             style: GoogleFonts.playfairDisplay(
-                              fontSize: 22.sp,
+                              fontSize: 24.sp,
                               fontWeight: FontWeight.bold,
                               color: AppColors.titleColor,
                             ),
                           ),
                         ),
-                        SizedBox(height: 16.h),
+                        SizedBox(height: 25.h),
 
-                        // Featured Card
+                        // Featured Khutbah Card
                         GestureDetector(
                           onTap: () => Get.toNamed(
                             AppRoutes.jummaNowPlaying,
-                            arguments: {'khutbah': featured},
+                            arguments: {'khutbah': featuredKhutbah},
                           ),
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: AppColors.cardColor,
                               borderRadius: BorderRadius.circular(20.r),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withValues(alpha: 0.05),
-                                  blurRadius: 15,
-                                  offset: const Offset(0, 8),
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 10),
                                 ),
                               ],
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(20.r),
-                                  ),
-                                  child: Image.network(
-                                    featured.thumbnailUrl,
-                                    height: 180.h,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (c, e, s) => Container(
-                                      height: 180.h,
-                                      color: AppColors.jummaColor
-                                          .withValues(alpha: 0.1),
-                                      child: const Center(
-                                        child: Icon(
-                                          Icons.play_circle_fill,
-                                          color: AppColors.jummaColor,
-                                          size: 48,
+                                Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20.r),
+                                        topRight: Radius.circular(20.r),
+                                      ),
+                                      child:
+                                          featuredKhutbah
+                                              .thumbnailUrl
+                                              .isNotEmpty
+                                          ? Image.network(
+                                              featuredKhutbah.thumbnailUrl,
+                                              width: double.infinity,
+                                              height: 200.h,
+                                              fit: BoxFit.cover,
+                                              errorBuilder:
+                                                  (
+                                                    context,
+                                                    error,
+                                                    stackTrace,
+                                                  ) => Image.asset(
+                                                    ImagePaths.video,
+                                                    width: double.infinity,
+                                                    height: 200.h,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                            )
+                                          : Image.asset(
+                                              ImagePaths.video,
+                                              width: double.infinity,
+                                              height: 200.h,
+                                              fit: BoxFit.cover,
+                                            ),
+                                    ),
+                                    Positioned.fill(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20.r),
+                                            topRight: Radius.circular(20.r),
+                                          ),
+                                          color: Colors.black.withValues(
+                                            alpha: 0.1,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
+                                    Positioned.fill(
+                                      child: Center(
+                                        child: Container(
+                                          padding: EdgeInsets.all(12.w),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white.withValues(
+                                              alpha: 0.3,
+                                            ),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Icon(
+                                            Icons.play_circle_fill,
+                                            color: Colors.white,
+                                            size: 30.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(16.w),
+                                  padding: EdgeInsets.all(20.w),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        featured.title,
+                                        'FEATURED',
+                                        style: GoogleFonts.inter(
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.goldColor,
+                                          letterSpacing: 1,
+                                        ),
+                                      ),
+                                      SizedBox(height: 8.h),
+                                      Text(
+                                        featuredKhutbah.title,
                                         style: GoogleFonts.playfairDisplay(
-                                          fontSize: 18.sp,
+                                          fontSize: 20.sp,
                                           fontWeight: FontWeight.bold,
                                           color: AppColors.titleColor,
                                         ),
                                       ),
                                       SizedBox(height: 6.h),
-                                      Text(
-                                        featured.speaker,
-                                        style: GoogleFonts.inter(
-                                          fontSize: 13.sp,
-                                          color: AppColors.jummaColor,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                      Row(
+                                        children: [
+                                          Image.asset(
+                                            ImagePaths.location,
+                                            width: 14.w,
+                                            height: 14.w,
+                                            color: AppColors.bodyColor,
+                                          ),
+                                          SizedBox(width: 6.w),
+                                          Expanded(
+                                            child: Text(
+                                              featuredKhutbah.mosqueName,
+                                              style: GoogleFonts.inter(
+                                                fontSize: 12.sp,
+                                                color: AppColors.bodyColor,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
@@ -201,67 +275,14 @@ class JummaHomeView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 24.h),
 
-                        if (others.isNotEmpty) ...[
-                          Text(
-                            "Past Khutbahs",
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.titleColor,
-                            ),
-                          ),
-                          SizedBox(height: 12.h),
-                          ...others.map((k) {
-                            return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.r),
-                                child: Image.network(
-                                  k.thumbnailUrl,
-                                  width: 60.w,
-                                  height: 60.w,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (c, e, s) => Container(
-                                    width: 60.w,
-                                    height: 60.w,
-                                    color: AppColors.jummaColor
-                                        .withValues(alpha: 0.1),
-                                    child: const Icon(
-                                      Icons.audiotrack,
-                                      color: AppColors.jummaColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              title: Text(
-                                k.title,
-                                style: GoogleFonts.inter(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.titleColor,
-                                ),
-                              ),
-                              subtitle: Text(
-                                k.speaker,
-                                style: GoogleFonts.inter(
-                                  fontSize: 12.sp,
-                                  color: AppColors.bodyColor,
-                                ),
-                              ),
-                              trailing: const Icon(
-                                Icons.play_arrow_rounded,
-                                color: AppColors.jummaColor,
-                              ),
-                              onTap: () => Get.toNamed(
-                                AppRoutes.jummaNowPlaying,
-                                arguments: {'khutbah': k},
-                              ),
-                            );
-                          }),
-                          SizedBox(height: 30.h),
-                        ],
+                        SizedBox(height: 30.h),
+
+                        // List of Other Khutbahs
+                        ...otherKhutbahs.map(
+                          (khutbah) => _buildKhutbahListItem(khutbah),
+                        ),
+                        SizedBox(height: 20.h),
                       ],
                     );
                   }),
@@ -269,6 +290,152 @@ class JummaHomeView extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildKhutbahListItem(KhutbahModel khutbah) {
+    return GestureDetector(
+      onTap: () => Get.toNamed(
+        AppRoutes.jummaNowPlaying,
+        arguments: {'khutbah': khutbah},
+      ),
+      child: Container(
+        margin: EdgeInsets.only(bottom: 16.h),
+        padding: EdgeInsets.all(12.w),
+        decoration: BoxDecoration(
+          color: AppColors.cardColor,
+          borderRadius: BorderRadius.circular(15.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.02),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.r),
+              child: Stack(
+                children: [
+                  khutbah.thumbnailUrl.isNotEmpty
+                      ? Image.network(
+                          khutbah.thumbnailUrl,
+                          width: 65.w,
+                          height: 65.w,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Image.asset(
+                                ImagePaths.video,
+                                width: 65.w,
+                                height: 65.w,
+                                fit: BoxFit.cover,
+                              ),
+                        )
+                      : Image.asset(
+                          ImagePaths.video,
+                          width: 65.w,
+                          height: 65.w,
+                          fit: BoxFit.cover,
+                        ),
+                  Positioned.fill(
+                    child: Container(
+                      color: Colors.black.withValues(alpha: 0.1),
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: Center(
+                      child: Icon(
+                        Icons.play_circle_fill,
+                        color: Colors.white.withValues(alpha: 0.8),
+                        size: 24.sp,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: 16.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    khutbah.title,
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.titleColor,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 4.h),
+                  Row(
+                    children: [
+                      Image.asset(
+                        ImagePaths.location,
+                        width: 12.w,
+                        height: 12.w,
+                        color: AppColors.bodyColor,
+                      ),
+                      SizedBox(width: 4.w),
+                      Expanded(
+                        child: Text(
+                          khutbah.mosqueName,
+                          style: GoogleFonts.inter(
+                            fontSize: 12.sp,
+                            color: AppColors.bodyColor,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 4.h),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.person_outline,
+                        size: 12,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(width: 4.w),
+                      Flexible(
+                        child: Text(
+                          khutbah.imam,
+                          style: GoogleFonts.inter(
+                            fontSize: 10.sp,
+                            color: Colors.grey,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+                      Icon(
+                        Icons.circle,
+                        size: 4.sp,
+                        color: Colors.grey.shade300,
+                      ),
+                      SizedBox(width: 8.w),
+                      Text(
+                        DateFormat('MMM dd').format(khutbah.date),
+                        style: GoogleFonts.inter(
+                          fontSize: 10.sp,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

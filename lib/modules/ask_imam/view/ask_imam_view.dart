@@ -37,7 +37,38 @@ class _AskImamViewState extends State<AskImamView> {
           physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              SizedBox(height: 10.h),
+              // High-Fidelity Header
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(top: 60.h, bottom: 45.h),
+                decoration: BoxDecoration(
+                  color: roleColor,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(40.r),
+                    bottomRight: Radius.circular(40.r),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: roleColor.withValues(alpha: 0.2),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Text(
+                    'Ask $roleLabel',
+                    style: GoogleFonts.playfairDisplay(
+                      fontSize: 38.sp,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 25.h),
 
               // Tab Switcher
               Container(
