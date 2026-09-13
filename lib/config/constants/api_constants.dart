@@ -76,6 +76,10 @@ class ApiConstants {
   static String namazGuide(String salahType) => "/namaz/guide/$salahType";
   static const String duas = "/duas";
 
+  // Khutbah Endpoints
+  static const String khutba = "/khutba";
+  static String khutbaDetails(String id) => "/khutba/$id";
+
   // Chat & Messaging Endpoints
   static const String chats = "/chats";
   static const String messages = "/messages";

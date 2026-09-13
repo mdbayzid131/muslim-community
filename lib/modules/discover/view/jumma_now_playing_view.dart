@@ -7,6 +7,7 @@ import 'package:muslim_community/config/constants/api_constants.dart';
 import 'package:muslim_community/config/constants/image_paths.dart';
 import 'package:muslim_community/config/themes/app_colors.dart';
 import 'package:muslim_community/data/models/khutbah_model.dart';
+import 'package:muslim_community/data/repositories/khutba_repository.dart';
 
 class JummaNowPlayingView extends StatefulWidget {
   const JummaNowPlayingView({super.key});
@@ -19,6 +20,7 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
   final AudioPlayer _player = AudioPlayer();
   KhutbahModel? _khutbah;
   bool _isPlaying = false;
+  bool _isLoadingDetails = false;
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
   double _currentVolume = 0.7;
@@ -27,9 +29,13 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
   void initState() {
     super.initState();
     final args = Get.arguments;
-    if (args is Map && args['khutbah'] is KhutbahModel) {
-      _khutbah = args['khutbah'];
-      _initAudio(_khutbah!.audioUrl);
+    if (args is Map) {
+      if (args['khutbah'] is KhutbahModel) {
+        _khutbah = args['khutbah'];
+        _initAudio(_khutbah!.audioUrl);
+      } else if (args['khutbahId'] != null) {
+        _fetchKhutbahDetails(args['khutbahId'].toString());
+      }
     }
 
     _player.playerStateStream.listen((state) {
@@ -55,6 +61,29 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
         });
       }
     });
+  }
+
+  Future<void> _fetchKhutbahDetails(String khutbaId) async {
+    setState(() => _isLoadingDetails = true);
+    try {
+      final repo = Get.find<KhutbaRepository>();
+      final response = await repo.getKhutbahDetails(khutbaId);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = response.data['data'] ?? response.data;
+        if (data is Map) {
+          setState(() {
+            _khutbah = KhutbahModel.fromJson(Map<String, dynamic>.from(data));
+          });
+          if (_khutbah != null && _khutbah!.audioUrl.isNotEmpty) {
+            _initAudio(_khutbah!.audioUrl);
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint("Fetch khutbah details error: $e");
+    } finally {
+      if (mounted) setState(() => _isLoadingDetails = false);
+    }
   }
 
   void _initAudio(String url) async {
@@ -86,6 +115,32 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
   @override
   Widget build(BuildContext context) {
     const Color themeColor = AppColors.jummaColor;
+
+    if (_isLoadingDetails) {
+      return Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: Padding(
+            padding: EdgeInsets.all(8.w),
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios_new,
+                  color: themeColor,
+                  size: 18.sp,
+                ),
+                onPressed: () => Get.back(),
+              ),
+            ),
+          ),
+        ),
+        body: const Center(child: CircularProgressIndicator(color: themeColor)),
+      );
+    }
+
     final khutbah = _khutbah;
     if (khutbah == null) {
       return const Scaffold(body: Center(child: Text("Khutbah not found")));
@@ -148,15 +203,9 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
                           khutbah.thumbnailUrl,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) =>
-                              Image.asset(
-                            ImagePaths.sun,
-                            fit: BoxFit.cover,
-                          ),
+                              Image.asset(ImagePaths.sun, fit: BoxFit.cover),
                         )
-                      : Image.asset(
-                          ImagePaths.sun,
-                          fit: BoxFit.cover,
-                        ),
+                      : Image.asset(ImagePaths.sun, fit: BoxFit.cover),
                 ),
               ),
             ),
@@ -177,13 +226,6 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircleAvatar(
-                  radius: 12.r,
-                  backgroundImage: const AssetImage(
-                    ImagePaths.abubakr,
-                  ),
-                ),
-                SizedBox(width: 8.w),
                 Flexible(
                   child: Text(
                     khutbah.imam,
@@ -253,8 +295,8 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
                     child: Slider(
                       value: _duration.inMilliseconds > 0
                           ? (_position.inMilliseconds /
-                                  _duration.inMilliseconds)
-                              .clamp(0.0, 1.0)
+                                    _duration.inMilliseconds)
+                                .clamp(0.0, 1.0)
                           : 0.0,
                       onChanged: (val) {
                         final target = _duration * val;
@@ -307,7 +349,8 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
                           final newPos =
                               _position - const Duration(seconds: 10);
                           _player.seek(
-                              newPos < Duration.zero ? Duration.zero : newPos);
+                            newPos < Duration.zero ? Duration.zero : newPos,
+                          );
                         },
                       ),
                       GestureDetector(
@@ -451,7 +494,7 @@ class _JummaNowPlayingViewState extends State<JummaNowPlayingView> {
                 ),
               ),
             ],
-            SizedBox(height: 40.h),
+            SizedBox(height: 60.h),
           ],
         ),
       ),

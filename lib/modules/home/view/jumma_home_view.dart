@@ -7,7 +7,7 @@ import 'package:muslim_community/config/constants/image_paths.dart';
 import 'package:muslim_community/config/routes/app_routes.dart';
 import 'package:muslim_community/config/themes/app_colors.dart';
 import 'package:muslim_community/data/models/khutbah_model.dart';
-import 'package:muslim_community/data/repositories/learning_repository.dart';
+import 'package:muslim_community/data/repositories/khutba_repository.dart';
 import 'package:muslim_community/modules/home/controller/jumma_home_controller.dart';
 
 class JummaHomeView extends StatelessWidget {
@@ -16,7 +16,7 @@ class JummaHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(
-      JummaHomeController(learningRepository: Get.find<LearningRepository>()),
+      JummaHomeController(khutbaRepository: Get.find<KhutbaRepository>()),
     );
 
     return Scaffold(

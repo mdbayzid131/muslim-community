@@ -28,21 +28,17 @@ class KhutbahModel {
   factory KhutbahModel.fromJson(Map<String, dynamic> json) {
     return KhutbahModel(
       id: json['id']?.toString() ?? json['_id']?.toString() ?? '',
-      title: json['title']?.toString() ?? 'Blessed Khutbah',
-      mosqueName: json['mosqueName']?.toString() ?? 'Local Mosque',
-      imam: json['speaker']?.toString() ??
-          json['imam']?.toString() ??
-          'Sheikh',
+      title: json['title']?.toString().trim() ?? 'Blessed Khutbah',
+      mosqueName: json['mosqueName']?.toString().trim() ?? 'Local Mosque',
+      imam: (json['imam'] ?? json['speaker'])?.toString().trim() ?? 'Sheikh',
       date: json['date'] != null
           ? DateTime.tryParse(json['date'].toString()) ?? DateTime.now()
           : DateTime.now(),
-      description: json['description']?.toString() ?? '',
-      audioUrl: json['audioUrl']?.toString() ??
-          json['audio']?.toString() ??
-          '',
-      thumbnailUrl: json['thumbnailUrl']?.toString() ??
-          json['thumbnail']?.toString() ??
-          json['image']?.toString() ??
+      description: json['description']?.toString().trim() ?? '',
+      audioUrl: (json['audioUrl'] ?? json['audio'])?.toString().trim() ?? '',
+      thumbnailUrl: (json['thumbnailUrl'] ?? json['thumbnail'] ?? json['image'])
+              ?.toString()
+              .trim() ??
           '',
       createdAt: json['createdAt'] != null
           ? DateTime.tryParse(json['createdAt'].toString()) ?? DateTime.now()

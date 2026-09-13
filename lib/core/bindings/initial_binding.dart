@@ -12,6 +12,7 @@ import 'package:muslim_community/data/repositories/chat_repository.dart';
 import 'package:muslim_community/data/repositories/connection_repository.dart';
 import 'package:muslim_community/data/repositories/dua_repository.dart';
 import 'package:muslim_community/data/repositories/group_repository.dart';
+import 'package:muslim_community/data/repositories/khutba_repository.dart';
 import 'package:muslim_community/data/repositories/learning_repository.dart';
 import 'package:muslim_community/data/repositories/mosque_repository.dart';
 import 'package:muslim_community/data/repositories/notification_repository.dart';
@@ -39,6 +40,7 @@ class InitialBinding extends Bindings {
     Get.lazyPut(() => GroupRepository(apiClient: apiClient), fenix: true);
     Get.lazyPut(() => ChatRepository(apiClient: apiClient), fenix: true);
     Get.lazyPut(() => LearningRepository(apiClient: apiClient), fenix: true);
+    Get.lazyPut(() => KhutbaRepository(apiClient: apiClient), fenix: true);
     Get.lazyPut(() => PrayerRepository(apiClient: apiClient), fenix: true);
     Get.lazyPut(() => DuaRepository(apiClient: apiClient), fenix: true);
     Get.lazyPut(() => NotificationRepository(apiClient: apiClient), fenix: true);
