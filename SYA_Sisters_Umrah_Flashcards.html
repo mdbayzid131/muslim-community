@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SYA Sisters A Guide to Umrah</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FEFAF4;
+    --cream-deep: #F7F0E6;
+    --gold: #C9943A;
+    --gold-light: #E8B86D;
+    --gold-deep: #A67C2E;
+    --rose: #C4847A;
+    --rose-light: #E8AEA8;
+    --rose-deep: #A0635A;
+    --rose-pale: #F9EDEB;
+    --charcoal: #2C2422;
+    --text-body: #5C4A3A;
+    --text-muted: #9B8070;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #F0E8E0;
+    font-family: 'DM Sans', sans-serif;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+
+  .page-title { text-align: center; margin-bottom: 50px; }
+  .page-title h1 { font-family: 'Cinzel', serif; font-size: 1.4rem; color: var(--rose-deep); letter-spacing: 0.1em; margin-bottom: 6px; }
+  .page-title p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.85rem; color: var(--text-muted); }
+
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; max-width: 1100px; margin: 0 auto; }
+
+  .card { width: 100%; border-radius: 24px; overflow: hidden; box-shadow: 0 8px 40px rgba(107,74,42,0.15), 0 2px 8px rgba(107,74,42,0.08); background: var(--cream); }
+
+  /* COVER */
+  .card-cover { background: linear-gradient(160deg, #A0635A 0%, #C4847A 45%, #D4998F 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 32px; text-align: center; min-height: 500px; }
+  .cover-ornament { width: 80px; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); margin-bottom: 24px; }
+  .cover-logo { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700; color: white; letter-spacing: 0.15em; margin-bottom: 6px; }
+  .cover-section { font-size: 0.6rem; color: rgba(255,255,255,0.8); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 32px; }
+  .cover-icon { font-size: 4rem; margin-bottom: 24px; filter: drop-shadow(0 4px 12px rgba(196,132,122,0.4)); }
+  .cover-title { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700; color: white; letter-spacing: 0.06em; margin-bottom: 10px; line-height: 1.3; }
+  .cover-subtitle { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 24px; line-height: 1.6; }
+  .cover-arabic { font-size: 1.4rem; color: rgba(255,255,255,0.9); direction: rtl; margin-bottom: 8px; font-family: 'Arial', sans-serif; }
+  .cover-transliteration { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 32px; }
+  .cover-ornament-bottom { width: 80px; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); }
+
+  /* STEP CARD */
+  .card-step { display: flex; flex-direction: column; background: var(--cream); }
+  .card-top { height: 8px; background: linear-gradient(90deg, var(--rose-deep), var(--rose), var(--rose-light)); }
+  .card-inner { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; }
+  .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .sya-logo-small { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--gold-deep); letter-spacing: 0.1em; }
+  .sisters-badge { font-size: 0.52rem; color: var(--rose-deep); background: var(--rose-pale); border: 1px solid rgba(196,132,122,0.25); padding: 3px 8px; border-radius: 50px; font-weight: 600; letter-spacing: 0.08em; }
+  .step-hero { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid rgba(196,132,122,0.15); }
+  .step-num { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--rose-deep), var(--rose)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(196,132,122,0.35); }
+  .step-num span { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; color: white; }
+  .step-label { font-size: 0.58rem; color: var(--rose); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
+  .step-name { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; color: var(--charcoal); letter-spacing: 0.04em; }
+  .step-icon-wrap { margin-left: auto; font-size: 2.2rem; filter: drop-shadow(0 2px 6px rgba(196,132,122,0.3)); }
+  .step-instruction { font-size: 0.82rem; color: var(--text-body); line-height: 1.65; margin-bottom: 14px; flex: 1; }
+  .dua-block { background: linear-gradient(135deg, rgba(196,132,122,0.07), rgba(201,148,58,0.05)); border: 1px solid rgba(196,132,122,0.18); border-left: 3px solid var(--rose); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; }
+  .dua-label { font-size: 0.5rem; color: var(--rose); letter-spacing: 0.15em; text-transform: uppercase; font-weight: 700; margin-bottom: 5px; }
+  .dua-arabic { font-size: 1rem; color: var(--charcoal); direction: rtl; text-align: right; line-height: 1.8; margin-bottom: 4px; font-family: 'Arial', sans-serif; }
+  .dua-transliteration { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.68rem; color: var(--gold-deep); margin-bottom: 3px; }
+  .dua-translation { font-size: 0.62rem; color: var(--text-muted); line-height: 1.5; }
+  .no-dua { font-size: 0.65rem; color: var(--text-muted); font-style: italic; background: rgba(196,132,122,0.05); border-radius: 8px; padding: 7px 10px; margin-bottom: 12px; border: 1px dashed rgba(196,132,122,0.2); }
+  .tip-block { background: rgba(201,148,58,0.06); border-radius: 8px; padding: 7px 10px; display: flex; gap: 6px; align-items: flex-start; margin-bottom: 12px; }
+  .tip-icon { font-size: 0.75rem; margin-top: 1px; flex-shrink: 0; }
+  .tip-text { font-size: 0.62rem; color: var(--text-muted); line-height: 1.5; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; padding: 10px 22px 14px; border-top: 1px solid rgba(196,132,122,0.1); }
+  .footer-label { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.58rem; color: var(--rose); letter-spacing: 0.05em; }
+  .footer-progress { font-size: 0.55rem; color: var(--text-muted); letter-spacing: 0.05em; }
+
+  /* INFO CARD */
+  .card-info { display: flex; flex-direction: column; background: linear-gradient(160deg, var(--rose-pale) 0%, var(--cream) 100%); }
+  .info-inner { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; }
+  .info-title { font-family: 'Cinzel', serif; font-size: 0.95rem; font-weight: 700; color: var(--rose-deep); letter-spacing: 0.05em; margin-bottom: 14px; }
+  .info-item { display: flex; gap: 10px; margin-bottom: 10px; padding: 10px 12px; background: white; border-radius: 10px; border: 1px solid rgba(196,132,122,0.12); box-shadow: 0 2px 8px rgba(196,132,122,0.06); }
+  .info-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+  .info-item-title { font-size: 0.72rem; font-weight: 700; color: var(--charcoal); margin-bottom: 2px; }
+  .info-item-text { font-size: 0.62rem; color: var(--text-muted); line-height: 1.5; }
+  .info-footer { margin-top: auto; text-align: center; padding-top: 14px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.72rem; color: var(--rose); }
+  .info-footer-logo { font-family: 'Cinzel', serif; font-size: 0.65rem; color: var(--gold-deep); letter-spacing: 0.1em; margin-top: 4px; text-align: center; }
+
+  @media (max-width: 600px) { .cards-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="page-title">
+  <h1>SYA Sisters A Guide to Umrah</h1>
+  <p>Preview each card exports as PDF for the app</p>
+</div>
+
+<div class="cards-grid">
+
+  <!-- COVER -->
+  <div class="card card-cover">
+    <div class="cover-ornament"></div>
+    <div class="cover-logo">SYA</div>
+    <div class="cover-section">Sisters</div>
+    <div class="cover-icon">🕋</div>
+    <div class="cover-title">A Guide to Umrah</div>
+    <div class="cover-subtitle">A step by step guide for sisters performing Umrah for the first time</div>
+
+    <div class="cover-arabic">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</div>
+    <div class="cover-transliteration">Labbayk Allahumma Labbayk Here I am O Allah, Here I am</div>
+    <div class="cover-ornament-bottom"></div>
+  </div>
+
+  <!-- KEYWORDS CARD -->
+  <div class="card card-info">
+    <div class="card-top"></div>
+    <div class="info-inner">
+      <div class="card-header"><div class="sya-logo-small">SYA</div><div class="sisters-badge">Sisters 🌸</div></div>
+      <div class="info-title">Words You Will Hear Simply Explained</div>
+      <div class="info-item"><div class="info-icon">🧕</div><div><div class="info-item-title">Ihram</div><div class="info-item-text">A special state of purity you enter before Umrah begins. Think of it like pressing a sacred pause button you stop certain normal activities and focus completely on Allah.</div></div></div>
+      <div class="info-item"><div class="info-icon">📍</div><div><div class="info-item-title">Miqat</div><div class="info-item-text">A boundary point around Makkah. Before you cross this line you must be in Ihram and have made your intention. Think of it as the starting gate of Umrah.</div></div></div>
+      <div class="info-item"><div class="info-icon">🗣️</div><div><div class="info-item-title">Talbiyah</div><div class="info-item-text">A special prayer you repeat out loud during Umrah "Here I am O Allah, here I am." It is your way of answering Allah's invitation to visit His house.</div></div></div>
+      <div class="info-item"><div class="info-icon">🕋</div><div><div class="info-item-title">Tawaf</div><div class="info-item-text">Walking in circles around the Kaaba 7 times. The Kaaba is the black cube in the centre of the Grand Mosque in Makkah the holiest place on earth.</div></div></div>
+      <div class="info-item"><div class="info-icon">🚶‍♀️</div><div><div class="info-item-title">Sa'i</div><div class="info-item-text">Walking back and forth 7 times between two small hills called Safa and Marwa inside the mosque. This remembers the story of Hajar (AS) who searched for water for her baby.</div></div></div>
+      <div class="info-item"><div class="info-icon">✂️</div><div><div class="info-item-title">Taqsir</div><div class="info-item-text">Cutting a small fingertip length of hair at the end of Umrah. This marks the end of your Umrah and releases you from Ihram. For sisters it is always a trim never shaving.</div></div></div>
+      <div class="info-item"><div class="info-icon">💧</div><div><div class="info-item-title">Zamzam</div><div class="info-item-text">A blessed spring of water inside the Grand Mosque in Makkah. It has been flowing for thousands of years since the time of Hajar (AS). Drink as much as you like and make Dua.</div></div></div>
+      <div class="info-footer">No question is too small. Every revert starts from the beginning. 🤍</div>
+    </div>
+  </div>
+
+  <!-- WHAT IS UMRAH -->
+  <div class="card card-info">
+    <div class="card-top"></div>
+    <div class="info-inner">
+      <div class="card-header"><div class="sya-logo-small">SYA</div><div class="sisters-badge">Sisters 🌸</div></div>
+      <div class="info-title">What is Umrah?</div>
+      <div class="info-item"><div class="info-icon">🕋</div><div><div class="info-item-title">The lesser pilgrimage</div><div class="info-item-text">Umrah is a voluntary pilgrimage to Makkah that can be performed at any time of year. Unlike Hajj it is not obligatory but carries enormous reward.</div></div></div>
+      <div class="info-item"><div class="info-icon">🌙</div><div><div class="info-item-title">Why do Muslims perform Umrah?</div><div class="info-item-text">To draw closer to Allah, seek forgiveness, and experience the spiritual journey to the holiest place on earth standing where millions of Muslims have stood before you.</div></div></div>
+      <div class="info-item"><div class="info-icon">🤍</div><div><div class="info-item-title">For reverts</div><div class="info-item-text">Your first Umrah as a revert is one of the most profound experiences of your life. You are not alone Allah invited you here. Every step is an act of worship.</div></div></div>
+      <div class="info-item"><div class="info-icon">✅</div><div><div class="info-item-title">The 4 steps of Umrah</div><div class="info-item-text">Ihram → Tawaf → Sa'i → Halq or Taqsir (cutting hair). That's it. Beautiful in its simplicity.</div></div></div>
+      <div class="info-footer">No question is too small. You are not alone. 🤍</div>
+      <div class="info-footer-logo">SYA Sisters</div>
+    </div>
+  </div>
+
+  <!-- STEP 1 IHRAM -->
+  <div class="card card-step">
+    <div class="card-top"></div>
+    <div class="card-inner">
+      <div class="card-header"><div class="sya-logo-small">SYA</div><div class="sisters-badge">Sisters 🌸</div></div>
+      <div class="step-hero">
+        <div class="step-num"><span>1</span></div>
+        <div><div class="step-label">Step One</div><div class="step-name">Enter Ihram</div></div>
+        <div class="step-icon-wrap">🫐</div>
+      </div>
+      <div class="step-instruction">Before reaching the Miqat (designated boundary) perform Ghusl, wear your Ihram garments and make your intention for Umrah. For sisters Ihram is your normal modest clothing no specific white garments required. Your face and hands must remain uncovered.</div>
+      <div class="dua-block">
+        <div class="dua-label">Intention say in your heart then aloud</div>
+        <div class="dua-arabic">لَبَّيْكَ اللَّهُمَّ عُمْرَةً</div>
+        <div class="dua-transliteration">Labbayk Allahumma Umratan</div>
+        <div class="dua-translation">"Here I am O Allah, for Umrah"</div>
+      </div>
+      <div class="tip-block"><div class="tip-icon">🌸</div><div class="tip-text">Once you enter Ihram certain things become prohibited cutting hair or nails, wearing perfume, arguing or using bad language. Stay in a state of worship and peace.</div></div>
+    </div>
+    <div class="card-footer"><div class="footer-label">A Guide to Umrah</div><div class="footer-progress">Step 1 of 4</div></div>
+  </div>
+
+  <!-- TALBIYAH CARD -->
+  <div class="card card-info">
+    <div class="card-top"></div>
+    <div class="info-inner">
+      <div class="card-header"><div class="sya-logo-small">SYA</div><div class="sisters-badge">Sisters 🌸</div></div>
+      <div class="info-title">The Talbiyah Recite Continuously</div>
+      <div style="background: linear-gradient(135deg, rgba(196,132,122,0.07), rgba(201,148,58,0.05)); border: 1px solid rgba(196,132,122,0.18); border-left: 3px solid var(--rose); border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+        <div style="font-size:1.2rem; color:var(--charcoal); direction:rtl; text-align:right; line-height:1.9; margin-bottom:8px; font-family:'Arial',sans-serif;">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ</div>
+        <div style="font-family:'Playfair Display',serif; font-style:italic; font-size:0.72rem; color:var(--gold-deep); margin-bottom:6px;">Labbayk Allahumma labbayk, labbayka la sharika laka labbayk, innal hamda wan ni'mata laka wal mulk, la sharika lak</div>
+        <div style="font-size:0.68rem; color:var(--text-muted); line-height:1.6;">"Here I am O Allah, here I am. Here I am, You have no partner, here I am. Verily all praise, grace and sovereignty belong to You. You have no partner."</div>
+      </div>
+      <div class="info-item"><div class="info-icon">🗣️</div><div><div class="info-item-title">When to recite</div><div class="info-item-text">Recite the Talbiyah continuously from the moment you enter Ihram until you begin Tawaf. Sisters recite quietly not loudly.</div></div></div>
+      <div class="info-item"><div class="info-icon">💫</div><div><div class="info-item-title">What it means</div><div class="info-item-text">You are answering Allah's call to come to His house. These are the most powerful words you will ever say. Let them fill your heart.</div></div></div>
+      <div class="info-footer">Labbayk Here I am, O Allah. 🤍</div>
+    </div>
+  </div>
+
+  <!-- STEP 2 TAWAF -->
+  <div class="card card-step">
+    <div class="card-top"></div>
+    <div class="card-inner">
+      <div class="card-header"><div class="sya-logo-small">SYA</div><div class="sisters-badge">Sisters 🌸</div></div>
+      <div class="step-hero">
+        <div class="step-num"><span>2</span></div>
+        <div><div class="step-label">Step Two</div><div class="step-name">Tawaf Circle the Kaaba</div></div>
+        <div class="step-icon-wrap">🕋</div>
+      </div>
+      <div class="step-instruction">Circle the Kaaba 7 times in an anticlockwise direction starting and ending at the Black Stone (Hajar al-Aswad). Keep the Kaaba on your left side. Each circuit is called a Shawt. You are in a state of Wudu for Tawaf.</div>
+      <div class="dua-block">
+        <div class="dua-label">Say at the start of each circuit</div>
+        <div class="dua-arabic">بِسْمِ اللَّهِ وَاللَّهُ أَكْبَرُ</div>
+        <div class="dua-transliteration">Bismillahi Allahu Akbar</div>
+        <div class="dua-translation">"In the name of Allah, Allah is the Greatest"</div>
+      </div>
+      <div class="tip-block"><div class="tip-icon">🌸</div><div class="tip-text">You do not need to memorise specific Duas for each circuit. Make your own Duas in any language pour your heart out to Allah. This is your moment.</div></div>
+    </div>
+    <div class="card-footer"><div class="footer-label">A Guide to Umrah</div><div class="footer-progress">Step 2 of 4</div></div>
+  </div>
+
+  <!-- TAWAF TIPS -->
+  <div class="card card-info">
+    <div class="card-top"></div>
+    <div class="info-inner">
+      <div class="card-header"><div class="sya-logo-small">SYA</div><div class="sisters-badge">Sisters 🌸</div></div>
+      <div class="info-title">Tawaf Things to Know</div>
+      <div class="info-item"><div class="info-icon">⬛</div><div><div class="info-item-title">The Black Stone</div><div class="info-item-text">If possible, kiss or touch the Black Stone at the start. If it is too crowded which it often is simply point towards it and say Allahu Akbar. This is perfectly valid.</div></div></div>
+      <div class="info-item"><div class="info-icon">🟩</div><div><div class="info-item-title">The Green Light</div><div class="info-item-text">Look for the green light on the wall this marks where you start and end each circuit at the Black Stone level.</div></div></div>
+      <div class="info-item"><div class="info-icon">🤲</div><div><div class="info-item-title">Two Rakats after Tawaf</div><div class="info-item-text">After completing 7 circuits pray 2 Rakats near Maqam Ibrahim if possible. Recite Surah Al-Kafirun in the first Rakat and Surah Al-Ikhlas in the second.</div></div></div>
+      <div class="info-item"><div class="info-icon">💧</div><div><div class="info-item-title">Drink Zamzam water</div><div class="info-item-text">After the 2 Rakats drink Zamzam water. Make a sincere Dua as you drink the Prophet ﷺ said Zamzam is for whatever it is drunk for.</div></div></div>
+      <div class="info-footer">Every step around the Kaaba is an act of worship. 🤍</div>
+    </div>
+  </div>
+
+  <!-- STEP 3 SA'I -->
+  <div class="card card-step">
+    <div class="card-top"></div>
+    <div class="card-inner">
+      <div class="card-header"><div class="sya-logo-small">SYA</div><div class="sisters-badge">Sisters 🌸</div></div>
+      <div class="step-hero">
+        <div class="step-num"><span>3</span></div>
+        <div><div class="step-label">Step Three</div><div class="step-name">Sa'i Safa and Marwa</div></div>
+        <div class="step-icon-wrap">🚶‍♀️</div>
+      </div>
+      <div class="step-instruction">Walk 7 times between the hills of Safa and Marwa. Start at Safa and end at Marwa. This commemorates Hajar (AS) the wife of Ibrahim (AS) who ran between these hills searching for water for her baby son Ismail. You are walking in her footsteps.</div>
+      <div class="dua-block">
+        <div class="dua-label">Say at Safa and Marwa</div>
+        <div class="dua-arabic">إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ</div>
+        <div class="dua-transliteration">Innas-Safa wal-Marwata min sha'a'irillah</div>
+        <div class="dua-translation">"Indeed Safa and Marwa are among the signs of Allah"</div>
+      </div>
+      <div class="tip-block"><div class="tip-icon">🌸</div><div class="tip-text">As a sister you walk the entire distance you do not run between the green lights like brothers do. Walk with dignity and make your Duas.</div></div>
+    </div>
+    <div class="card-footer"><div class="footer-label">A Guide to Umrah</div><div class="footer-progress">Step 3 of 4</div></div>
+  </div>
+
+  <!-- HAJAR AS CARD -->
+  <div class="card card-info">
+    <div class="card-top"></div>
+    <div class="info-inner">
+      <div class="card-header"><div class="sya-logo-small">SYA</div><div class="sisters-badge">Sisters 🌸</div></div>
+      <div class="info-title">The Story of Hajar (AS)</div>
+      <div class="info-item"><div class="info-icon">👩</div><div><div class="info-item-title">Who was Hajar?</div><div class="info-item-text">Hajar was the wife of Prophet Ibrahim (AS) and mother of Prophet Ismail (AS). She was left alone in the desert of Makkah with her baby and no water.</div></div></div>
+      <div class="info-item"><div class="info-icon">🏃‍♀️</div><div><div class="info-item-title">Her search</div><div class="info-item-text">She ran seven times between the hills of Safa and Marwa searching for water for her baby. She was alone, afraid but her trust in Allah never wavered.</div></div></div>
+      <div class="info-item"><div class="info-icon">💧</div><div><div class="info-item-title">Zamzam appears</div><div class="info-item-text">Allah sent the angel Jibreel who struck the ground and Zamzam water gushed forth. Her trust in Allah was rewarded with a miracle that still flows today.</div></div></div>
+      <div class="info-item"><div class="info-icon">🤍</div><div><div class="info-item-title">For reverts</div><div class="info-item-text">You also walked alone. You also trusted Allah without seeing the full picture. When you walk Sa'i you are walking in the footsteps of one of the greatest women in Islam.</div></div></div>
+      <div class="info-footer">She stood alone too. And Allah never left her. 🤍</div>
+    </div>
+  </div>
+
+  <!-- STEP 4 TAQSIR -->
+  <div class="card card-step">
+    <div class="card-top"></div>
+    <div class="card-inner">
+      <div class="card-header"><div class="sya-logo-small">SYA</div><div class="sisters-badge">Sisters 🌸</div></div>
+      <div class="step-hero">
+        <div class="step-num"><span>4</span></div>
+        <div><div class="step-label">Step Four</div><div class="step-name">Taqsir Cut Your Hair</div></div>
+        <div class="step-icon-wrap">✂️</div>
+      </div>
+      <div class="step-instruction">After completing Sa'i cut a fingertip length of hair from your head. This marks the completion of your Umrah and releases you from the state of Ihram. For sisters it is always Taqsir cutting a small amount never shaving the head.</div>
+      <div class="dua-block">
+        <div class="dua-label">Dua after completing Umrah</div>
+        <div class="dua-arabic">اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي</div>
+        <div class="dua-transliteration">Allahumma innaka 'afuwwun tuhibbul 'afwa fa'fu 'anni</div>
+        <div class="dua-translation">"O Allah You are Most Forgiving and You love forgiveness so forgive me"</div>
+      </div>
+      <div class="tip-block"><div class="tip-icon">🌸</div><div class="tip-text">Your Umrah is now complete. You are released from Ihram. All prohibitions are lifted. Alhamdulillah you did it. 🤍</div></div>
+    </div>
+    <div class="card-footer"><div class="footer-label">A Guide to Umrah</div><div class="footer-progress">Step 4 of 4</div></div>
+  </div>
+
+  <!-- WHAT TO PACK -->
+  <div class="card card-info">
+    <div class="card-top"></div>
+    <div class="info-inner">
+      <div class="card-header"><div class="sya-logo-small">SYA</div><div class="sisters-badge">Sisters 🌸</div></div>
+      <div class="info-title">What to Pack for Umrah</div>
+      <div class="info-item"><div class="info-icon">👗</div><div><div class="info-item-title">Modest clothing</div><div class="info-item-text">Loose comfortable modest clothing in neutral or dark colours. Avoid perfume or scented products once in Ihram.</div></div></div>
+      <div class="info-item"><div class="info-icon">👟</div><div><div class="info-item-title">Comfortable shoes</div><div class="info-item-text">You will walk a lot especially during Tawaf and Sa'i. Wear the most comfortable shoes you own.</div></div></div>
+      <div class="info-item"><div class="info-icon">📿</div><div><div class="info-item-title">Tasbih beads</div><div class="info-item-text">For counting Tawaf circuits and making Dhikr throughout your journey.</div></div></div>
+      <div class="info-item"><div class="info-icon">📖</div><div><div class="info-item-title">Small Dua book</div><div class="info-item-text">A pocket sized Dua guide so you always have something to recite. The Hisnul Muslim app is also excellent.</div></div></div>
+      <div class="info-item"><div class="info-icon">💧</div><div><div class="info-item-title">Stay hydrated</div><div class="info-item-text">Makkah is very hot. Drink plenty of Zamzam water and carry a small water bottle.</div></div></div>
+      <div class="info-footer">Prepare your body. Prepare your heart. 🤍 SYA Sisters</div>
+    </div>
+  </div>
+
+  <!-- TIPS FOR REVERTS -->
+  <div class="card card-info">
+    <div class="card-top"></div>
+    <div class="info-inner">
+      <div class="card-header"><div class="sya-logo-small">SYA</div><div class="sisters-badge">Sisters 🌸</div></div>
+      <div class="info-title">Tips for Reverts on First Umrah</div>
+      <div class="info-item"><div class="info-icon">🤍</div><div><div class="info-item-title">You belong here</div><div class="info-item-text">You may feel like everyone else knows what they're doing and you don't. You belong here just as much as anyone. Allah called you here personally.</div></div></div>
+      <div class="info-item"><div class="info-icon">😭</div><div><div class="info-item-title">It's okay to cry</div><div class="info-item-text">Most people cry the first time they see the Kaaba. It is a completely natural and beautiful response. Let yourself feel it.</div></div></div>
+      <div class="info-item"><div class="info-icon">🗣️</div><div><div class="info-item-title">Ask for help</div><div class="info-item-text">There are always guides and volunteers in the Haram. Never be embarrassed to ask for help people are there specifically to assist pilgrims.</div></div></div>
+      <div class="info-item"><div class="info-icon">🌙</div><div><div class="info-item-title">Make the most of every moment</div><div class="info-item-text">Duas made in Makkah are especially powerful. Bring a list of everything you want to ask Allah for. This is your moment with Him.</div></div></div>
+      <div class="info-footer">"Honouring those who stood alone so no revert ever has to." 🤍</div>
+      <div class="info-footer-logo">SYA Sisters</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

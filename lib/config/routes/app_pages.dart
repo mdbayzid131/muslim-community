@@ -17,6 +17,7 @@ import 'package:muslim_community/modules/discover/binding/discover_binding.dart'
 import 'package:muslim_community/modules/discover/view/jumma_now_playing_view.dart';
 import 'package:muslim_community/modules/discover/view/learning_view.dart';
 import 'package:muslim_community/modules/discover/view/mosque_details_view.dart';
+import 'package:muslim_community/modules/discover/view/umrah_flashcard_view.dart';
 import 'package:muslim_community/modules/discover/view/wudu_ghusl_flashcard_view.dart';
 import 'package:muslim_community/modules/group/binding/group_binding.dart';
 import 'package:muslim_community/modules/group/view/group_details_view.dart';
@@ -331,6 +332,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.wuduGhuslFlashcard,
       page: () => const WuduGhuslFlashcardView(title: "How to Make Wudu"),
+    ),
+    GetPage(
+      name: AppRoutes.umrahFlashcard,
+      page: () => const UmrahFlashcardView(title: "A Guide to Umrah"),
     ),
     GetPage(
       name: AppRoutes.mosqueDetails,

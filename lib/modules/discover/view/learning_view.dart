@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:muslim_community/config/themes/app_colors.dart';
 import 'package:muslim_community/core/services/auth_service.dart';
+import 'package:muslim_community/modules/discover/view/umrah_flashcard_view.dart';
 import 'package:muslim_community/modules/discover/view/wudu_ghusl_flashcard_view.dart';
 import 'package:muslim_community/modules/home/view/three_quls_view.dart';
 import 'package:muslim_community/modules/prayer_guide/view/prayer_rakat_guide_view.dart';
@@ -41,7 +42,24 @@ class LearningView extends StatelessWidget {
 
         SizedBox(height: 16.h),
 
-        // Card 1: How to Perform Ghusl
+        // Card 1: A Guide to Umrah (Dynamic role-based for Brother / Sister)
+        _buildLearningSectionCard(
+          title: "A Guide to Umrah",
+          subtitle: "Step-by-step flashcard guide for performing Umrah.",
+          icon: Icons.explore_rounded,
+          themeColor: themeColor,
+          onTap: () {
+            Get.to(
+              () => const UmrahFlashcardView(
+                title: "A Guide to Umrah",
+              ),
+            );
+          },
+        ),
+
+        SizedBox(height: 16.h),
+
+        // Card 3: How to Perform Ghusl
         _buildLearningSectionCard(
           title: "How to Perform Ghusl",
           subtitle: "Step-by-step ritual purification bath guide.",
@@ -56,7 +74,7 @@ class LearningView extends StatelessWidget {
 
         SizedBox(height: 16.h),
 
-        // Card 2: How to Make Wudu
+        // Card 4: How to Make Wudu
         _buildLearningSectionCard(
           title: "How to Make Wudu",
           subtitle: "Step-by-step ritual purification guide for prayer.",
@@ -71,7 +89,7 @@ class LearningView extends StatelessWidget {
 
         SizedBox(height: 16.h),
 
-        // Card 3: 3 Quls
+        // Card 5: 3 Quls
         _buildLearningSectionCard(
           title: "3 Quls",
           subtitle: "Listen, read and learn the three protective Surahs.",

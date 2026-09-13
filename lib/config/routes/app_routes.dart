@@ -70,6 +70,7 @@ class AppRoutes {
   static const String maleJummaNowPlaying = '/maleJummaNowPlaying';
   static const String femaleJummaNowPlaying = '/femaleJummaNowPlaying';
   static const String wuduGhuslFlashcard = '/wuduGhuslFlashcard';
+  static const String umrahFlashcard = '/umrahFlashcard';
 
   static const String notifications = '/notifications';
   static const String femaleNotifications = '/femaleNotifications';

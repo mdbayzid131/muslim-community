@@ -169,10 +169,7 @@ class _AskImamViewState extends State<AskImamView> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20.r),
-                borderSide: BorderSide(
-                  color: roleColor,
-                  width: 1.5,
-                ),
+                borderSide: BorderSide(color: roleColor, width: 1.5),
               ),
               contentPadding: EdgeInsets.all(20.w),
             ),
@@ -203,8 +200,11 @@ class _AskImamViewState extends State<AskImamView> {
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.send_rounded,
-                              size: 18.sp, color: Colors.white),
+                          Icon(
+                            Icons.send_rounded,
+                            size: 18.sp,
+                            color: Colors.white,
+                          ),
                           SizedBox(width: 10.w),
                           Text(
                             'Submit Question',
@@ -291,8 +291,8 @@ class _AskImamViewState extends State<AskImamView> {
           separatorBuilder: (context, index) => SizedBox(height: 20.h),
           itemBuilder: (context, index) {
             final question = controller.myQuestions[index];
-            final hasAnswer = question.answer != null &&
-                question.answer!.isNotEmpty;
+            final hasAnswer =
+                question.answer != null && question.answer!.isNotEmpty;
             final created = question.createdAt;
             final dateStr = "${created.day}/${created.month}/${created.year}";
 
