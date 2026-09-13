@@ -9,15 +9,27 @@ class LearningRepository {
 
   Future<Response> getLearningContents({
     String? category,
+    String? search,
     int page = 1,
-    int limit = 10,
+    int limit = 20,
   }) async {
     final query = <String, dynamic>{'page': page, 'limit': limit};
-    if (category != null) query['category'] = category;
+    if (category != null && category.isNotEmpty && category.toLowerCase() != 'all') {
+      query['category'] = category;
+    }
+    if (search != null && search.trim().isNotEmpty) {
+      query['search'] = search.trim();
+    }
 
     return await apiClient.getData(
       ApiConstants.learningContents,
       query: query,
+    );
+  }
+
+  Future<Response> getContentDetails(String contentId) async {
+    return await apiClient.getData(
+      ApiConstants.learningContentDetails(contentId),
     );
   }
 
@@ -50,10 +62,18 @@ class LearningRepository {
     );
   }
 
-  Future<Response> addComment(String contentId, String comment) async {
+  Future<Response> addComment(
+    String contentId,
+    String comment, {
+    String? parentCommentId,
+  }) async {
+    final Map<String, dynamic> data = {'comment': comment};
+    if (parentCommentId != null && parentCommentId.isNotEmpty) {
+      data['parentCommentId'] = parentCommentId;
+    }
     return await apiClient.postData(
       ApiConstants.learningComments(contentId),
-      {'comment': comment},
+      data,
     );
   }
 

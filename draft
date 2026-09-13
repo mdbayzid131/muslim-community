@@ -1,41 +1,12 @@
-Viewed mosque.route.ts:1-38
-
-মোবাইল অ্যাপের (Mobile App) জন্য ব্যবহারযোগ্য সকল এপিআই-এর একটি পরিষ্কার ও সাজানো তালিকা নিচে দেওয়া হলো (বেস ইউআরএল: `/api/v1`):
-
----
-
-### ১. 📚 লার্নিং সেকশন (Learning Content APIs)
-| Method | Endpoint | Auth Token | বিবরণ / কাজ |
-|---|---|:---:|---|
-| `GET` | `/api/v1/learning-contents` | ✅ Required | সব লার্নিং কনটেন্ট/ভিডিও লিস্ট দেখা (Category, Search, Pagination সহ) |
-| `GET` | `/api/v1/learning-contents/:contentId` | ✅ Required | নির্দিষ্ট লার্নিং ভিডিওর বিস্তারিত তথ্য দেখা |
-| `POST` | `/api/v1/learning-contents/:contentId/like` | ✅ Required | ভিডিওতে লাইক/আনলাইক (Toggle) করা |
-| `GET` | `/api/v1/learning-contents/:contentId/comments` | ✅ Required | ভিডিওর কমেন্ট ও রিপ্লাইগুলোর লিস্ট দেখা |
-| `POST` | `/api/v1/learning-contents/:contentId/comments` | ✅ Required | নতুন কমেন্ট বা রিপ্লাই পোস্ট করা |
-| `DELETE`| `/api/v1/learning-contents/comments/:commentId` | ✅ Required | নিজের করা কোনো কমেন্ট ডিলিট করা |
-
----
-
-### ২. 🤲 দুয়া ও ডেইলি দুয়া (Dua APIs)
-| Method | Endpoint | Auth Token | বিবরণ / কাজ |
-|---|---|:---:|---|
-| `GET` | `/api/v1/duas` | ❌ Optional/No | সব দুয়া এবং ডেইলি দুয়ার তালিকা (ওয়াক্ত ফিল্টার যেমন: `waqt=Fajr`, `Zuhr`, `Asr`, `Maghrib`, `Isha` দিয়ে ফিল্টার করা যায়) |
-| `GET` | `/api/v1/duas/:duaId` | ❌ Optional/No | নির্দিষ্ট দুয়ার বিস্তারিত অর্থ, উচ্চারণ এবং অডিও অডিও প্লে করার ডেটা |
-
----
-
-### ৩. 🕌 জুমাহ খুতবাহ (Jummah Khutbah APIs)
-| Method | Endpoint | Auth Token | বিবরণ / কাজ |
-|---|---|:---:|---|
-| `GET` | `/api/v1/khutba` | ❌ Optional/No | সমস্ত জুমাহ খুতবাহর লিস্ট (Pagination সহ) |
-| `GET` | `/api/v1/khutba/:khutbaId` | ❌ Optional/No | নির্দিষ্ট খুতবাহর বিস্তারিত বিবরণ, থাম্বনেইল ও অডিও লিংক |
-
----
-
-### ৪. 🕋 সালাহ / নামাজ ও সময়সূচি (Salah & Prayer Time APIs)
-| Method | Endpoint | Auth Token | বিবরণ / কাজ |
-|---|---|:---:|---|
-| `GET` | `/api/v1/namaz/guide/:salahType` | ❌ Optional/No | সালাতের সম্পূর্ণ গাইড ও নিয়মাবলী (`Fajr`, `Dhuhr`, `Asr`, `Maghrib`, `Isha`) |
-| `GET` | `/api/v1/namaz/surah-list` | ❌ Optional/No | নামাজের জন্য প্রয়োজনীয় সুরাহ তালিকা |
-| `GET` | `/api/v1/prayer-times` | ❌ Optional/No | ব্যবহারকারীর লোকেশন অনুযায়ী নামাজের সময়সূচি (Query: `latitude`, `longitude`) |
-
+১. 📚 লার্নিং সেকশন (Learning Content APIs)
+Method	Endpoint	Auth Token	বিবরণ / কাজ
+GET	/api/v1/learning-contents	✅ Required	সব লার্নিং কনটেন্ট/ভিডিও লিস্ট দেখা (Category, Search, Pagination সহ)
+GET	/api/v1/learning-contents/:contentId	✅ Required	নির্দিষ্ট লার্নিং ভিডিওর বিস্তারিত তথ্য দেখা
+POST	/api/v1/learning-contents/:contentId/like	✅ Required	ভিডিওতে লাইক/আনলাইক (Toggle) করা
+GET	/api/v1/learning-contents/:contentId/comments	✅ Required	ভিডিওর কমেন্ট ও রিপ্লাইগুলোর লিস্ট দেখা
+POST	/api/v1/learning-contents/:contentId/comments	✅ Required	নতুন কমেন্ট বা রিপ্লাই পোস্ট করা
+DELETE	/api/v1/learning-contents/comments/:commentId	✅ Required	নিজের করা কোনো কমেন্ট ডিলিট করা
+২. 🤲 দুয়া ও ডেইলি দুয়া (Dua APIs)
+Method	Endpoint	Auth Token	বিবরণ / কাজ
+GET	/api/v1/duas	❌ Optional/No	সব দুয়া এবং ডেইলি দুয়ার তালিকা (ওয়াক্ত ফিল্টার যেমন: waqt=Fajr, Zuhr, Asr, Maghrib, Isha দিয়ে ফিল্টার করা যায়)
+GET	/api/v1/duas/:duaId	❌ Optional/No	নির্দিষ্ট দুয়ার বিস্তারিত অর্থ, উচ্চারণ এবং অডিও অডিও প্লে করার ডেটা

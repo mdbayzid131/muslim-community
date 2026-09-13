@@ -15,10 +15,14 @@ import 'package:muslim_community/modules/auth/view/signup_view.dart';
 import 'package:muslim_community/modules/auth/view/verification_complete_view.dart';
 import 'package:muslim_community/modules/discover/binding/discover_binding.dart';
 import 'package:muslim_community/modules/discover/view/jumma_now_playing_view.dart';
+import 'package:muslim_community/modules/discover/view/learning_details_view.dart';
 import 'package:muslim_community/modules/discover/view/learning_view.dart';
 import 'package:muslim_community/modules/discover/view/mosque_details_view.dart';
 import 'package:muslim_community/modules/discover/view/umrah_flashcard_view.dart';
 import 'package:muslim_community/modules/discover/view/wudu_ghusl_flashcard_view.dart';
+import 'package:muslim_community/modules/dua/binding/dua_binding.dart';
+import 'package:muslim_community/modules/dua/view/dua_details_view.dart';
+import 'package:muslim_community/modules/dua/view/dua_list_view.dart';
 import 'package:muslim_community/modules/group/binding/group_binding.dart';
 import 'package:muslim_community/modules/group/view/group_details_view.dart';
 import 'package:muslim_community/modules/group/view/post_details_view.dart';
@@ -268,6 +272,16 @@ class AppPages {
       name: AppRoutes.threeQuls,
       page: () => const ThreeQulsView(),
     ),
+    GetPage(
+      name: AppRoutes.duas,
+      page: () => const DuaListView(),
+      binding: DuaBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.duaDetails,
+      page: () => const DuaDetailsView(),
+      binding: DuaBinding(),
+    ),
 
     // Group Features
     GetPage(
@@ -305,6 +319,11 @@ class AppPages {
     GetPage(
       name: AppRoutes.learningDetails,
       page: () => const LearningView(),
+      binding: DiscoverBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.learningLessonDetails,
+      page: () => const LearningDetailsView(),
       binding: DiscoverBinding(),
     ),
     GetPage(

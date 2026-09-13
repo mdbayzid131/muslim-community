@@ -51,6 +51,8 @@ class AppRoutes {
   static const String prayerSettings = '/prayerSettings';
   static const String sunriseDetails = '/sunriseDetails';
   static const String threeQuls = '/threeQuls';
+  static const String duas = '/duas';
+  static const String duaDetails = '/duaDetails';
 
   static const String groupDetails = '/groupDetails';
   static const String maleGroupDetails = '/maleGroupDetails';
@@ -61,6 +63,7 @@ class AppRoutes {
 
   static const String learning = '/learningDetails';
   static const String learningDetails = '/learningDetails';
+  static const String learningLessonDetails = '/learningLessonDetails';
   static const String maleLearningDetails = '/maleLearningDetails';
   static const String femaleLearningDetails = '/femaleLearningDetails';
   static const String mosqueDetails = '/mosqueDetails';

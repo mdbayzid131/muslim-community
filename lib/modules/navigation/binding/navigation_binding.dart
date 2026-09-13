@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:muslim_community/data/repositories/ask_imam_repository.dart';
 import 'package:muslim_community/data/repositories/chat_repository.dart';
 import 'package:muslim_community/data/repositories/connection_repository.dart';
+import 'package:muslim_community/data/repositories/dua_repository.dart';
 import 'package:muslim_community/data/repositories/group_repository.dart';
 import 'package:muslim_community/data/repositories/learning_repository.dart';
 import 'package:muslim_community/data/repositories/mosque_repository.dart';
@@ -9,7 +10,9 @@ import 'package:muslim_community/data/repositories/prayer_repository.dart';
 import 'package:muslim_community/data/repositories/user_repository.dart';
 import 'package:muslim_community/modules/ask_imam/controller/ask_imam_controller.dart';
 import 'package:muslim_community/modules/discover/controller/discover_controller.dart';
+import 'package:muslim_community/modules/discover/controller/learning_controller.dart';
 import 'package:muslim_community/modules/discover/controller/mosque_controller.dart';
+import 'package:muslim_community/modules/dua/controller/dua_controller.dart';
 import 'package:muslim_community/modules/group/controller/group_controller.dart';
 import 'package:muslim_community/modules/home/controller/home_controller.dart';
 import 'package:muslim_community/modules/home/controller/prayer_settings_controller.dart';
@@ -70,6 +73,16 @@ class NavigationBinding extends Bindings {
     Get.lazyPut<MosqueController>(
       () => MosqueController(
         mosqueRepository: Get.find<MosqueRepository>(),
+      ),
+    );
+    Get.lazyPut<LearningController>(
+      () => LearningController(
+        learningRepository: Get.find<LearningRepository>(),
+      ),
+    );
+    Get.lazyPut<DuaController>(
+      () => DuaController(
+        duaRepository: Get.find<DuaRepository>(),
       ),
     );
   }

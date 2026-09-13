@@ -7,8 +7,10 @@ import 'package:muslim_community/config/themes/app_colors.dart';
 import 'package:muslim_community/core/utils/rakat_info.dart';
 import 'package:muslim_community/core/widgets/qibla_compass_widget.dart';
 import 'package:muslim_community/modules/discover/controller/discover_controller.dart';
+import 'package:muslim_community/modules/dua/view/dua_list_view.dart';
 import 'package:muslim_community/modules/home/controller/home_controller.dart';
 import 'package:muslim_community/modules/home/view/sunrise_details_view.dart';
+import 'package:muslim_community/modules/home/widgets/daily_dua_card.dart';
 import 'package:muslim_community/modules/navigation/controller/navigation_controller.dart';
 import 'package:muslim_community/modules/prayer_guide/view/prayer_recitation_view.dart';
 
@@ -46,6 +48,10 @@ class HomeView extends GetView<HomeController> {
 
                   // 3. Prayer Times
                   _buildPrayerTimes(roleColor),
+                  SizedBox(height: 30.h),
+
+                  // 3.5. Daily & Waqt Dua Card
+                  DailyDuaCard(roleColor: roleColor),
                   SizedBox(height: 30.h),
 
                   // 4. Qibla Direction
@@ -589,6 +595,13 @@ class HomeView extends GetView<HomeController> {
         'category': 'Jumma',
       },
       {
+        'title': 'Daily & Prayer Duas',
+        'subtitle': 'Authentic supplications with Arabic & audio.',
+        'icon': Icons.favorite_rounded,
+        'color': const Color(0xFF26A69A),
+        'category': 'Duas',
+      },
+      {
         'title': controller.userRole == 'female' ? 'Ask Sister' : 'Ask Brother',
         'subtitle': 'Connect with a member for guidance and support.',
         'icon': Icons.question_answer_rounded,
@@ -604,6 +617,8 @@ class HomeView extends GetView<HomeController> {
           onTap: () {
             if (resource['category'] == 'Jumma') {
               _showComingSoonDialog();
+            } else if (resource['category'] == 'Duas') {
+              Get.to(() => const DuaListView());
             } else {
               if (Get.isRegistered<DiscoverController>()) {
                 Get.find<DiscoverController>().selectedCategory.value =

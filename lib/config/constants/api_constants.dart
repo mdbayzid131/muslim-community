@@ -23,6 +23,15 @@ class ApiConstants {
     return '$serverUrl/$url';
   }
 
+  static String getVideoUrl(String? url) {
+    if (url == null || url.isEmpty || url == 'null' || url == '/') {
+      return '';
+    }
+    if (url.startsWith('http')) return url;
+    if (url.startsWith('/')) return '$serverUrl$url';
+    return '$serverUrl/$url';
+  }
+
   // Auth Endpoints
   static const String login = "/auth/login";
   static const String signup = "/users";
@@ -61,6 +70,7 @@ class ApiConstants {
 
   // Learning Endpoints
   static const String learningContents = "/learning-contents";
+  static String learningContentDetails(String id) => "/learning-contents/$id";
   static String likeLearningContent(String id) => "/learning-contents/$id/like";
   static String learningComments(String id) =>
       "/learning-contents/$id/comments";
@@ -75,6 +85,7 @@ class ApiConstants {
   static const String prayerTimes = "/prayer-times";
   static String namazGuide(String salahType) => "/namaz/guide/$salahType";
   static const String duas = "/duas";
+  static String duaDetails(String id) => "/duas/$id";
 
   // Khutbah Endpoints
   static const String khutba = "/khutba";
