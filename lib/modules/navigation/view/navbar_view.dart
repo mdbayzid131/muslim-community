@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:muslim_community/config/constants/image_paths.dart';
 import 'package:muslim_community/config/themes/app_colors.dart';
 import 'package:muslim_community/core/services/auth_service.dart';
 import 'package:muslim_community/modules/ask_imam/view/ask_imam_view.dart';
@@ -85,54 +87,54 @@ class NavbarView extends GetView<NavigationController> {
               items: isJumma
                   ? [
                       _buildNavbarItem(
-                        'assets/icons/homenav.png',
-                        'Home',
-                        0,
-                        roleColor,
+                        assetPath: ImagePaths.homeNav,
+                        label: 'Home',
+                        index: 0,
+                        activeColor: roleColor,
                       ),
                       _buildNavbarItem(
-                        'assets/icons/Messagesnav.png',
-                        'Ask $roleLabel',
-                        1,
-                        roleColor,
+                        assetPath: ImagePaths.messagesNav,
+                        label: 'Ask $roleLabel',
+                        index: 1,
+                        activeColor: roleColor,
                       ),
                       _buildNavbarItem(
-                        'assets/icons/profilenav.png',
-                        'Profile',
-                        2,
-                        roleColor,
+                        assetPath: ImagePaths.profileNav,
+                        label: 'Profile',
+                        index: 2,
+                        activeColor: roleColor,
                       ),
                     ]
                   : [
                       _buildNavbarItem(
-                        'assets/icons/homenav.png',
-                        'Home',
-                        0,
-                        roleColor,
+                        assetPath: ImagePaths.homeNav,
+                        label: 'Home',
+                        index: 0,
+                        activeColor: roleColor,
                       ),
                       _buildNavbarItem(
-                        'assets/icons/Discovernav.png',
-                        'Discover',
-                        1,
-                        roleColor,
+                        assetPath: ImagePaths.discoverNav,
+                        label: 'Discover',
+                        index: 1,
+                        activeColor: roleColor,
                       ),
                       _buildNavbarItem(
-                        'assets/icons/Messagesnav.png',
-                        'Message',
-                        2,
-                        roleColor,
+                        assetPath: ImagePaths.messagesNav,
+                        label: 'Message',
+                        index: 2,
+                        activeColor: roleColor,
                       ),
                       _buildNavbarItem(
-                        'assets/icons/groupnav.png',
-                        'Group',
-                        3,
-                        roleColor,
+                        assetPath: ImagePaths.groupNav,
+                        label: 'Group',
+                        index: 3,
+                        activeColor: roleColor,
                       ),
                       _buildNavbarItem(
-                        'assets/icons/profilenav.png',
-                        'Profile',
-                        4,
-                        roleColor,
+                        assetPath: ImagePaths.profileNav,
+                        label: 'Profile',
+                        index: 4,
+                        activeColor: roleColor,
                       ),
                     ],
             );
@@ -142,20 +144,24 @@ class NavbarView extends GetView<NavigationController> {
     );
   }
 
-  BottomNavigationBarItem _buildNavbarItem(
-    String assetPath,
-    String label,
-    int index,
-    Color activeColor,
-  ) {
+  BottomNavigationBarItem _buildNavbarItem({
+    required String assetPath,
+    required String label,
+    required int index,
+    required Color activeColor,
+  }) {
+    final unselectedColor = const Color(0xFFA6864D).withValues(alpha: 0.7);
     return BottomNavigationBarItem(
       icon: Padding(
-        padding: EdgeInsets.only(top: 8.h),
-        child: Image.asset(
+        padding: EdgeInsets.only(top: 6.h),
+        child: SvgPicture.asset(
           assetPath,
-          width: 24.w,
-          height: 24.w,
-          color: const Color(0xFFA6864D).withValues(alpha: 0.7),
+          width: 24.sp,
+          height: 24.sp,
+          colorFilter: ColorFilter.mode(
+            unselectedColor,
+            BlendMode.srcIn,
+          ),
         ),
       ),
       activeIcon: Column(
@@ -169,8 +175,16 @@ class NavbarView extends GetView<NavigationController> {
               shape: BoxShape.circle,
             ),
           ),
-          SizedBox(height: 4.h),
-          Image.asset(assetPath, width: 24.w, height: 24.w, color: activeColor),
+          SizedBox(height: 3.h),
+          SvgPicture.asset(
+            assetPath,
+            width: 24.sp,
+            height: 24.sp,
+            colorFilter: ColorFilter.mode(
+              activeColor,
+              BlendMode.srcIn,
+            ),
+          ),
         ],
       ),
       label: label,

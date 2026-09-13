@@ -20,11 +20,11 @@ class ImagePaths {
   static const String brotherLogo = 'assets/icons/brotherlogo.png';
   static const String sisterLogo = 'assets/icons/sisterlogo.png';
   static const String jummaLogo = 'assets/icons/jummalogo.png';
-  static const String homeNav = 'assets/icons/homenav.png';
-  static const String groupNav = 'assets/icons/groupnav.png';
-  static const String discoverNav = 'assets/icons/Discovernav.png';
-  static const String messagesNav = 'assets/icons/Messagesnav.png';
-  static const String profileNav = 'assets/icons/profilenav.png';
+  static const String homeNav = 'assets/icons/homenav.svg';
+  static const String groupNav = 'assets/icons/groupnav.svg';
+  static const String discoverNav = 'assets/icons/Discovernav.svg';
+  static const String messagesNav = 'assets/icons/Messagesnav.svg';
+  static const String profileNav = 'assets/icons/profilenav.svg';
   static const String location = 'assets/icons/location.png';
   static const String compass = 'assets/icons/compas.png';
   static const String mosque = 'assets/icons/mosque.png';
